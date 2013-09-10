@@ -19,7 +19,8 @@ include_once('dbinfo.php');
 function create_dbDataExport() {
     connect();
     mysql_query("DROP TABLE IF EXISTS dbDataExport");
-    $result = mysql_query("CREATE TABLE dbDataExport (export_date TEXT NOT NULL, name TEXT NOT NULL, gender TEXT,
+    $result = mysql_query("CREATE TABLE dbDataExport (export_date TEXT NOT NULL, first_name TEXT NOT NULL,
+    					  last_name TEXT NOT NULL, gender TEXT,
 						  type TEXT, notes TEXT, address TEXT, city TEXT, state TEXT, zip TEXT,
 						  county TEXT, phone1 VARCHAR(12) NOT NULL, phone2 VARCHAR(12), email TEXT, employer TEXT,
 						  status TEXT, hours_worked TEXT, day_of_week TEXT, month TEXT, start_date TEXT, id TEXT)");
@@ -44,7 +45,8 @@ function insert_dbDataExport($data) {
 
     $query = "INSERT INTO dbDataExport VALUES ('" .
             $data->get_export_date() . "','" .
-            $data->get_name() . "','" .
+            $data->get_first_name() . "','" .
+            $data->get_last_name() . "','" .
             $data->get_gender() . "','" .
             $data->get_type() . "','" .
             $data->get_notes() . "','" .
@@ -82,7 +84,7 @@ function retrieve_dbDataExport($id) {
         return false;
     }
     $result_row = mysql_fetch_assoc($result);
-    $theData = new DataExport($result_row['export_date'], $result_row['name'], $result_row['gender'],
+    $theData = new DataExport($result_row['export_date'], $result_row['first_name'], $result_row['last_name'], $result_row['gender'],
                     $result_row['type'], $result_row['notes'], $result_row['address'],
                     $result_row['city'], $result_row['state'], $result_row['zip'],
                     $result_row['county'], $result_row['phone1'], $result_row['phone2'],

@@ -84,9 +84,10 @@ class MasterScheduleEntry {
 		return $this->id;
 	}
 	
-	/* 
-	 * Setter functions to be added later...
-	*/
+	function set_notes($notes){
+		$this->notes = $notes; 
+	}
+	
 	
 }
 

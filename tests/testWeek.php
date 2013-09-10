@@ -8,7 +8,7 @@ class testWeek extends UnitTestCase {
       	 }
          $aweek = new Week($days,"Rec", 2, 5,"archived");
          $this->assertEqual($aweek->get_name(), "February 6, 2012 to February 12, 2012");
-		 $this->assertEqual($aweek->get_id(), "02-06-12Rec");
+		 $this->assertEqual($aweek->get_id(), "02-06-12");
 		 $this->assertTrue(sizeof($aweek->get_dates()) == 7);
 		 $this->assertEqual($aweek->get_status(), "archived");
 		 $this->assertEqual($aweek->get_end(), mktime(23,59,59,2,12,2012));

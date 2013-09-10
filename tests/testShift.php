@@ -8,13 +8,13 @@ class testShift extends UnitTestCase {
          
 // Test new function for resetting shift's start/end time
 		 $this->assertTrue($noonshift->set_start_end_time(15,17));
-		 $this->assertEqual($noonshift->get_id(), "03-28-08-15-17Rec");
-		 $this->assertTrue($noonshift->get_name() == "15-17Rec");
+		 $this->assertEqual($noonshift->get_id(), "03-28-08-15-17");
+		 $this->assertTrue($noonshift->get_name() == "15-17");
 		 
 // Be sure that invalid times are caught.
 		 $this->assertFalse($noonshift->set_start_end_time(13,12));
-		 $this->assertTrue($noonshift->get_id() == "03-28-08-15-17Rec");
-		 $this->assertTrue($noonshift->get_name() == "15-17Rec");
+		 $this->assertTrue($noonshift->get_id() == "03-28-08-15-17");
+		 $this->assertTrue($noonshift->get_name() == "15-17");
 
          $this->assertTrue($noonshift->num_vacancies() == 3);
 

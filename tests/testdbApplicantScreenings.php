@@ -48,7 +48,7 @@ class testdbApplicantScreenings extends UnitTestCase {
 		$this->assertTrue(delete_dbApplicantScreenings($screening3->get_type()));
 		$this->assertTrue(delete_dbApplicantScreenings($screening4->get_type()));
    	  	
-
+		echo "testdbApplicantScreenings complete";
       } 
 	
 }

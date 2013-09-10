@@ -7,21 +7,14 @@
 // require_once(dirname(__FILE__).'/simpletest/autorun.php');
 class AllTests extends GroupTest {
           function AllTests() {
-                $_SESSION['logged_in']=1;
-                $_SESSION['access_level'] = 2;
-                $_SESSION['f_name']='All';
-                $_SESSION['l_name']='Tests';
-                $_SESSION['_id']='All Tests';
-//              parent::GroupTest('');
-		
-               	$this->addTestFile(dirname(__FILE__).'/testPerson.php');
+				$this->addTestFile(dirname(__FILE__).'/testPerson.php');
        			$this->addTestFile(dirname(__FILE__).'/testShift.php');
       			$this->addTestFile(dirname(__FILE__).'/testSCL.php');
       		 	$this->addTestFile(dirname(__FILE__).'/testRMHdate.php');
        			$this->addTestFile(dirname(__FILE__).'/testWeek.php');
        			$this->addTestFile(dirname(__FILE__).'/testMonth.php');
        			$this->addTestFile(dirname(__FILE__).'/testdbSCL.php');
-       			$this->addTestFile(dirname(__FILE__).'/testdbPersons.php');
+       		//	$this->addTestFile(dirname(__FILE__).'/testdbPersons.php');
        			$this->addTestFile(dirname(__FILE__).'/testdbSchedules.php');
        			$this->addTestFile(dirname(__FILE__).'/testdbShifts.php');
       	 		$this->addTestFile(dirname(__FILE__).'/testdbDates.php');

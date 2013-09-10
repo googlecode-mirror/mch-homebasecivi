@@ -26,9 +26,7 @@ class DataExport {
     private $day_of_week;  // day of week - string
     private $month;      // month - string
     private $start_date;  // start date
-    private $id;      // unique identifier: concatination of export date, 
-
-    // name, and maine phone, with commas in between
+    private $id;      // unique identifier: export date . first name . phone1
 
     /**
      * constructor for all DataExports
@@ -54,7 +52,7 @@ class DataExport {
         $this->day_of_week = $dow;
         $this->month = $m;
         $this->start_date = $sd;
-        $this->id = $ed . "," . $n . "," . $p1;
+        $this->id = $ed. $fn. $p1;
     }
 
     /*
