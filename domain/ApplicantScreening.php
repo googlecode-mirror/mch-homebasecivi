@@ -1,5 +1,15 @@
 <?php
 
+/** 
+ * Our initial idea would be to discard this domain class, as MCHPP doesn't currently
+ * do applicant screening of the type that RMH did. But on out call with Brady on Tuesday,
+ * he expressed interest in keeping this around because the organization may want to use that
+ * functionality in the future. We'll leave this as-is for now.
+ * @author Brian, Simon
+ * @version Sept. 20, 2013
+**/
+
+
 /**
  * ApplicantScreening class for RMH homebase
  * @author Jackson Moniaga

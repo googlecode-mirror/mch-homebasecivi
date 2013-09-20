@@ -1,6 +1,17 @@
 <?php
 
 /**
+ * This class will serve as a jumping-off point for the ActivityReport class
+ * specified in the design document. We will remove a lot of the detail from this class,
+ * such as the Address, City, State, Zip, County, etc. fields, which will be migrated into
+ * the Person class (where xome of that detail already exists).
+ * @author Brian, Simon
+ * @version Sept. 20, 2013
+**/
+
+
+
+/**
  * DataExport class for RMH homebase.
  * @version February 8, 2012
  */

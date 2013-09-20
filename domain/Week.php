@@ -1,5 +1,15 @@
 <?php
 
+/** 
+ * Our initial idea would be to discard this domain class, because the spec document doesn't
+ * call for a Week class, just a month class. However, on our Tuesday call with Brady, he said that
+ * much of MCHPP's volunteer base is either every week OR every month, so a week class might be
+ * helpful for arranging those two volunteer bases. Because it's early in the project and we're not 
+ * yet sure what we'll need, we're choosing to keep this class for now.
+ * @author Brian, Simon
+ * @version Sept. 20, 2013
+**/
+
 /*
  * Copyright 2008 by Oliver Radwan, Maxwell Palmer, Nolan McNair,
  * Taylor Talmage, and Allen Tucker.  This program is part of RMH Homebase.

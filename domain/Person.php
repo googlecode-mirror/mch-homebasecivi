@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * This class will be most of what we need for the Person class spec'ed out in the design document.
+ * Most of the variables are the same. Only small tweaks to this file will be needed.
+ * @author Brian, Simon
+ * @version Sept. 20, 2013
+**/
+
 /*
  * Copyright 2008 by Oliver Radwan, Maxwell Palmer, Nolan McNair,
  * Taylor Talmage, and Allen Tucker.  This program is part of RMH Homebase.

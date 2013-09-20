@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * This class will be most of what is called for by the design document's Month class.
+ * It already contains an ID, and information about the month. It will need to contain a variable
+ * to represent the crews that are working that month, and at what times.
+ * It will not need the $group variable, as MCHPP does not use alternating weeks.
+ * @author Brian, Simon
+ * @version Sept. 20, 2013
+**/
+
+
 /*
  * Copyright 2012 by Johnny Coster, Jackson Moniaga, Judy Yang, and
  * Allen Tucker.  This program is part of RMH Homebase. RMH Homebase
