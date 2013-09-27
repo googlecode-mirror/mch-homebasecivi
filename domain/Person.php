@@ -12,6 +12,7 @@
  * This class relies on some functionality provided by the DBZipCode class/table that we removed. 
  * We plan on querying an API for this information - it's much simpler and more reliable. 
  * We will write this functionality into this class soon.
+ * (Good idea -- meanwhile, I removed the reliance on dbZipCodes so that AllTests and the app itself will run.  Allen)
  * @author Brian, Oliver
  * @version Sept. 27, 2013
 **/
@@ -30,7 +31,7 @@
  * @author Oliver Radwan, Judy Yang and Allen Tucker
  * @version May 1, 2008, modified 2/15/2012
  */
-include_once(dirname(__FILE__).'/../database/dbZipCodes.php');
+
 class Person {
     private $id;    // id (unique key) = first_name . phone1
     private $first_name; // first name as a string
@@ -257,18 +258,6 @@ class Person {
         $this->county = $county;
     }
     function compute_county () {
-        if ($this->state=="ME") {
-            $countydata = false;
-            if ($this->get_zip()!="")
-	            $countydata = retrieve_dbZipCodes($this->get_zip(),"");    
-	        else if (!$countydata) 
-	            $countydata = retrieve_dbZipCodes("",$this->get_city());
-	        if ($countydata) {
-	            if ($this->zip == "")
-	            	$this->zip = $countydata[0];
-	            return $countydata[3];
-	        }
-        }
         return "";
     }
 }
