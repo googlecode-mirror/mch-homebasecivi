@@ -7,6 +7,15 @@
  * @version Sept. 20, 2013
 **/
 
+
+/**
+ * This class relies on some functionality provided by the DBZipCode class/table that we removed. 
+ * We plan on querying an API for this information - it's much simpler and more reliable. 
+ * We will write this functionality into this class soon.
+ * @author Brian, Oliver
+ * @version Sept. 27, 2013
+**/
+
 /*
  * Copyright 2008 by Oliver Radwan, Maxwell Palmer, Nolan McNair,
  * Taylor Talmage, and Allen Tucker.  This program is part of RMH Homebase.
