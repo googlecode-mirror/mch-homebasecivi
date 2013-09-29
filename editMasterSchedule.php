@@ -19,23 +19,21 @@ session_cache_expire(30);
                     die("<p>Only managers can edit the master schedule.</p>");
                 }
                 $group = $_GET['group'];
-                // $frequency=$_GET['frequency'];
-                $venue = $_GET['venue'];
                 $day = $_GET['day'];
-                $shiftname = $_GET['shift'];
-                $shift = array($group, $day, $shiftname);
+                $week_no = $_GET['week_no'];
+                $shift = array($group, $day);
                 $shift = get_day_names($shift, $day);
+                var_dump($shift);
                 include_once('database/dbMasterSchedule.php');
                 include_once('domain/MasterScheduleEntry.php');
                 include_once('database/dbLog.php');
-                //if($group=="" || $day=="" || $shiftname=="") {
-                if ($group == "" || $day == "" || $shift == "") {
+                if ($group == "" || $day == "" || $week_no == "") {
                     echo "<p>Invalid schedule parameters.  Please click on the \"Master Schedule\" link above to edit a master schedule shift.</p>";
                 } // see if there is no master shift for this time slot and try to set times starting there
-                else if (retrieve_dbMasterSchedule($venue . $day . $group . "-" . $shiftname) == false) {
-                    $result = process_set_times($_POST, $group, $day, $shiftname, $venue);
+                else if (retrieve_dbMasterSchedule($group . $day . $week_no) == false) {
+                    $result = process_set_times($_POST, $group, $day, $week_no);
                     if ($result) {
-                        $returnpoint = "viewSchedule.php?frequency=" . $venue;
+                        $returnpoint = "viewSchedule.php?group=" . $group;
                         echo "<table align=\"center\"><tr><td align=\"center\" width=\"442\">
 								<br><a href=\"" . $returnpoint . "\">
 								Back to Master Schedule</a></td></tr></table>";
@@ -45,19 +43,15 @@ session_cache_expire(30);
                         //$groupdisplay = $venue . " Group ".$group;
                         echo ("<table align=\"center\" width=\"450\"><tr><td align=\"center\" colspan=\"2\"><b>
 								Adding a New Master Schedule shift for " . $group .
-                        substr($shift[1], 3) . " " . $shift[3] . "s " . "
+                        $week_no . " " . $day . " " . "
 								</b></td></tr>"
                         . "<tr><td>
 									<form method=\"POST\" style=\"margin-bottom:0;\">
-									<select name=\"new_start\">
-									<option value=\"0\">Please select a new starting time</option>"
-                        . get_all_times() .
+									<select name=\"new_slots\">
+									<option value=\"0\">Please select the number of slots for this shift</option>"
+                        . slots_select() .
                         "</select><br>
 									<br><br>
-									<select name=\"new_end\">
-									<option value=\"0\">and ending time for this shift.</option>"
-                        . get_all_times() .
-                        "</select><br><br>
 									<input type=\"hidden\" name=\"_submit_change_times\" value=\"1\">
 									<input type=\"submit\" value=\"Add New Shift\" name=\"submit\">
 									</form><br></td></tr></table>");
@@ -73,7 +67,6 @@ session_cache_expire(30);
                         // we've tried to clear the shift, add a slot, or remove a slot;
                         // so now display the shift again.
                         $persons = get_persons($venue, $shift[0], $shift[1], $shift[2]);
-                        // $groupdisplay = $venue . " Group ".$group;
                         echo ("<table align=\"center\" width=\"450\"><tr><td align=\"center\" colspan=\"2\"><b>
 								Master schedule shift for " . $group .
                         substr($shift[1], 3) . " " . $shift[3] . "s, " . do_name($shift[2]) . "
@@ -109,15 +102,11 @@ session_cache_expire(30);
 
                 <?php
 
-                function get_all_times() {
+                function slots_select() {
                     $s = "";
-                    for ($hour = 9; $hour < 22; $hour++) {
-                        $clock = $hour < 12 ? $hour . "am" : $hour - 12 . "pm";
-                        if ($clock == "0pm")
-                            $clock = "12pm";
-                        $s = $s . "<option value=\"" . $hour . "\">" . $clock . "</option>";
+                    for ($slots = 0; $slots < 15; $slots++) {
+                        $s = $s . "<option value=\"" . $slots . "\">" . $slots . "</option>";
                     }
-                    $s = $s . "<option value=\"" . "overnight" . "\">" . "overnight" . "</option>";
                     return $s;
                 }
 
@@ -184,8 +173,8 @@ session_cache_expire(30);
                     }
                 }
 
-                function do_slot_num($shift, $venue) {
-                    $slots = get_total_slots($venue, $shift[0], $shift[1], $shift[2]);
+                function do_slot_num($group, $day, $week_no) {
+                    $slots = get_total_slots($group, $day, $week_no);
                     if ($slots == 1)
                         return "1 slot for this shift:";
                     return $slots . " slots for this shift:";
@@ -373,35 +362,5 @@ session_cache_expire(30);
                         return false;
                     }
                 }
-
-                function get_day_names(&$shift, $day) {
-                    if ($day == "Mon") {
-                        $shift[] = "Monday";
-                        $shift[] = "Mon";
-                    }
-                    if ($day == "Tue") {
-                        $shift[] = "Tuesday";
-                        $shift[] = "Tue";
-                    }
-                    if ($day == "Wed") {
-                        $shift[] = 'Wednesday';
-                        $shift[] = "Wed";
-                    }
-                    if ($day == "Thu") {
-                        $shift[] = "Thursday";
-                        $shift[] = "Thu";
-                    }
-                    if ($day == "Fri") {
-                        $shift[] = "Friday";
-                        $shift[] = "Fri";
-                    }
-                    if ($day == "Sat") {
-                        $shift[] = "Saturday";
-                        $shift[] = "Sat";
-                    } else {
-                        $shift[] = "Sunday";
-                        $shift[] = "Sun";
-                    }
-                    return $shift;
-                }
-                ?>
+                
+?>

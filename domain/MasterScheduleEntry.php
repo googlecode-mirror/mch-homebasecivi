@@ -15,61 +15,42 @@
  */
 
 class MasterScheduleEntry {
-	private $schedule_type; // "monthly" (for guestchef type) or "weekly" (for weekday, weekend, and overnight types)
+	private $group; // "foodbank", "foodpantry", or "soupkitchen"
 	private $day;           // "Mon", "Tue", ... "Sun"
-	private $week_no;       // week of month (1st-5th) for "monthly" or "weekly" Sat or Sun
-	                        // or week of year (odd or even) for "weekly" Mon-Fri
-	private $start_time;    // start time for the shift (9 - 21), or "overnight" or "any" (for any time of day)
-	private $end_time;		// end time for the shift (9 - 21)
+	private $week_no;       // week of month 1 - 5
 	private $slots;         // the number of slots to be filled for this shift
 	private $persons;       // array of ids, eg ["alex2071234567", "jane1112345567"]
 	private $notes;         // notes to be displayed for this shift on the schedule
-	private $id;	        // unique string for each entry = schedule_type.day.week."-".start_time."-".end_time
-							//    or (for overnight shifts) = schedule_type.day.week."-"."overnight"    
+	private $id;	        // unique string for each entry = group.day.week_no   
 
 	/**
 	* constructor for all MasterScheduleEntries
 	*/
-	function __construct($schedule_type, $day, $week_no, $start_time, $end_time, $slots, $persons, $notes){
-		$this->schedule_type = $schedule_type;
+	function __construct($group, $day, $week_no, $slots, $persons, $notes){
+		$this->group = $group;
 		$this->day = $day;
 		$this->week_no = $week_no;
-		$this->start_time = $start_time;
-		$this->end_time = $end_time;
 		$this->slots = $slots;
 		if ($persons !== "")
 			$this->persons = explode(',',$persons);
 		else
 			$this->persons = array();
 		$this->notes = $notes;
-		if ($start_time!="overnight")
-			$this->id = $schedule_type.$day.$week_no."-".$start_time."-".$end_time;
-		else $this->id = $schedule_type.$day.$week_no."-".$start_time;
+		$this->id = $group.$day.$week_no;
 	}
 	
 	/**
 	*  getter functions
 	*/
 	
-	function get_schedule_type(){
-		return $this->schedule_type;
+	function get_group(){
+		return $this->group;
 	}
 	function get_day(){
 		return $this->day;
 	}
 	function get_week_no(){
 		return $this->week_no;
-	}
-	function get_start_time(){ 
-		return $this->start_time;
-	}
-	function get_end_time(){
-		return $this->end_time;
-	}
-	function get_time(){
-		if ($this->start_time!="overnight")
-			return $this->start_time."-".$this->end_time;
-		else return "overnight";
 	}
 	function get_slots(){
 		return $this->slots;

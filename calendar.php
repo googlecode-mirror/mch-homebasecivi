@@ -39,7 +39,7 @@ session_cache_expire(30);
                         else
                             $edit = true;
                         // gets the week to show, if no week then defaults to current week
-                        $venue = $_GET['venue'];
+                        $group = $_GET['group'];
                         $weekid = $_GET['id'];
                         if (!$weekid)
                             $weekid = date("m-d-y", time());
@@ -56,17 +56,17 @@ session_cache_expire(30);
                             $doy = date("z", time()) + 1;
                             // if notes were edited, processes notes
                             if (array_key_exists('_submit_check_edit_notes', $_POST) && $_SESSION['access_level'] >= 2) {
-                                process_edit_notes($week, $venue, $_POST, $year, $doy);
+                                process_edit_notes($week, $group, $_POST, $year, $doy);
                                 $week = get_dbWeeks($weekid);
                             }
                             // shows the previous week / next week navigation
-                            $week_nav = do_week_nav($week, $edit, $venue);
+                            $week_nav = do_week_nav($week, $edit, $group);
                             echo $week_nav;
                             // prevents archived weeks from being edited by anyone
                             if ($week->get_status() == "archived")
                                 $edit = false;
                             echo '<form method="POST">';
-                            show_week($days, $week, $edit, $year, $doy, $venue);
+                            show_week($days, $week, $edit, $year, $doy, $group);
                             if ($edit == true && !($days[6]->get_year() < $year || ($days[6]->get_year() == $year && $days[6]->get_day_of_year() < $doy) ) && $_SESSION['access_level'] >= 2)
                                 echo "<p align=\"center\"><input type=\"submit\" value=\"Save changes to all notes\" name=\"submit\">";
                             echo '</form>';
