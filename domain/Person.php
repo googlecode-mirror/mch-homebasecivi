@@ -70,6 +70,8 @@ class Person {
         $this->phone2 = $p2;
         $this->email = $e;
 
+        // here we will query a zipcode API and set $this->zip
+
         // turn "type", "availability", and "schedule" from a comma-separated string into an array (or empty array)
         if ($t !== "")
             $this->type = explode(',', $t);
@@ -107,10 +109,6 @@ class Person {
         return $this->last_name;
     }
 
-    function get_gender() {
-        return $this->gender;
-    }
-
     function get_address() {
         return $this->address;
     }
@@ -127,10 +125,6 @@ class Person {
         return $this->zip;
     }
 
-    function get_county() {
-        return $this->county;
-    }
-
     function get_phone1() {
         return $this->phone1;
     }
@@ -143,18 +137,6 @@ class Person {
         return $this->email;
     }
 
-    function get_contact_preference() {
-        return $this->contact_preference;
-    }
-
-    function get_emergency_contact() {
-        return $this->emergency_contact;
-    }
-
-    function get_emergency_phone() {
-        return $this->emergency_phone;
-    }
-
     /**
      * @return type of person, an array of: "volunteer", "guestchef", "sub", etc.
      */
@@ -162,36 +144,16 @@ class Person {
         return $this->type;
     }
 
-    function get_screening_type() {
-        return $this->screening_type;
+    function get_group() {
+        return $this->group;
     }
 
-    function get_screening_status() {
-        return $this->screening_status;
+    function get_role() {
+        return $this->role;
     }
 
     function get_status() {
         return $this->status;
-    }
-
-    function get_occupation() {
-        return $this->occupation;
-    }
-
-    function get_references() {
-        return $this->references;
-    }
-
-    function get_maywecontact() {
-        return $this->maywecontact;
-    }
-
-    function get_motivation() {
-        return $this->motivation;
-    }
-
-    function get_specialties() {
-        return $this->specialties;
     }
 
     function get_availability() {
@@ -200,10 +162,6 @@ class Person {
 
     function get_schedule() {
         return $this->schedule;
-    }
-
-    function get_history() {
-        return $this->history;
     }
 
     function get_birthday() {
@@ -220,12 +178,6 @@ class Person {
 
     function get_password() {
         return $this->password;
-    }
-    function set_county ($county){
-        $this->county = $county;
-    }
-    function compute_county () {
-        return "";
     }
 }
 
