@@ -9,9 +9,9 @@ class testdbPersons extends UnitTestCase {
       	//add a manager
 
 //setup_dbPersons();
-$m = new Person("Taylor","Talmage","male","928 SU","Brunswick","ME",
-      2074415902,2072654046,"ttalmage@bowdoin.edu", "email", "volunteer",
-      "soupkitchen","C","active", "programmer",
+$m = new Person("Taylor","Talmage","928 SU","Brunswick","ME",
+      2074415902,2072654046,"ttalmage@bowdoin.edu", "volunteer",
+      "soupkitchen","C","active",
       "Mon:morning,Tue:morning,Wed:earlypm", "09-19-13,09-16-13", "02-19-89", "03-14-08",
       "this is a note","Taylor2074415902");
 $this->assertTrue(add_person($m));
