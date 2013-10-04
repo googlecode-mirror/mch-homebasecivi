@@ -33,79 +33,48 @@
  */
 
 class Person {
-    private $id;    // id (unique key) = first_name . phone1
+    private $person_id; // id (unique key) = first_name . phone1
     private $first_name; // first name as a string
-    private $last_name;  // last name as a string
-    private $gender; // gender - string
-    private $address;   // address - string
-    private $city;    // city - string
-    private $state;   // state - string
-    private $zip;    // zip code - integer
-    private $county; // county of residence
-    private $phone1;   // main phone
-    private $phone2;   // alternate phone
-    private $email;   // email address as a string
-    private $contact_preference; // prefer being contacted by phone or email
-    private $emergency_contact; // contact in case of emergencies
-    private $emergency_phone; // phone number of emergency caontact
-    private $type;       // array of "volunteer", "sub", 
-    // "weekendmgr", "guestchef", "parking", "cleaning", "other", "manager"
-    private $screening_type; // if "applicant, type of screening used for this applicant
-    private $screening_status; // array of dates showing completion of 
-    // screening steps for this applicant 
-    private $status;     // a person may be an "applicant", "active", "LOA", or "former"
-    private $occupation; // current occupation
-    private $references;   // array of name:phone of up to 2 references 
-    private $maywecontact; // "yes" or "no" for permission to contact references
-    private $motivation;   // App: why interested in RMH?
-    private $specialties;  // App: special interests and hobbies related to RMH
-    private $availability; // array of frequency:week:day:shift quads; e.g., weekly:odd:Mon:morning
-    private $schedule;     // array of scheduled shifts; e.g.,  weekly:odd:Mon:morning
-    private $history;     // array of recent shifts worked; e.g., 03-12-08morning
-    private $birthday;     // format: 03-12-64
-    private $start_date;   // format: 03-12-99
-    private $notes;        // notes that only the manager can see and edit
-    private $password;     // password for calendar and database access: default = $id
+    private $last_name; // last name as a string
+    private $address; // local address - string
+    private $city; // city - string
+    private $state; // state - string
+    private $zip; // zip code - integer
+    private $phone1; // primary phone (may be a cell)
+    private $phone2; // alternate phone (may be a cell)
+    private $email; // email address as a string
+    private $type; // "volunteer", "staff”
+    private $group; // array of "soupkitchen", "foodpantry", "foodbank", "other"
+    private $role; // array of roles e.g., [“C”,”D”,”B”,”T”]
+    private $status; // "active", "on-leave", or "former"
+    private $availability; // array of day:week-of-month pairs; e.g. [“Mon:1”, “Thu:4”]
+    private $schedule; // array of dates actually worked e.g., [“09-19-13”,”09-16-13”]
+    private $birthday; // format: yy-mm-dd
+    private $start_date; // format: yy-mm-dd
+    private $notes; // notes about this person
+    private $password; // password for system access
 
     /**
      * constructor for all persons
      */
 
-    function __construct($f, $l, $g, $a, $c, $s, $z, $co, $p1, $p2, $e, $cp, $ec, $ep, $t, $screening_type, $screening_status, $st, $oc, $re, $mwc, $mot, $spe, $av, $sch, $hist, $bd, $sd, $notes, $pass) {
+    // constructior takes firstname, lastname, address, city, state, phone1, phone2, email, type, group, role, status, availability, schedule, birthday, start_date, notes, password
+    function __construct($f, $l, $a, $c, $s, $p1, $p2, $e, $t, $g, $r, $s, $av, $sch, $bd, $sd, $notes, $pass) {
         $this->id = $f . $p1;
         $this->first_name = $f;
         $this->last_name = $l;
-        $this->gender = $g;
         $this->address = $a;
         $this->city = $c;
         $this->state = $s;
-        $this->zip = $z;
-        $this->county = $this->compute_county();
         $this->phone1 = $p1;
         $this->phone2 = $p2;
         $this->email = $e;
-        $this->contact_preference = $cp;
-        $this->emergency_contact = $ec;
-        $this->emergency_phone = $ep;
+
+        // turn "type", "availability", and "schedule" from a comma-separated string into an array (or empty array)
         if ($t !== "")
             $this->type = explode(',', $t);
         else
             $this->type = array();
-        $this->screening_type = $screening_type;
-        if ($screening_status !== "")
-            $this->screening_status = explode(',', $screening_status);
-        else
-            $this->screening_status = array();
-        $this->status = $st;
-        $this->occupation = $oc;
-        if ($re != null) {
-            $this->references = explode(',', $re);
-            $this->maywecontact = "yes";
-        }
-        else
-            $this->references = array();
-        $this->motivation = $mot;
-        $this->specialties = $spe;
         if ($av == "")
             $this->availability = array();
         else
@@ -114,19 +83,17 @@ class Person {
             $this->schedule = explode(',', $sch);
         else
             $this->schedule = array();
-        if ($hist !== "")
-            $this->history = explode(',', $hist);
-        else
-            $this->history = array();
 
+        $this->status = $st;
         $this->birthday = $bd;
         $this->start_date = $sd;
         $this->notes = $notes;
+
+        // MD5 hash the password (oooh, secure)
         if ($pass == "")
             $this->password = md5($this->id);
         else
             $this->password = $pass;  // default password == md5($id)
-    }
 
     function get_id() {
         return $this->id;

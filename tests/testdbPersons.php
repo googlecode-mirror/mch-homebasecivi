@@ -8,18 +8,19 @@ class testdbPersons extends UnitTestCase {
       function testdbPersonsModule() {
       	//add a manager
 
-//      	setup_dbPersons();
-$m = new Person("Gabrielle","Booth", "female","14 Way St", "Harpswell", "ME", "04079","",
-1112345678, 2071112345,"ted@bowdoin.edu","email", "Mother", 2077758989, "manager","","","active", "programmer", 
-"Steve_2077291234","yes","","", "Mon:morning,Tue:morning","","","02-19-89", "03-14-08","","");
+//setup_dbPersons();
+$m = new Person("Taylor","Talmage","male","928 SU","Brunswick","ME",
+      2074415902,2072654046,"ttalmage@bowdoin.edu", "email", "volunteer",
+      "soupkitchen","C","active", "programmer",
+      "Mon:morning,Tue:morning,Wed:earlypm", "09-19-13,09-16-13", "02-19-89", "03-14-08",
+      "this is a note","Taylor2074415902");
 $this->assertTrue(add_person($m));
+
 //get a person
-$p = retrieve_person("Gabrielle1112345678");
+$p = retrieve_person("Taylor2074415902");
 $this->assertTrue($p!==false);
 $this->assertTrue($p->get_status() == "active");
-$this->assertTrue($p->get_occupation() == "programmer");
-$this->assertEqual($p->get_refs(), array("Steve_2077291234"));
-$this->assertTrue(remove_person("Gabrielle1112345678"));
+$this->assertTrue(remove_person("Taylor2074415902"));
 
 echo("testdbPersons complete");
 
