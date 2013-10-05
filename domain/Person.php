@@ -43,7 +43,7 @@ class Person {
     private $phone1; // primary phone (may be a cell)
     private $phone2; // alternate phone (may be a cell)
     private $email; // email address as a string
-    private $type; // "volunteer", "staff”
+    private $type; // "volunteer" or "staff"
     private $group; // array of "soupkitchen", "foodpantry", "foodbank", "other"
     private $role; // array of roles e.g., [“C”,”D”,”B”,”T”]
     private $status; // "active", "on-leave", or "former"
@@ -66,17 +66,14 @@ class Person {
         $this->address = $a;
         $this->city = $c;
         $this->state = $s;
+        // here we will query a zipcode API and set $this->zip
+        
         $this->phone1 = $p1;
         $this->phone2 = $p2;
         $this->email = $e;
-
-        // here we will query a zipcode API and set $this->zip
-
-        // turn "type", "availability", and "schedule" from a comma-separated string into an array (or empty array)
-        if ($t !== "")
-            $this->type = explode(',', $t);
-        else
-            $this->type = array();
+        $this->type = $t;
+        
+        // turn "availability", "schedule", group, and role from a comma-separated string into an array (or empty array)
         if ($av == "")
             $this->availability = array();
         else
@@ -85,7 +82,14 @@ class Person {
             $this->schedule = explode(',', $sch);
         else
             $this->schedule = array();
-
+        if ($g == "")
+            $this->group = array();
+        else
+            $this->group = explode(',', $g);
+        if ($r !== "")
+            $this->role = explode(',', $r);
+        else
+            $this->role = array();
         $this->status = $st;
         $this->birthday = $bd;
         $this->start_date = $sd;
@@ -140,7 +144,7 @@ class Person {
     }
 
     /**
-     * @return type of person, an array of: "volunteer", "guestchef", "sub", etc.
+     * @return type of person, either "volunteer" or "staff"
      */
     function get_type() {
         return $this->type;

@@ -52,7 +52,7 @@ function add_person($person) {
                 $person->get_phone1() . '","' .
                 $person->get_phone2() . '","' .
                 $person->get_email() . '","' .
-                implode(',', $person->get_type()) . '","' .
+                $person->get_type() . '","' .
                 implode(',', $person->get_group()) . '","' .
                 implode(',', $person->get_role()) . '","' .
                 $person->get_status() . '","' .
@@ -147,7 +147,6 @@ function make_a_person($result_row) {
                     $result_row['address'],
                     $result_row['city'],
                     $result_row['state'],
-                    $result_row['zip'],
                     $result_row['phone1'],
                     $result_row['phone2'],
                     $result_row['email'],

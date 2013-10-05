@@ -12,14 +12,14 @@ class testdbPersons extends UnitTestCase {
 $m = new Person("Taylor","Talmage","928 SU","Brunswick","ME",
       2074415902,2072654046,"ttalmage@bowdoin.edu", "volunteer",
       "soupkitchen","C","active",
-      "Mon:morning,Tue:morning,Wed:earlypm", "09-19-13,09-16-13", "02-19-89", "03-14-08",
+      "Mon:1,Tue:3,Wed:1", "09-19-13,09-16-13", "02-19-89", "03-14-08",
       "this is a note","Taylor2074415902");
 $this->assertTrue(add_person($m));
 
 //get a person
 $p = retrieve_person("Taylor2074415902");
 $this->assertTrue($p!==false);
-$this->assertTrue($p->get_status() == "active");
+$this->assertEqual($p->get_status(), "active");
 $this->assertTrue(remove_person("Taylor2074415902"));
 
 echo("testdbPersons complete");
