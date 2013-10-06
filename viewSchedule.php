@@ -58,6 +58,7 @@ function show_master_month($group) {
     foreach ($days as $day => $dayname) 
         echo ('<td class="dow" align="center"> ' . $dayname . ' </td>');
     echo ('<td bgcolor="#99B1D1"></td></tr>');
+    $shiftdefaultsizes = array ("foodbank"=>8, "foodpantry"=>6, "soupkitchen"=>9);
     foreach ($weeks as $week_no => $week) {
     	echo('<tr><td bgcolor="#99B1D1">'.$week.'</td>');
     	foreach ($days as $day => $dayname) {
@@ -66,7 +67,8 @@ function show_master_month($group) {
             if ($master_shift) 
                 echo do_shift($master_shift, $shift_length); 
             else {
-            	$master_shift = new MasterScheduleEntry($group, $day, $week_no, 1, "", "");
+            	$master_shift = new MasterScheduleEntry($group, $day, $week_no, $shiftdefaultsizes[$group], "", "");
+            	insert_dbMasterSchedule($master_shift);
                 echo do_shift($master_shift, 1);
             }
         }

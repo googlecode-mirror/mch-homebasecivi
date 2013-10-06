@@ -57,6 +57,7 @@ session_cache_expire(30);
 									</form><br></td></tr></table>");
                     }
                 } else { // if one is there, see what we can do to update it
+                	echo "we are here";
                     if (!process_fill_vacancy($_POST, $shift, $group, $venue) && // try to fill a vacancy
                             !process_add_volunteer($_POST, $shift, $venue) &&
                             !process_remove_shift($_POST, $shift, $group, $day, $shiftname, $venue)) { // try to remove the shift
