@@ -201,12 +201,12 @@ session_cache_expire(30);
 		</b></td></tr>
 		<tr><td align=\"center\"><form method=\"POST\" style=\"margin-bottom:0;\">
 			<select name=\"scheduled_vol\">
-			<option value=\"0\" style=\"width: 371px;\">Select a volunteer with " . do_week_name($week_no) . " " . do_day_name($week_no) . " availability</option>"
+			<option value=\"0\" style=\"width: 371px;\">Select a volunteer with " . do_week_name($week_no) . " " . do_day_name($day) . " availability</option>"
                     . get_available_volunteer_options($group, $day, $week_no, get_persons($group, $day, $week_no)) .
                     "</select><br><br>
 			<select name=\"all_vol\">
-			<option value=\"0\" style=\"width: 371px;\">Select from all volunteers in this group</option>"
-                    . get_all_volunteer_options(get_persons($group, $day, $week_no)) .
+			<option value=\"0\" style=\"width: 371px;\">Select from all volunteers in the " . do_group_name($group) . " group</option>"
+                    . get_all_volunteer_options($group, get_persons($group, $day, $week_no)) .
                     "</select><br><br>
 			<input type=\"hidden\" name=\"_submit_add_volunteer\" value=\"1\">
 			<input type=\"submit\" value=\"Add Volunteer\" name=\"submit\" style=\"width: 200px\">
@@ -258,7 +258,7 @@ session_cache_expire(30);
                     connect();
 
                     $query = "SELECT * FROM dbPersons WHERE status = 'active' " .
-                    		"AND group LIKE '%" . $group . "%' " .
+                    		"AND `group` LIKE '%" . $group . "%' " .
                             "AND availability LIKE '%" . $day . ":" . $week_no . "%' ORDER BY last_name,first_name";
                     $result = mysql_query($query);
                     mysql_close();
@@ -280,12 +280,14 @@ session_cache_expire(30);
                     }
                     return $s;
                 }
-				// list everyone except persons already scheduled in this group, day, and week_no
-                function get_all_volunteer_options($persons) {
+				// list everyone in this group except persons already scheduled in this shift
+                function get_all_volunteer_options($group, $persons) {
                     if (!$persons[0])
                         array_shift($persons);
                     connect();
-                    $query = "SELECT * FROM dbPersons WHERE status = 'active' ORDER BY last_name,first_name";
+                    $query = "SELECT * FROM dbPersons WHERE status = 'active' " .
+                    		"AND `group` LIKE '%" . $group . "%' " .
+                            " ORDER BY last_name,first_name";
                     $result = mysql_query($query);
                     mysql_close();
                     $s = "";
