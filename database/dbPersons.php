@@ -41,7 +41,7 @@ function add_person($person) {
     $result = mysql_query($query);
     //if there's no entry for this id, add it
     if ($result == null || mysql_num_rows($result) == 0) {
-        mysql_query('INSERT INTO dbPersons VALUES("' .
+        $query_string = 'INSERT INTO dbPersons VALUES("' .
                 $person->get_id() . '","' .
                 $person->get_first_name() . '","' .
                 $person->get_last_name() . '","' .
@@ -62,7 +62,8 @@ function add_person($person) {
                 $person->get_start_date() . '","' .
                 $person->get_notes() . '","' .
                 $person->get_password() .
-                '");');
+                '");';
+        $query = mysql_query($query_string);
         mysql_close();
         return true;
     }

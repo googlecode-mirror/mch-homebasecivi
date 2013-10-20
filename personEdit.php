@@ -38,7 +38,7 @@ if ($id == 'new') {
 <html>
     <head>
         <title>
-            Editing <?PHP echo($person->get_first_name() . " " . $person->get_last_name()); ?>
+            Editing <?=$person->get_first_name() . " " . $person->get_last_name()?>
         </title>
         <link rel="stylesheet" href="styles.css" type="text/css" />
     </head>
@@ -48,7 +48,7 @@ if ($id == 'new') {
             <div id="content">
                 <?PHP
                 include('personValidate.inc');
-                if ($_POST['_form_submit'] != 1)
+                if (@$_POST['_form_submit'] != 1)
                 //in this case, the form has not been submitted, so show it
                     include('personForm.inc');
                 else {
@@ -92,9 +92,9 @@ if ($id == 'new') {
                     $state = trim(htmlentities($_POST['state']));
 
                     $phone1 = trim(str_replace(' ', '', htmlentities($_POST['phone1'])));
-                    $clean_phone1 = ereg_replace("[^0-9]", "", $phone1);
+                    $clean_phone1 = mb_ereg_replace("[^0-9]", "", $phone1);
                     $phone2 = trim(str_replace(' ', '', htmlentities($_POST['phone2'])));
-                    $clean_phone2 = ereg_replace("[^0-9]", "", $phone2);
+                    $clean_phone2 = mb_ereg_replace("[^0-9]", "", $phone2);
                     $email = $_POST['email'];
 
                     $type = implode(',', $_POST['type']);
@@ -108,7 +108,6 @@ if ($id == 'new') {
                         $availability = "";
                     // these two are not visible for editing, so they go in and out unchanged
                     $schedule = $_POST['schedule'];
-                    $history = $_POST['history'];
                     //concatenate birthday and start_date strings
                     if ($_POST['DateOfBirth_Year'] == "")
                         $birthday = $_POST['DateOfBirth_Month'] . '-' . $_POST['DateOfBirth_Day'] . '-XX';
@@ -123,10 +122,10 @@ if ($id == 'new') {
                     //used for url path in linking user back to edit form
                     $path = strrev(substr(strrev($_SERVER['SCRIPT_NAME']), strpos(strrev($_SERVER['SCRIPT_NAME']), '/')));
                     //step two: try to make the deletion, password change, addition, or change
-                    if ($_POST['deleteMe'] == "DELETE") {
+                    if (@$_POST['deleteMe'] == "DELETE") {
                         $result = retrieve_person($id);
                         if (!$result)
-                            echo('<p>Unable to delete. ' . $first_name . ' ' . $last_name . ' is not in the database. <br>Please report this error to the House Manager.');
+                            echo('<p>Unable to delete. ' . $first_name . ' ' . $last_name . ' is not in the database. <br>Please report this error to the admin.');
                         else {
                             //What if they're the last remaining manager account?
                             if (strpos($type, 'manager') !== false) {
@@ -154,7 +153,7 @@ if ($id == 'new') {
                     }
 
                     // try to reset the person's password
-                    else if ($_POST['reset_pass'] == "RESET") {
+                    else if (@$_POST['reset_pass'] == "RESET") {
                         $id = $_POST['old_id'];
                         $result = remove_person($id);
                         $pass = $first_name . $clean_phone1;
@@ -171,13 +170,14 @@ if ($id == 'new') {
                     }
 
                     // try to add a new person to the database
-                    else if ($_POST['old_id'] == 'new') {
+                    else if (@$_POST['old_id'] == 'new') {
                         $id = $first_name . $clean_phone1;
                         //check if there's already an entry
                         $dup = retrieve_person($id);
                         if ($dup)
                             echo('<p class="error">Unable to add ' . $first_name . ' ' . $last_name . ' to the database. <br>Another person with the same name and phone is already there.');
                         else {
+                            $pass = $_POST['old_pass'];
                             $newperson = new Person($first_name, $last_name, $address, $city, $state, 
                                         $clean_phone1, $clean_phone2, $email, $type,
                                         null, null, $status, $availability, $schedule,
