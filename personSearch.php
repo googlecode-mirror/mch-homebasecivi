@@ -23,17 +23,12 @@ session_cache_expire(30);
             <div id="content">
                 <?PHP
                 // display the search form
-                $area = $_GET['area'];
                 echo('<form method="post">');
                 echo('<p><strong>Search for volunteers:</strong>');
 
                 echo('<p>Type:<select name="s_type">' .
                 '<option value="" SELECTED></option>' .
-                '<option value="volunteer">House Volunteer</option>' . '<option value="sub">Sub</option>' .
-                '<option value="weekendmanager">Weekend Manager</option>' .
-                '<option value="guestchef">Guest Chef</option>' .
-                '<option value="parking">Event Parking</option>' . '<option value="cleaning">House cleaning</option>' .
-                '<option value="other">Other</option>' . '<option value="manager">Manager</option>' .
+                '<option value="volunteer">Volunteer</option>' . '<option value="staff">Staff</option>' .
                 '</select>');
                 echo('&nbsp;&nbsp;Status:<select name="s_status">' .
                 '<option value="" SELECTED></option>' . '<option value="applicant">Applicant</option>' . '<option value="active">Active</option>' .
@@ -46,7 +41,7 @@ session_cache_expire(30);
 						<legend>Availability: </legend>
 							<table><tr>
 								<td>Day (of week)</td>
-								<td>Shift</td>
+								<td>Week of Month</td>
 								</tr>';
                 echo "<tr>";
                 echo "<td>";
@@ -57,11 +52,10 @@ session_cache_expire(30);
                 }
                 echo '</select>';
                 echo "</td><td>";
-                $shifts = array('morning' => 'Morning (9-12)', 'earlypm' => 'Early Afternoon (12-3)', 'latepm' => 'Late Afternoon (3-6)',
-                    'evening' => 'Evening (6-9)', 'overnight' => 'Overnight');
-                echo '<select name="s_shift">' . '<option value=""></option>';
-                foreach ($shifts as $shiftno => $shiftname) {
-                    echo '<option value="' . $shiftno . '">' . $shiftname . '</option>';
+                $weeks = array(1 => "First Week", 2 => "Second Week", 3 => "Third Week", 4 => "Fourth Week", 5 => "Fifth Week");
+                echo '<select name="s_week">' . '<option value=""></option>';
+                foreach ($weeks as $weekno => $weekname) {
+                    echo '<option value="' . $weekno . '">' . $weekname . '</option>';
                 }
                 echo '</select>';
                 echo "</td>";
@@ -72,15 +66,19 @@ session_cache_expire(30);
                 echo('</form></p>');
 
                 // if user hit "Search"  button, query the database and display the results
-                if ($_POST['s_submitted']) {
+                if (@$_POST['s_submitted']) {
                     $type = $_POST['s_type'];
                     $status = $_POST['s_status'];
                     $name = trim(str_replace('\'', '&#39;', htmlentities($_POST['s_name'])));
+                    $day = $_POST['s_day'];
+                    $week = $_POST['s_week'];
+
                     // now go after the volunteers that fit the search criteria
                     include_once('database/dbPersons.php');
                     include_once('domain/Person.php');
-                    $result = getonlythose_dbPersons($type, $status, $name, $_POST['s_day'], $_POST['s_shift']);
-                    //$result = getall_dbPersons();
+
+                    $result = getonlythose_dbPersons($type, $status, $name, $day, $week);
+
                     echo '<p><strong>Search Results:</strong> <p>Found ' . sizeof($result) . ' ' . $status . ' ';
                     if ($type != "")
                         echo $type . "s";
@@ -88,7 +86,7 @@ session_cache_expire(30);
                         echo "persons";
                     if ($name != "")
                         echo ' with name like "' . $name . '"';
-                    $availability = $_POST['s_day'] ." ". $_POST['s_shift'];
+                    $availability = $_POST['s_day'] ." ". $_POST['s_week'];
                     if ($availability != " ") {
                         echo " with availability " . $availability;
                     }

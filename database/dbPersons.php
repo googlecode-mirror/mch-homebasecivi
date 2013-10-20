@@ -188,13 +188,13 @@ function getall_type($t) {
 }
 
 /*
- *   get all active volunteers and subs of $type who are available for the given $frequency,$week,$day,and $shift
+ *   get all active volunteers and subs of $type who are available for the given $frequency,$week,$day,and $week
  */
 
-function getall_available($type, $day, $shift) {
+function getall_available($type, $day, $week) {
     connect();
     $query = "SELECT * FROM dbPersons WHERE (type LIKE '%" . $type . "%' OR type LIKE '%sub%')" .
-            " AND availability LIKE '%" . $day .":". $shift .
+            " AND availability LIKE '%" . $day .":". $week .
             "%' AND status = 'active' ORDER BY last_name,first_name";
     $result = mysql_query($query);
     mysql_close();
@@ -202,7 +202,7 @@ function getall_available($type, $day, $shift) {
 }
 
 // retrieve only those persons that match the criteria given in the arguments
-function getonlythose_dbPersons($type, $status, $name, $day, $shift) {
+function getonlythose_dbPersons($type, $status, $name, $day, $week) {
     connect();
     if ($type=="manager")
         {$string1 = " = '"; $string2 = "'";}
@@ -210,7 +210,7 @@ function getonlythose_dbPersons($type, $status, $name, $day, $shift) {
     $query = "SELECT * FROM dbPersons WHERE type ".$string1. $type . $string2 .
             " AND status LIKE '%" . $status . "%'" .
             " AND (first_name LIKE '%" . $name . "%' OR last_name LIKE'%" . $name . "%')" .
-            " AND availability LIKE '%" . $day . ":" . $shift .
+            " AND availability LIKE '%" . $day . ":" . $week .
             "%' ORDER BY last_name,first_name";
     $result = mysql_query($query);
     $thePersons = array();
