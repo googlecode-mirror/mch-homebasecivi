@@ -16,17 +16,16 @@ class testdbMonths extends UnitTestCase {
 		//$this->assertTrue(create_dbMonths());
       	      	
       	// create a month to add to the table
-      	$m1 = new Month("06-01-10", "One", "unpublished");
+      	$m1 = new Month("13-10-foodbank", "unpublished");
       	
-      	
-      	// test the insert function
+        // test the insert function
       	$this->assertTrue(insert_dbMonths($m1));
       	
       	// test the retrieve function
-      	$this->assertEqual(retrieve_dbMonths($m1->get_id())->get_id(), "06-01-10");
+      	$this->assertEqual(retrieve_dbMonths($m1->get_id())->get_id(), "13-10-foodbank");
       	$this->assertEqual(retrieve_dbMonths($m1->get_id())->get_status(), "unpublished");
-      	$this->assertEqual(retrieve_dbMonths($m1->get_id())->get_group(), "One");
-      	$this->assertEqual(retrieve_dbMonths($m1->get_id())->get_end_of_month_timestamp(), mktime(0, 0, 0, 6, 30, 2010));
+      	$this->assertEqual(retrieve_dbMonths($m1->get_id())->get_group(), "foodbank");
+      	$this->assertEqual(retrieve_dbMonths($m1->get_id())->get_end_of_month_timestamp(), mktime(0, 0, 0, 10,31,2013));
       	
       	
       	// test the update function

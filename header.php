@@ -49,7 +49,7 @@
         //pages only managers can view
         $permission_array['personEdit.php'] = 2;
         $permission_array['viewSchedule.php'] = 2;
-        $permission_array['addWeek.php'] = 2;
+        $permission_array['addMonth.php'] = 2;
         $permission_array['rmh.php'] = 2;
         $permission_array['log.php'] = 2;
 

@@ -10,9 +10,9 @@
  */
 
 /**
- * dbMonth class for RMH homebase.
- * @author Judy Yang
- * @version February 22, 2012
+ * dbMonths module for MCH homebase.
+ * @author Allen Tucker
+ * @version October 20, 2013
  */
 include_once(dirname(__FILE__) . '/dbinfo.php');
 include_once(dirname(__FILE__) . '/../domain/Month.php');
@@ -20,7 +20,7 @@ include_once(dirname(__FILE__) . '/../domain/Month.php');
 function create_dbMonths() {
     connect();
     mysql_query("DROP TABLE IF EXISTS dbMonths");
-    $result = mysql_query("CREATE TABLE dbMonths (id TEXT NOT NULL, dates TEXT, `group` TEXT, status TEXT, end_of_month_timestamp INT)");
+    $result = mysql_query("CREATE TABLE dbMonths (id TEXT NOT NULL, crews TEXT, `group` TEXT, status TEXT, end_of_month_timestamp INT)");
 
     if (!$result) {
         echo mysql_error() . "Error creating dbMonths table<br>";
@@ -47,7 +47,7 @@ function insert_dbMonths($month) {
     //if there's no entry for this id, add it
     $query = "INSERT INTO dbMonths VALUES ('" .
             $month->get_id() . "','" .
-            implode(',', $month->get_dates()) . "','" .
+            implode(',', $month->get_crews()) . "','" .
             $month->get_group() . "','" .
             $month->get_status() . "','" .
             $month->get_end_of_month_timestamp() .
@@ -79,11 +79,8 @@ function retrieve_dbMonths($id) {
         mysql_close();
         return false;
     }
-
     $result_row = mysql_fetch_assoc($result);
-    $theMonth = new Month($result_row['id'], $result_row['group'], $result_row['status']);
-    $theMonth->set_end_of_month_timestamp($result_row['end_of_month_timestamp']);
-
+    $theMonth = new Month($result_row['id'], $result_row['status']);
     return $theMonth;
 }
 

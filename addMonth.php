@@ -3,14 +3,14 @@ session_start();
 session_cache_expire(30);
 ?>
 <!--
-        addWeek.php
+        addMonth.php
         @author Max Palmer and Allen Tucker
-        @version 3/25/08, revised 9/10/08
+        @version 3/25/08, revised 10/19/13
 -->
 <html>
     <head>
         <title>
-            Add Weeks to Calendar
+            Add a Month to a group's calendar
         </title>
         <link rel="stylesheet" href="styles.css" type="text/css" />
     </head>
@@ -19,102 +19,101 @@ session_cache_expire(30);
             <?PHP include('header.php'); ?>
             <div id="content">
                 <?PHP
-                include_once('database/dbWeeks.php');
+                include_once('database/dbMonths.php');
                 include_once('database/dbMasterSchedule.php');
                 include_once('database/dbPersons.php');
                 include_once('database/dbLog.php');
                 include_once('domain/Shift.php');
-                include_once('domain/RMHdate.php');
-                include_once('domain/Week.php');
+                include_once('domain/Month.php');
                 include_once('domain/Person.php');
                 
-                // Check to see if there are already weeks in the db
-                // connects to the database to see if there are any weeks in the dbWeeks table
-                $result = get_all_dbWeeks();
-                // If no weeks for either the house or the family room, show first week form
+                // Check to see if there are already months in the db
+                // connects to the database to see if there are any months in the dbMonths table
+                $result = get_all_dbMonths();
+                // If no months for either the house or the family room, show first month form
                 if (sizeof($result) == 0)
-                    $firstweek = true;
+                    $firstmonth = true;
                 else
-                    $firstweek = false;
+                    $firstmonth = false;
                 
-                // publishes a week if the user is a manager
+                // publishes a month if the user is a manager
                 if ($_GET['publish'] && $_SESSION['access_level'] >= 2) {
                     $id = $_GET['publish'];
-                    $week = get_dbWeeks($id);
-                    if ($week->get_status() == "unpublished")
-                        $week->set_status("published");
-                    else if ($week->get_status() == "published")
-                        $week->set_status("unpublished");
-                    update_dbWeeks($week);
+                    $month = get_dbMonths($id);
+                    if ($month->get_status() == "unpublished")
+                        $month->set_status("published");
+                    else if ($month->get_status() == "published")
+                        $month->set_status("unpublished");
+                    update_dbMonths($month);
                     add_log_entry('<a href=\"personEdit.php?id=' . $_SESSION['_id'] . '\">' . $_SESSION['f_name'] . ' ' . $_SESSION['l_name'] . '</a> ' .
-                            $week->get_status() . ' the week of <a href=\"calendar.php?id=' . $week->get_id() . '&edit=true\">' . $week->get_name() . '</a>.');
-                    echo "<p>Week \"" . $week->get_name() . "\" " .
-                    $week->get_status() . ".<br>";
-					include('addWeek_newweek.inc');
+                            $month->get_status() . ' the month of <a href=\"calendar.php?id=' . $month->get_id() . '&edit=true\">' . $month->get_name() . '</a>.');
+                    echo "<p>Month \"" . $month->get_name() . "\" " .
+                    $month->get_status() . ".<br>";
+					include('addMonth_newmonth.inc');
                 }
-                // removes a week if user is a manager
+                // removes a month if user is a manager
                 else if ($_GET['remove'] && $_SESSION['access_level'] >= 2) {
                     $id = $_GET['remove'];
-                    $week = get_dbWeeks($id);
-                    if ($week) {
-                      if ($week->get_status() == "unpublished" || $week->get_status() == "archived") {
-                        delete_dbWeeks($week);
-                        add_log_entry('<a href=\"personEdit.php?id=' . $_SESSION['_id'] . '\">' . $_SESSION['f_name'] . ' ' . $_SESSION['l_name'] . '</a> removed the week of <a href=\"calendar.php?id=' . $week->get_id() . '&edit=true\">' . $week->get_name() . '</a>.');
-                        echo "<p>Week \"" . $week->get_name() . "\" removed.<br>";
+                    $month = get_dbMonths($id);
+                    if ($month) {
+                      if ($month->get_status() == "unpublished" || $month->get_status() == "archived") {
+                        delete_dbMonths($month);
+                        add_log_entry('<a href=\"personEdit.php?id=' . $_SESSION['_id'] . '\">' . $_SESSION['f_name'] . ' ' . $_SESSION['l_name'] . '</a> removed the month of <a href=\"calendar.php?id=' . $month->get_id() . '&edit=true\">' . $month->get_name() . '</a>.');
+                        echo "<p>Month \"" . $month->get_name() . "\" removed.<br>";
                       }
                       else
-                        echo "<p>Week \"" . $week->get_name() . "\" is published, so it cannot be removed.<br>";
-					  include('addWeek_newweek.inc');
+                        echo "<p>Month \"" . $month->get_name() . "\" is published, so it cannot be removed.<br>";
+					  include('addMonth_newmonth.inc');
                     }
                 }
-                else if (!array_key_exists('_submit_check_newweek', $_POST)) {
-                    include('addWeek_newweek.inc');
+                else if (!array_key_exists('_submit_check_newmonth', $_POST)) {
+                    include('addMonth_newmonth.inc');
                 } else {
-                    process_form($firstweek);
-                    include('addWeek_newweek.inc');
+                    process_form($firstmonth);
+                    include('addMonth_newmonth.inc');
                 }
                 
                 // must be a manager
-                function process_form($firstweek) {
+                function process_form($firstmonth) {
                 	
                 	if ($_SESSION['access_level'] < 2)
                         return null;
-                    if ($firstweek == true) {
-                        //find the beginning of the week
+                    if ($firstmonth == true) {
+                        //find the beginning of the month
                         $timestamp = mktime(0, 0, 0, $_POST['month'], $_POST['day'], $_POST['year']);
                         $dow = date("N", $timestamp);
                         $m = date("m", mktime(0, 0, 0, $_POST['month'], $_POST['day'] - $dow + 1, $_POST['year']));
                         $d = date("d", mktime(0, 0, 0, $_POST['month'], $_POST['day'] - $dow + 1, $_POST['year']));
                         $y = date("y", mktime(0, 0, 0, $_POST['month'], $_POST['day'] - $dow + 1, $_POST['year']));
-                        generate_populate_and_save_new_week($m, $d, $y, $_POST['weekday_group'],$_POST['weekend_group']);
+                        generate_populate_and_save_new_month($m, $d, $y, $_POST['monthday_group'],$_POST['monthend_group']);
                     } else {
-                        $timestamp = $_POST['_new_week_timestamp'];
+                        $timestamp = $_POST['_new_month_timestamp'];
                         $m = date("m", $timestamp);
                         $d = date("d", $timestamp);  
                         $y = date("y", $timestamp);
-                        // finds the last week, and calculates next week's groups
-                        //$week = get_dbWeeks($m.'-'.$d.'-'.$y);
-                        $weekday_group = $_POST['weekday_group'];
-                		$weekend_group = $_POST['weekend_group'];
-                        generate_populate_and_save_new_week($m, $d, $y, $weekday_group, $weekend_group);
+                        // finds the last month, and calculates next month's groups
+                        //$month = get_dbMonths($m.'-'.$d.'-'.$y);
+                        $monthday_group = $_POST['monthday_group'];
+                		$monthend_group = $_POST['monthend_group'];
+                        generate_populate_and_save_new_month($m, $d, $y, $monthday_group, $monthend_group);
                     }
                 }
 
-                // uses the master schedule to create a new week in dbWeeks and 
+                // uses the master schedule to create a new month in dbMonths and 
                 // 7 new dates in dbDates and new shifts in dbShifts
                 // 
-                function generate_populate_and_save_new_week($m, $d, $y, $weekdaygroup, $weekendgroup) {
+                function generate_populate_and_save_new_month($m, $d, $y, $monthdaygroup, $monthendgroup) {
                     // set the group names the format used by master schedule
-                    $weekdays = array("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun");
+                    $monthdays = array("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun");
                     $day_id = $m . "-" . $d . "-" . $y;
                     $dates = array();
-                    foreach ($weekdays as $day) {
+                    foreach ($monthdays as $day) {
                         if ($day == "Sat" || $day == "Sun")
-                            $my_group = $weekendgroup;
+                            $my_group = $monthendgroup;
                         else
-                            $my_group = $weekdaygroup;
+                            $my_group = $monthdaygroup;
                         
-                        $venue_shifts = get_master_shifts("weekly", $my_group, $day);
+                        $venue_shifts = get_master_shifts("monthly", $my_group, $day);
                             /* Each row in the array is an associative array
                              *  of (venue, my_group, day, time, start, end, slots, persons, notes)
                              *  and persons is a comma-separated string of ids, like "alex2077291234"
@@ -122,7 +121,7 @@ session_cache_expire(30);
                         $shifts = array();
                         if (sizeof($venue_shifts)>0) {
                         	foreach ($venue_shifts as $venue_shift) 
-                                $shifts[] = generate_and_populate_shift($day_id, "weekly", $my_group, $day, $venue_shift->get_time(), "");
+                                $shifts[] = generate_and_populate_shift($day_id, "monthly", $my_group, $day, $venue_shift->get_time(), "");
                         }
                     
                         // makes a new date with these shifts
@@ -131,10 +130,10 @@ session_cache_expire(30);
                         $d++;
                         $day_id = date("m-d-y", mktime(0, 0, 0, $m, $d, $y));
                     }
-                     // creates a new week from the dates
-                    $newweek = new Week($dates, "weekly", $weekdaygroup, $weekendgroup, "unpublished");
-                    insert_dbWeeks($newweek);
-                    add_log_entry('<a href=\"personEdit.php?id=' . $_SESSION['_id'] . '\">' . $_SESSION['f_name'] . ' ' . $_SESSION['l_name'] . '</a> generated a new week: <a href=\"calendar.php?id=' . $newweek->get_id() . '&edit=true\">' . $newweek->get_name() . '</a>.');        
+                     // creates a new month from the dates
+                    $newmonth = new Month($dates, "monthly", $monthdaygroup, $monthendgroup, "unpublished");
+                    insert_dbMonths($newmonth);
+                    add_log_entry('<a href=\"personEdit.php?id=' . $_SESSION['_id'] . '\">' . $_SESSION['f_name'] . ' ' . $_SESSION['l_name'] . '</a> generated a new month: <a href=\"calendar.php?id=' . $newmonth->get_id() . '&edit=true\">' . $newmonth->get_name() . '</a>.');        
                 }
 
                 // makes new shifts, fills from master schedule
@@ -159,7 +158,7 @@ session_cache_expire(30);
                     
                 }
 
-                // displays form errors (only for first week)
+                // displays form errors (only for first month)
                 function show_errors($e) {
                     //this function should display all of our errors.
                     echo("<p><ul>");

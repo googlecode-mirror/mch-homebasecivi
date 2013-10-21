@@ -12,11 +12,10 @@ class AllTests extends GroupTest {
       			$this->addTestFile(dirname(__FILE__).'/testMasterScheduleEntry.php');
 				$this->addTestFile(dirname(__FILE__).'/testMonth.php');
        		    $this->addTestFile(dirname(__FILE__).'/testPerson.php');
-       			$this->addTestFile(dirname(__FILE__).'/testShift.php');
+       			$this->addTestFile(dirname(__FILE__).'/testCrew.php');
             	$this->addTestFile(dirname(__FILE__).'/testdbPersons.php');
-       			$this->addTestFile(dirname(__FILE__).'/testdbShifts.php');
-      	 		$this->addTestFile(dirname(__FILE__).'/testdbDates.php');
-       			$this->addTestFile(dirname(__FILE__).'/testdbWeeks.php');
+       			$this->addTestFile(dirname(__FILE__).'/testdbCrews.php');
+      	 		$this->addTestFile(dirname(__FILE__).'/testdbWeeks.php');
        			$this->addTestFile(dirname(__FILE__).'/testdbMasterSchedule.php');
        			$this->addTestFile(dirname(__FILE__).'/testdbMonths.php');
        			$this->addTestFile(dirname(__FILE__).'/testdbDataExport.php');
