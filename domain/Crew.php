@@ -64,7 +64,7 @@ class Crew {
     }
 
     function num_vacancies() {
-        if (!$this->persons[0])
+        if (sizeof($this->persons)>0 && !$this->persons[0])
             array_shift($this->persons);
         return $this->slots - count($this->persons);
     }
