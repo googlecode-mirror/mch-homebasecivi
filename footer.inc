@@ -3,7 +3,7 @@
 <div align="center">
     <div align="center" style="border:dashed 1px #999; width:80%;">
 
-        <p style="font-size:xx-small">Copyright &copy; 2008-2012 by Johnny Coster, Jackson Moniaga, Judy Yang, 
+        <p style="font-size:xx-small" class="footer-text">Copyright &copy; 2008-2012 by Johnny Coster, Jackson Moniaga, Judy Yang, 
             Maxwell Palmer, Oliver Radwan, Nolan McNair, Taylor Talmadge, and <a href="mailto:allen@myopensoftware.org>">Allen Tucker</a>.  
             <i>Homebase</i> is free open source software and it comes with absolutely no warranty.  
             You can redistribute and/or modify this software under the terms of the

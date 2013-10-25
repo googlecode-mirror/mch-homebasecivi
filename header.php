@@ -15,7 +15,7 @@
 <div id="header">
 <!--<br><br><img src="images/rmhHeader.gif" align="center"><br>
 <h1><br><br>Homebase <br></h1>-->
-
+<div class="logout"><a href="<?=$path?>logout.php"><p>logout</p></a></div>
 </div>
 
 <div align="center" id="navigationLinks">
@@ -90,7 +90,6 @@
 			        <a href="personEdit.php?id=' . 'new' . '">add, </a> <a href="viewScreenings.php?type=new">screenings</a> | ');
             echo('<a href="' . $path . 'dataSearch.php"><strong>reports</strong></a> ');
         }
-        echo(' | <a href="' . $path . 'logout.php"><b>logout</b></a>');
     }
     ?>
 </div>

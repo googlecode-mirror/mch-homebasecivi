@@ -4,7 +4,7 @@
 /* GENERAL STYLES */
 body{
     /* background:#001460; */
-    background:#FFFFDD;
+    background-color:#14456D;
     font-family:verdana, arial, sans-serif;
     font-size:12px;
     color: 	#000000;
@@ -104,7 +104,7 @@ p.error {color: #FF0000;}
 /* LAYOUT CONTROL IDS */
 
 #container{
-    width:90%;
+    max-width:1152px;
     align:center;
     margin-right : auto;
     margin-left : auto;
@@ -136,4 +136,22 @@ p.error {color: #FF0000;}
     padding: 10px;
     background:#ffffff;
     overflow:hidden;
+}
+
+/* FOOTER */
+
+.footer-text {
+    color:grey;
+}
+
+.footer-text a {
+    color:#2980B9;
+}
+
+/* HEADER */
+.logout {
+    position:relative;
+    float:right;
+    font-size:12pt;
+    font-weight:bold;
 }
