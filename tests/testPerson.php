@@ -16,7 +16,7 @@
  class testPerson extends UnitTestCase {
       function testPersonModule() {
 
- $myPerson = new Person("Taylor","Talmage","928 SU","Brunswick","ME",
+ $myPerson = new Person("Taylor","Talmage","928 SU","Brunswick","ME", 04011,
       2074415902,2072654046,"ttalmage@bowdoin.edu", "volunteer",
       "soupkitchen","C","active",
       "Mon:1,Tue:3,Wed:1", "09-19-13,09-16-13", "02-19-89", "03-14-08",

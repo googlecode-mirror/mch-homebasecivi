@@ -148,6 +148,7 @@ function make_a_person($result_row) {
                     $result_row['address'],
                     $result_row['city'],
                     $result_row['state'],
+                    $result_row['zip'],
                     $result_row['phone1'],
                     $result_row['phone2'],
                     $result_row['email'],
@@ -235,7 +236,7 @@ function get_people_for_export($first_name, $last_name, $gender, $type, $status,
     $query = "SELECT * FROM dbPersons WHERE first_name LIKE '%" . $first_name . "%' AND last_name LIKE '%" .
             $last_name . "%' AND type LIKE '%" . $type . "%' AND status LIKE '%" .
             $status . "%' AND start_date LIKE '%" . $start_date . "%' AND address LIKE '%" . $street . "%' AND city LIKE '%" .
-            $city . "%' AND county LIKE '%" . $county . "%' AND state LIKE '%" . $state . "%' AND zip LIKE '%" . $zip .
+            $city . "%' AND state LIKE '%" . $state . "%' AND zip LIKE '%" . $zip .
             "%' AND phone1 LIKE '%" . $phone1 . "%' AND phone2 LIKE '%" . $phone2 . "%' AND email LIKE '%" . $email .
             "%' AND notes LIKE '%" . $notes . "%' ORDER BY last_name,first_name";
     $result = mysql_query($query);

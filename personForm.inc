@@ -118,14 +118,36 @@ else {
 	    echo (' SELECTED'); echo('>former</option>');
 }
 echo('</select>');
-// $st = implode(',', $person->get_type());
-$types = array('volunteer' => 'Volunteer', 'staff' => "Staff");
-echo('<p>Position type(s):');
-// $ts = $types;
-echo('<span style="font-size:x-small;color:FF0000">*</span>');
 
+$types = array('volunteer' => 'Volunteer', 'staff' => "Staff");
+echo('<p>Position type:');
+echo('<span style="font-size:x-small;color:FF0000">*</span>');
 foreach ($types as $key => $value) {
-    echo ('&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="type[]" value=' . $key . '>' . $value );
+    if($person->get_type() == $key)
+        echo ('&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="type[]" value="' . $key . '" checked>'. $value . '</input>');
+    else
+        echo ('&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="type[]" value="' . $key . '">'. $value . '</input>');
+}
+
+$groups= array('soupkitchen' => 'Soup Kitchen', 'foodpantry' => "Food Pantry", 'foodkitchen' => "Food Kitchen", 'other' => "Other");
+echo('<p>Group(s):');
+echo('<span style="font-size:x-small;color:FF0000">*</span>');
+foreach ($groups as $key => $value) {
+    if(in_array($key, $person->get_group()))
+        echo ('&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="group[]" value="' . $key . '" checked>'. $value . '</input>');
+    else {
+        echo ('&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="group[]" value="' . $key . '">'. $value . '</input>');
+    }
+}
+
+$roles = array('c' => 'Chef', 'd' => "Dishwasher", 't' => "Team Leader", 'b' => "Box person");
+echo('<p>Role(s):');
+echo('<span style="font-size:x-small;color:FF0000">*</span>');
+foreach ($roles as $key => $value) {
+    if(in_array($key, $person->get_role()))
+        echo ('&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="role[]" value="' . $key . '" checked>'. $value . '</input>');
+    else
+        echo ('&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="role[]" value="' . $key . '">'. $value . '</input>');
 }
 ?>
     <fieldset id='availability'>

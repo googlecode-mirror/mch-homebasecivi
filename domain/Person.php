@@ -59,14 +59,14 @@ class Person {
      */
 
     // constructior takes firstname, lastname, address, city, state, phone1, phone2, email, type, group, role, status, availability, schedule, birthday, start_date, notes, password
-    function __construct($f, $l, $a, $c, $s, $p1, $p2, $e, $t, $g, $r, $st, $av, $sch, $bd, $sd, $notes, $pass) {
+    function __construct($f, $l, $a, $c, $s, $z, $p1, $p2, $e, $t, $g, $r, $st, $av, $sch, $bd, $sd, $notes, $pass) {
         $this->id = $f . $p1;
         $this->first_name = $f;
         $this->last_name = $l;
         $this->address = $a;
         $this->city = $c;
         $this->state = $s;
-        // here we will query a zipcode API and set $this->zip
+        $this->zip = $z;
         
         $this->phone1 = $p1;
         $this->phone2 = $p2;
