@@ -67,7 +67,7 @@
 
         //This line gives us the path to the html pages in question, useful if the server isn't installed @ root.
         $path = strrev(substr(strrev($_SERVER['SCRIPT_NAME']), strpos(strrev($_SERVER['SCRIPT_NAME']), '/')));
-
+		$month = "13-10"; // date('y-m');
         //they're logged in and session variables are set.
         if ($_SESSION['access_level'] >= 0) {
             echo('<a href="' . $path . 'index.php"><b>home</b></a> | ');
@@ -78,9 +78,9 @@
         if ($_SESSION['access_level'] == 0)
             echo(' | <a href="' . $path . 'personEdit.php?id=' . 'new' . '"><b>apply</b></a>');
         if ($_SESSION['access_level'] >= 1) {
-            echo(' | <strong>calendars:</strong> <a href="' . $path . 'calendar.php?group=foodbank">food bank, </a>');
-            echo('<a href="' . $path . 'calendar.php?group=foodpantry">food pantry, </a>');
-            echo('<a href="' . $path . 'calendar.php?group=soupkitchen">soup kitchen  </a>');
+            echo(' | <strong>calendars:</strong> <a href="' . $path . 'calendar.php?group=foodbank&month='.$month.'">food bank, </a>');
+            echo('<a href="' . $path . 'calendar.php?group=foodpantry&month='.$month.'">food pantry, </a>');
+            echo('<a href="' . $path . 'calendar.php?group=soupkitchen&month='.$month.'">soup kitchen  </a>');
         }
         if ($_SESSION['access_level'] >= 2) {
             echo('<br><strong>master schedules : </strong><a href="' . $path . 'viewSchedule.php?group=foodbank">food bank, </a>
