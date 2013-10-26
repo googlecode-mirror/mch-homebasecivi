@@ -6,7 +6,6 @@ class testCrew extends UnitTestCase {
       	$this->assertEqual($acrew->get_group(), "foodbank");
       	$this->assertTrue($acrew->get_id() == "13-10-12-foodbank");       
       	$this->assertTrue($acrew->num_vacancies() == 3);
-   echo "we are here";      
          $this->assertFalse($acrew->has_sub_call_list());
          $persons = array();
 		 $persons[] = "alex1234567890+alex+jones";

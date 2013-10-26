@@ -6,7 +6,7 @@ session_cache_expire(30);
 <html>
     <head>
         <title>
-            Edit Master Schedule Shift
+            Edit Master Schedule Crew
         </title>
         <link rel="stylesheet" href="styles.css" type="text/css" />
     </head>
@@ -26,8 +26,8 @@ session_cache_expire(30);
                 include_once('domain/MasterScheduleEntry.php');
                 include_once('database/dbLog.php');
                 if ($group == "" || $day == "" || $week_no == "") {
-                    echo "<p>Invalid schedule parameters.  Please click on the \"Master Schedule\" link above to edit a master schedule shift.</p>";
-                } // see if there is no master shift for this time slot and try to set times starting there
+                    echo "<p>Invalid schedule parameters.  Please click on the \"Master Schedule\" link above to edit a master schedule crew.</p>";
+                } // see if there is no master crew for this time slot and try to set times starting there
                 else if (retrieve_dbMasterSchedule($group . $day . $week_no) == false) {
                     $result = process_set_times($_POST, $group, $day, $week_no);
                     if ($result) {
@@ -36,40 +36,40 @@ session_cache_expire(30);
 								<br><a href=\"" . $returnpoint . "\">
 								Back to Master Schedule</a></td></tr></table>";
                     }
-                    // if not, there's an opportunity to add a shift 
+                    // if not, there's an opportunity to add a crew 
                     else {
                         echo ("<table align=\"center\" width=\"450\"><tr><td align=\"center\" colspan=\"2\"><b>
-								Adding a New Master Schedule shift for " . $do_group_name($group) . ", " .
+								Adding a New Master Schedule crew for " . $do_group_name($group) . ", " .
                         do_week_name($week_no) . " " . do_day_name($day) . " " . "</b></td></tr>"
                         . "<tr><td>
 									<form method=\"POST\" style=\"margin-bottom:0;\">
 									<select name=\"new_slots\">
-									<option value=\"0\">Please select the number of slots for this shift</option>"
+									<option value=\"0\">Please select the number of slots for this crew</option>"
                         . slots_select() .
                         "</select><br>
 									<br><br>
 									<input type=\"hidden\" name=\"_submit_change_times\" value=\"1\">
-									<input type=\"submit\" value=\"Add New Shift\" name=\"submit\">
+									<input type=\"submit\" value=\"Add New Crew\" name=\"submit\">
 									</form><br></td></tr></table>");
                     }
                 } else { // if one is there, see what we can do to update it
                 	if (!process_fill_vacancy($_POST, $group, $day, $week_no) && // try to fill a vacancy
                             !process_add_volunteer($_POST, $group, $day, $week_no) &&
-                            !process_remove_shift($_POST, $group, $day, $week_no)) { // try to remove the shift
-                        if (process_unfill_shift($_POST, $group, $day, $week_no)) {  // try to remove a person
+                            !process_remove_crew($_POST, $group, $day, $week_no)) { // try to remove the crew
+                        if (process_unfill_crew($_POST, $group, $day, $week_no)) {  // try to remove a person
                         } else if (process_add_slot($_POST, $group, $day, $week_no)) { // try to add a new slot
                         } else if (process_ignore_slot($_POST, $group, $day, $week_no)) {  //try to remove a slot
                         }
-                        // we've tried to clear the shift, add a slot, or remove a slot;
-                        // so now display the shift again.
+                        // we've tried to clear the crew, add a slot, or remove a slot;
+                        // so now display the crew again.
                         $persons = get_persons($group, $day, $week_no);
                         echo ("<br><table align=\"center\" width=\"450\" border=\"1px\"><tr><td align=\"center\" colspan=\"2\"><b>
-								Editing master schedule shift for " . 
+								Editing master schedule crew for " . 
                         do_group_name($group) . ", " . do_week_name($week_no) . " " . do_day_name($day) . "
 								</b>
 								<form method=\"POST\" style=\"margin-bottom:0;\">
-									<input type=\"hidden\" name=\"_submit_remove_shift\" value=\"1\"><br>
-									<input type=\"submit\" value=\"Remove Entire Shift\"
+									<input type=\"hidden\" name=\"_submit_remove_crew\" value=\"1\"><br>
+									<input type=\"submit\" value=\"Remove Entire Crew\"
 									name=\"submit\">
 									</form><br>
 								</td></tr>"
@@ -110,35 +110,36 @@ session_cache_expire(30);
                     if (!array_key_exists('_submit_change_times', $post))
                         return false;
                     if ($post['new_start'] == "0")
-                        $error = "Can't add new shift: you must select a start time.<br><br>";
+                        $error = "Can't add new crew: you must select a start time.<br><br>";
                     else if ($post['new_start'] != "overnight" && $post['new_end'] == "0")
-                        $error = "Can't add new shift: you must select an end time.<br><br>";
+                        $error = "Can't add new crew: you must select an end time.<br><br>";
                     else {
                         $entry = new MasterScheduleEntry($group, $day, $week_no);
                         if (!insert_nonoverlapping($entry))
-                            $error = "Can't insert a new shift into an overlapping group, day, week.<br><br>";
+                            $error = "Can't insert a new crew into an overlapping group, day, week.<br><br>";
                     }
                     if ($error) {
                         echo $error;
                         return true;
                     } else {
-                        echo "Added a new shift for " . do_group_name($group) . " " . do_day_name($day) . " " . do_week_name($week_no) . "<br><br>";
+                        echo "Added a new crew for " . do_group_name($group) . " " . do_day_name($day) . " " . do_week_name($week_no) . "<br><br>";
                         return true;
                     }
                 }
 
-                function process_remove_shift($post, $group, $day, $week_no) {
-                    if (!array_key_exists('_submit_remove_shift', $post))
+                function process_remove_crew($post, $group, $day, $week_no) {
+                    if (!array_key_exists('_submit_remove_crew', $post))
                         return false;
                     $id = $group . $day . $week_no ;
                     if (delete_dbMasterSchedule($id)) {
-                        echo "<br>Deleted master schedule shift for " . $do_group_name($group) .", ". $do_week_name($week_no) ." ". $do_day_name($day_no) . "<br><br>";
+                        echo "<br>Deleted master schedule crew for " . $do_group_name($group) .", ". $do_week_name($week_no) ." ". $do_day_name($day_no) . "<br><br>";
                         $returnpoint = "viewSchedule.php?group=" . $group;
                         echo "<table align=\"center\"><tr><td align=\"center\" width=\"442\">
 				<br><a href=\"" . $returnpoint . "\">
 				Back to Master Schedule</a></td></tr></table>";
                         return true;
                     }
+                    echo "we are here";
                     return false;
                 }
 
@@ -157,8 +158,8 @@ session_cache_expire(30);
                 function do_slot_num($group, $day, $week_no) {
                     $slots = get_total_slots($group, $day, $week_no);
                     if ($slots == 1)
-                        return "1 slot for this shift:";
-                    return $slots . " slots for this shift:";
+                        return "1 slot for this crew:";
+                    return $slots . " slots for this crew:";
                 }
 
                 function display_filled_slots($persons) {
@@ -213,14 +214,14 @@ session_cache_expire(30);
 			</form></td></tr>";
                     echo "</table>";
                     echo "<br><table align=\"center\"><tr><td align=\"center\" width=\"450\">
-		<a href=\"editMasterSchedule.php?group=" . $group . "&day=" . $day . "&week_no=" . $week_no . "\">Back to Shift</a><br></td></tr></table>";
+		<a href=\"editMasterSchedule.php?group=" . $group . "&day=" . $day . "&week_no=" . $week_no . "\">Back to Crew</a><br></td></tr></table>";
                     return true;
 
-                    // check that person is not already working that shift
+                    // check that person is not already working that crew
                     // check that person is available
                 }
 
-                function process_unfill_shift($post, $group, $day, $week_no) {
+                function process_unfill_crew($post, $group, $day, $week_no) {
                     $persons = get_persons($group, $day, $week_no);
                     if (!$persons[0])
                         array_shift($persons);
@@ -280,7 +281,7 @@ session_cache_expire(30);
                     }
                     return $s;
                 }
-				// list everyone in this group except persons already scheduled in this shift
+				// list everyone in this group except persons already scheduled in this crew
                 function get_all_volunteer_options($group, $persons) {
                     if (!$persons[0])
                         array_shift($persons);

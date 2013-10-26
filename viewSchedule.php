@@ -65,11 +65,16 @@ function show_master_month($group) {
             $master_shift = retrieve_dbMasterSchedule($group.$day.$week_no);
             /* retrieves a MasterScheduleEntry for this group, day, and week of the month */
             if ($master_shift) 
-                echo do_shift($master_shift, $shift_length); 
+                echo do_shift($master_shift); 
+            else if ($day=="Sat" || $day=="Sun") {
+            	$master_shift = new MasterScheduleEntry($group, $day, $week_no, 0, "", "");
+            	insert_dbMasterSchedule($master_shift);
+                echo do_shift($master_shift);
+            }
             else {
             	$master_shift = new MasterScheduleEntry($group, $day, $week_no, $shiftdefaultsizes[$group], "", "");
             	insert_dbMasterSchedule($master_shift);
-                echo do_shift($master_shift, 1);
+                echo do_shift($master_shift);
             }
         }
         echo('<td bgcolor="#99B1D1">'.$week.'</td></tr>');

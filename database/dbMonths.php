@@ -16,6 +16,10 @@
  */
 include_once(dirname(__FILE__) . '/dbinfo.php');
 include_once(dirname(__FILE__) . '/../domain/Month.php');
+include_once(dirname(__FILE__) . '/../domain/Crew.php');
+include_once(dirname(__FILE__) . '/dbCrews.php');
+include_once(dirname(__FILE__) . '/dbMasterSchedule.php');
+include_once(dirname(__FILE__) . '/../domain/MasterScheduleEntry.php');
 
 function create_dbMonths() {
     connect();
@@ -115,7 +119,7 @@ function update_dbMonths($month) {
         return false;
     }
 
-    if (delete_dbMonths($month->get_id()))
+    if (delete_dbMonths($month))
         return insert_dbMonths($month);
     else {
         echo (mysql_error() . "unable to update dbMonths table: " . $month->get_id());
@@ -124,19 +128,53 @@ function update_dbMonths($month) {
 }
 
 /*
- * remove a month from dbMonths table.  If already there, return false
+ * remove a month from dbMonths table and its crews from the dbCrews table
  */
 
-function delete_dbMonths($id) {
+function delete_dbMonths($month) {
     connect();
-    $query = "DELETE FROM dbMonths WHERE id=\"" . $id . "\"";
+    $query = "DELETE FROM dbMonths WHERE id=\"" . $month->get_id() . "\"";
     $result = mysql_query($query);
     mysql_close();
     if (!$result) {
-        echo (mysql_error() . " unable to delete from dbMonths: " . $id);
+        echo (mysql_error() . " unable to delete from dbMonths: " . $month->get_id());
         return false;
     }
+    foreach ($month->get_crews() as $crew_id) {
+    	delete_dbCrews($crew_id);
+    }
     return true;
+}
+// generate a new month for a group of crews from the master schedule
+// $id = yy-mm-group
+function newMonth ($id) {
+	$days = array (1=>"Mon", 2=>"Tue", 3=>"Wed", 4=>"Thu", 5=>"Fri", 6=>"Sat", 7=>"Sun");
+	$new_month = new Month($id, "unpublished");
+	$new_crews = $new_month->get_crews();
+	$dom = 1;			// day of the month, 1, 2, ..., 31
+	$week_no = 1;		// master schedule week number
+	$firstdow = $dow = date("N", mktime(0,0,0,substr($id,3,2), "01", substr($id,0,2)));  // day of week, 1 = Monday
+	foreach ($new_crews as $new_crew) {
+		$id1 = substr($id,6).$days[$dow].$week_no;
+		$schedule_entry = retrieve_dbMasterSchedule($id1);
+		if ($schedule_entry  && $schedule_entry->get_slots()>0) {
+			echo "\ndow, week_no, dom, area = ".$dow.$week_no.$dom.$id1;
+			if ($dom<10) $dd = "-0".$dom; else $dd = "-".$dom;
+			$new_crew = new Crew(substr($id,0,5).$dd, substr($id,6),
+					$schedule_entry->get_slots(),
+					$schedule_entry -> get_persons(),"","");
+			$new_month->set_crew($dom, $new_crew->get_id());
+			insert_dbCrews($new_crew);
+		}
+		if ($dow==$firstdow-1) 
+			$week_no++;
+		if ($dow==7)
+			$dow = 1;
+		else $dow++;
+		$dom++;
+	}
+	update_dbMonths($new_month);
+	return true;
 }
 
 ?>

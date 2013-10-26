@@ -79,16 +79,14 @@ function insert_dbCrews($s) {
 
 /**
  * Deletes a crew from the db
- * @param $s the crew to delete
+ * @param $id is the id of the crew to delete
  */
-function delete_dbCrews($s) {
-    if (!$s instanceof Crew)
-        die("Invalid argument for delete_dbCrews function call");
+function delete_dbCrews($id) {
     connect();
-    $query = "DELETE FROM dbCrews WHERE id=\"" . $s->get_id() . "\"";
+    $query = "DELETE FROM dbCrews WHERE id=\"" . $id . "\"";
     $result = mysql_query($query);
     if (!$result) {
-        echo "unable to delete from dbCrews " . $s->get_id() . mysql_error();
+        echo "unable to delete from dbCrews " . $id . mysql_error();
         mysql_close();
         return false;
     }
@@ -103,7 +101,7 @@ function delete_dbCrews($s) {
 function update_dbCrews($s) {
     if (!$s instanceof Crew)
         die("Invalid argument for dbCrews->replace_crew function call");
-    delete_dbCrews($s);
+    delete_dbCrews($s->get_id());
     insert_dbCrews($s);
     return true;
 }

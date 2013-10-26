@@ -26,7 +26,8 @@ class testdbMonths extends UnitTestCase {
       	$this->assertEqual(retrieve_dbMonths($m1->get_id())->get_status(), "unpublished");
       	$this->assertEqual(retrieve_dbMonths($m1->get_id())->get_group(), "foodbank");
       	$this->assertEqual(retrieve_dbMonths($m1->get_id())->get_end_of_month_timestamp(), mktime(0, 0, 0, 10,31,2013));
-      	
+      	// testing generation of a new calendar month from the master schedule
+      	$this->assertTrue(newMonth("13-10-foodbank"));
       	
       	// test the update function
       	$m1->set_status("published");
@@ -34,7 +35,7 @@ class testdbMonths extends UnitTestCase {
       	$this->assertEqual(retrieve_dbMonths($m1->get_id())->get_status(), "published");
       	
       	// tests the delete function
-      	$this->assertTrue(delete_dbMonths($m1->get_id()));
+    	$this->assertTrue(delete_dbMonths($m1));
       	echo("\ntestdbMonths complete\n");
       }
 }

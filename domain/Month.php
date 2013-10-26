@@ -84,6 +84,9 @@ class Month {
     function set_status($s) {
         $this->status = $s;
     }
+    function set_crew($i, $crew) {
+    	$this->crews[$i] = $crew;
+    }
 
 }
 
