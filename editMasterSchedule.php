@@ -139,7 +139,6 @@ session_cache_expire(30);
 				Back to Master Schedule</a></td></tr></table>";
                         return true;
                     }
-                    echo "we are here";
                     return false;
                 }
 
