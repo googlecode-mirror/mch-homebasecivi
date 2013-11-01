@@ -26,6 +26,7 @@ session_cache_expire(30);
 
                 if ($_SESSION['type'] == "staff" || $_SESSION['type'] == "volunteer") {
                     include_once('database/dbMonths.php');
+                    include_once('database/dbCrews.php');
                     include_once('database/dbPersons.php');
                     include_once('database/dbLog.php');
                     include_once 'calendar.inc';

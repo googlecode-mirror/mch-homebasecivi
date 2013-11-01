@@ -43,10 +43,10 @@ class Month {
 
         $this->crews = array();
         for ($i = 1; $i <= 9; $i++) {
-            $this->crews[] = $month . "-0" . $i . "-" . $year . "-" . substr($id, 6);
+            $this->crews[] = $year . "-" . $month . "-0" . $i . "-" . substr($id, 6);
         }
         for ($i = 10; $i <= $num_days; $i++) {
-            $this->crews[] = $month . "-" . $i . "-" . $year . "-" . substr($id, 6);
+            $this->crews[] = $year . "-" . $month . "-" . $i  . "-" . substr($id, 6);
         }
         $this->group = substr($id, 6);
         $this->status = $s;

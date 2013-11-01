@@ -58,6 +58,14 @@ function show_month($days, $month, $edit, $year, $group) {
     // for ($i = 0; $i < 91; $i++)
     //     $free_hour[] = true;
 
+    $crew_ids = $month->get_crews();
+
+    $crews = [];
+
+    foreach($crew_ids as $crew){
+        array_push($crews, select_dbCrews($crew));
+    }
+
     $startday = date("w", mktime(0, 0, 0, $month->get_month_number(), 1, $year));
 
     echo ('<table id="calendar" align="center" ><tr class="weekname"><td colspan="16" ' .
@@ -81,7 +89,7 @@ function show_month($days, $month, $edit, $year, $group) {
         if(($i+$startday)%7==0){
             echo("<tr>");
         }
-        echo("<td class='cell'><p class='date'>".$days[$i]."</p></td>");
+        echo("<td class='cell'><p class='date'>".$days[$i]."</p>".get_crewinfo($crews, $days[$i])."</td>");
         if(($i+$startday)%7==7){
             echo("</tr>");
         }
@@ -133,8 +141,25 @@ function show_month($days, $month, $edit, $year, $group) {
 //     }
 // }
 
+
+function get_crewinfo($crews, $day){
+    foreach($crews as $crew){
+        if($crew && explode("-", $crew->get_date())[2] == $day){
+            $info = "<p>";
+
+            $info = $info . $crew->get_persons()[0];
+
+            $info = $info . "</p>";
+
+            return $info;
+        }
+    }
+}
+
 // return a string of html that contains a table cell for a shift
 function do_shift($day, $shift, $length, $edit, $group) {
+
+
 
     // // chooses size annd style of cell based on length
     // $s = "<td colspan=\"2\" ";
