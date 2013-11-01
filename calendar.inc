@@ -13,135 +13,158 @@ session_cache_expire(30);
 /**
  * shows the "previous week"/"next week" menu, if the weeks exist
  */
-function do_week_nav($week, $edit, $group) {
-    $cur_id = $week->get_id();
-//		echo ("We are doing a nav for week ".$cur_id."<br>");
-    $prev_id = date("m-d-y", mktime(0, 0, 0, substr($cur_id, 0, 2), substr($cur_id, 3, 2) - 7, substr($cur_id, 6, 2)));
-    $next_id = date("m-d-y", mktime(0, 0, 0, substr($cur_id, 0, 2), substr($cur_id, 3, 2) + 7, substr($cur_id, 6, 2)));
-    $s = "<p><table id=\"weeknav\" align=\"left\"><tr><td align=\"left\" >";
-    // determines if there is a previous week
-    $prev_week = get_dbWeeks($prev_id);
-    if ($prev_week instanceof Week) {
-        $s = $s . '<a href="calendar.php?id=' . $prev_id . '&venue=' . $group;
-        if ($edit)
-            $s = $s . "&edit=true";
-        $s = $s . "\" id=\"weeknavlink\"><< Previous Week</a>";
-    }
-    else $s = $s . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-    if ($_SESSION['access_level'] >= 1)
-        if ($edit != true)
-            $s = $s . '<td align="left"> <a href="calendar.php?id=' . $cur_id . '&venue=' . $group . '&edit=true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(edit this week)</a></td>';
-        else
-            $s = $s . '<td align="left"> <a href="calendar.php?id=' . $cur_id . '&venue=' . $group . '&edit=false">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(view this week)</a></td>';
-    if ($_SESSION['access_level'] >= 2)
-        $s = $s . '<td align="right"> <a href="addWeek.php?archive=false">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(manage weeks)</a></td>';
-    $s = $s . "</td><td align=\"right\">";
-    // determines if there is a next week
-    $next_week = get_dbWeeks($next_id);
-    if ($next_week instanceof Week) {
-        $s = $s . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="calendar.php?id=' . $next_id . '&venue=' . $group;
-        if ($edit)
-            $s = $s . "&edit=true";
-        $s = $s . "\" id=\"weeknavlink\">Next Week >></a>";
-    }
-    else $s = $s . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-    $s = $s . "</td></tr></table></p><br><br>";
-    return $s;
+function do_month_nav($week, $edit, $group) {
+    // $cur_id = $week->get_id();
+    // $prev_id = date("m-d-y", mktime(0, 0, 0, substr($cur_id, 0, 2), substr($cur_id, 3, 2) - 7, substr($cur_id, 6, 2)));
+    // $next_id = date("m-d-y", mktime(0, 0, 0, substr($cur_id, 0, 2), substr($cur_id, 3, 2) + 7, substr($cur_id, 6, 2)));
+    // $s = "<p><table id=\"weeknav\" align=\"left\"><tr><td align=\"left\" >";
+    // // determines if there is a previous week
+    // $prev_week = get_dbWeek($prev_id);
+    // if ($prev_week instanceof Week) {
+    //     $s = $s . '<a href="calendar.php?id=' . $prev_id . '&venue=' . $group;
+    //     if ($edit)
+    //         $s = $s . "&edit=true";
+    //     $s = $s . "\" id=\"weeknavlink\"><< Previous Week</a>";
+    // }
+    // else $s = $s . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    // if ($_SESSION['access_level'] >= 1)
+    //     if ($edit != true)
+    //         $s = $s . '<td align="left"> <a href="calendar.php?id=' . $cur_id . '&venue=' . $group . '&edit=true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(edit this week)</a></td>';
+    //     else
+    //         $s = $s . '<td align="left"> <a href="calendar.php?id=' . $cur_id . '&venue=' . $group . '&edit=false">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(view this week)</a></td>';
+    // if ($_SESSION['access_level'] >= 2)
+    //     $s = $s . '<td align="right"> <a href="addWeek.php?archive=false">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(manage weeks)</a></td>';
+    // $s = $s . "</td><td align=\"right\">";
+    // // determines if there is a next week
+    // $next_week = get_dbWeeks($next_id);
+    // if ($next_week instanceof Week) {
+    //     $s = $s . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="calendar.php?id=' . $next_id . '&venue=' . $group;
+    //     if ($edit)
+    //         $s = $s . "&edit=true";
+    //     $s = $s . "\" id=\"weeknavlink\">Next Week >></a>";
+    // }
+    // else $s = $s . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    // $s = $s . "</td></tr></table></p><br><br>";
+    // return $s;
 }
 
 /**
  * gets a week object, and displays it as a calendar
  */
-function show_week($days, $week, $edit, $year, $doy, $group) {
+function show_month($days, $month, $edit, $year, $group) {
     // gets all of the dates for this week
     // sets up the table, with title, and then day of month
-    $free_hour = array();
-    for ($i = 0; $i < 91; $i++)
-        $free_hour[] = true;
-//		echo ("Showing week ". $week->get_id(). " for venue " . $group . " and first day " . $days[0]->get_id() . "<br>");
-    $daynames = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
+    // $free_hour = array();
+    // for ($i = 0; $i < 91; $i++)
+    //     $free_hour[] = true;
+
+    $startday = date("w", mktime(0, 0, 0, $month->get_month_number(), 1, $year));
+
     echo ('<table id="calendar" align="center" ><tr class="weekname"><td colspan="16" ' .
-    'align="center" >' . 'House calendar: ' . $week->get_name() . '</td></tr>
-				<tr><td bgcolor=lightblue></td>');
-    for ($i = 0; $i < 7; $i++)
-        echo ('<td class="dom">' . get_dom($days[$i]) . '</td><td class="dow">&nbsp; ' . $daynames[$i] . '</td>');
-    echo('<td bgcolor=lightblue></td></tr>');
-    $limit = 22;
-    for ($hour = 9; $hour < $limit; $hour++) {
-        echo ("<tr><td class=\"hour\">" . show_hours($group, $hour) . "</td>");
-        for ($i = 0; $i < 7; $i++) {
-            $shiftid = $days[$i]->get_shift_id($hour, $group);
-            if ($shiftid) {
-            	$shift_length = get_shift_end($shiftid) - get_shift_start($shiftid);
-            	echo do_shift($days[$i], substr($shiftid, 9), $shift_length, $edit, $group);
-                for ($j = $hour; $j < $hour + $shift_length; $j++)
-                    $free_hour[7 * ($j - 9) + $i] = false;
-            } 
-            else 
-            if ($free_hour[7 * ($hour - 9) + $i])
-                echo "<td colspan='2' bgcolor=\"lightgray\"></td>";
-        }
-        echo ("<td class=\"hour\">" . show_hours($group, $hour) . "</td></tr>");
+    'align="center" >' . 'Calendar: ' . $month->get_name() . '</td></tr>');
+
+    $daynames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+    foreach($daynames as $name)
+        echo ('<td class="dow">&nbsp; ' . $name . '</td>');
+
+    // TABLE STARTS HERE
+    
+    // days of the "month" that actually belong to the last month
+    echo("<tr>");
+    for ($i = 0; $i < $startday; $i++) {
+        echo("<td class='dow'></td>");
     }
 
+    // actual days of the month
+    for ($i = 0; $i <= count($days); $i++) {
+        if(($i+$startday)%7==0){
+            echo("<tr>");
+        }
+        echo("<td class='cell'><p class='date'>".$days[$i]."</p></td>");
+        if(($i+$startday)%7==7){
+            echo("</tr>");
+        }
+    }
 
-// notes
-    echo do_day_notes($days, $edit, $year, $doy);
-    echo "<input type=\"hidden\" name=\"_submit_check_edit_notes\" value=\"1\">";
-    echo "<input type=\"hidden\" name=\"weekid\" value=\"" . $days[0]->get_id() . "\">";
+    //$limit = 22;
+    
+    // for ($hour = 9; $hour < $limit; $hour++) {
+    //     echo ("<tr><td class=\"hour\">" . show_hours($group, $hour) . "</td>");
+    //     for ($i = 0; $i < 7; $i++) {
+    //         $shiftid = $days[$i]->get_shift_id($hour, $group);
+    //         if ($shiftid) {
+    //         	$shift_length = get_shift_end($shiftid) - get_shift_start($shiftid);
+    //         	echo do_shift($days[$i], substr($shiftid, 9), $shift_length, $edit, $group);
+    //             for ($j = $hour; $j < $hour + $shift_length; $j++)
+    //                 $free_hour[7 * ($j - 9) + $i] = false;
+    //         } 
+    //         else 
+    //         if ($free_hour[7 * ($hour - 9) + $i])
+    //             echo "<td colspan='2' bgcolor=\"lightgray\"></td>";
+    //     }
+    //     echo ("<td class=\"hour\">" . show_hours($group, $hour) . "</td></tr>");
+    // }
+
+
+    // notes
+    //echo do_day_notes($days, $edit, $year);
+    //echo "<input type=\"hidden\" name=\"_submit_check_edit_notes\" value=\"1\">";
+    //echo "<input type=\"hidden\" name=\"weekid\" value=\"" . $days[0]->get_id() . "\">";
     echo "</table>";
 }
 
-function show_hours($group, $hour) {
-    $d = 3;
-    if ($hour==21) {
-    	return "overnight";
-    }
-    else {
-    $clock = $hour < 12 ? $hour . "am" : $hour - 12 . "pm";
-    $clockend = $hour + $d < 12 ? ($hour + $d) . "am" : ($hour - 12 + $d) . "pm";
-    if ($clock == "0pm")
-        $clock = "12pm";
-    if ($clockend == "0pm")
-        $clockend = "12pm";
-    if (($clock) % $d == 0)
-        return $clock . " - " . $clockend;
-    else
-        return "";
-    }
-}
+// function show_hours($group, $hour) {
+//     $d = 3;
+//     if ($hour==21) {
+//     	return "overnight";
+//     }
+//     else {
+//     $clock = $hour < 12 ? $hour . "am" : $hour - 12 . "pm";
+//     $clockend = $hour + $d < 12 ? ($hour + $d) . "am" : ($hour - 12 + $d) . "pm";
+//     if ($clock == "0pm")
+//         $clock = "12pm";
+//     if ($clockend == "0pm")
+//         $clockend = "12pm";
+//     if (($clock) % $d == 0)
+//         return $clock . " - " . $clockend;
+//     else
+//         return "";
+//     }
+// }
 
 // return a string of html that contains a table cell for a shift
 function do_shift($day, $shift, $length, $edit, $group) {
-    // chooses size annd style of cell based on length
-    $s = "<td colspan=\"2\" ";
-    $s = $s . "rowspan='" . $length . "' class = 'shift'";
-    // checks that the shift is not in the past
-    $year = date("Y", time());
-    $doy = date("z", time()) + 1;
-    if ($edit && ($year < $day->get_year() || $year == $day->get_year() && $doy <= $day->get_day_of_year() ))
-        $s = $s . "e";
-    $s = $s . "\"><table id=\"shiftbox\"><tr><td class=\"persons\">";
-    if ($edit && ($year < $day->get_year() || $year == $day->get_year() && $doy <= $day->get_day_of_year() ))
-        $s = $s . "<a id=\"shiftlink\" href=\"editShift.php?shift=" . $day->get_id() . "-" . $shift . "&venue=" . $group . "\">";
-    $s = $s . get_people_for_shift($day, $shift);
-    if ($edit && ($year < $day->get_year() || $year == $day->get_year() && $doy <= $day->get_day_of_year() )) {
-        $s = $s . "</a>";
-        // if manager, adds shift notes
-        if ($_SESSION['access_level'] >= 2) {
-            $s = $s . "</td></tr><tr><td class=\"notes\" align=\"center\">" .
-                    "<textarea id=\"shift_notes\" rows=\"1\" name=\"shift_notes_" . $day->get_shift($shift)->get_id() . "\">"
-                    . $day->get_shift($shift)->get_notes() . "</textarea>";
-        } else {
-            $shiftnote = $day->get_shift($shift)->get_notes();
-            $s = $s . "</td></tr><tr><td class=\"notes\"><p id=\"shift\">" . $shiftnote . "</p>";
-        }
-    } else {
-        $shiftnote = $day->get_shift($shift)->get_notes();
-        $s = $s . "</td></tr><tr><td class=\"notes\"><p id=\"shift\">" . $shiftnote . "</p>";
-    }
-    $s = $s . "</td></tr></table></td>";
-    return $s;
+
+    // // chooses size annd style of cell based on length
+    // $s = "<td colspan=\"2\" ";
+    // $s = $s . "rowspan='" . $length . "' class = 'shift'";
+    // // checks that the shift is not in the past
+    // $year = date("Y", time());
+    // $doy = date("z", time()) + 1;
+    // if ($edit && ($year < $day->get_year() || $year == $day->get_year()))
+    //     $s = $s . "e";
+    // $s = $s . "\"><table id=\"shiftbox\"><tr><td class=\"persons\">";
+    // if ($edit && ($year < $day->get_year() || $year == $day->get_year()))
+    //     $s = $s . "<a id=\"shiftlink\" href=\"editShift.php?shift=" . $day->get_id() . "-" . $shift . "&venue=" . $group . "\">";
+    // $s = $s . get_people_for_shift($day, $shift);
+    // if ($edit && ($year < $day->get_year() || $year == $day->get_year())) {
+    //     $s = $s . "</a>";
+    //     // if manager, adds shift notes
+    //     if ($_SESSION['access_level'] >= 2) {
+    //         $s = $s . "</td></tr><tr><td class=\"notes\" align=\"center\">" .
+    //                 "<textarea id=\"shift_notes\" rows=\"1\" name=\"shift_notes_" . $day->get_shift($shift)->get_id() . "\">"
+    //                 . $day->get_shift($shift)->get_notes() . "</textarea>";
+    //     } else {
+    //         $shiftnote = $day->get_shift($shift)->get_notes();
+    //         $s = $s . "</td></tr><tr><td class=\"notes\"><p id=\"shift\">" . $shiftnote . "</p>";
+    //     }
+    // } else {
+    //     $shiftnote = $day->get_shift($shift)->get_notes();
+    //     $s = $s . "</td></tr><tr><td class=\"notes\"><p id=\"shift\">" . $shiftnote . "</p>";
+    // }
+    // $s = $s . "</td></tr></table></td>";
+    // return $s;
 }
 
 function get_dom($day) {

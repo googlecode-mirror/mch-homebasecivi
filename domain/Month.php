@@ -57,6 +57,11 @@ class Month {
         return $this->id;
     }
 
+    function get_month_number(){
+        return intval(explode("-", $this->id)[1]);
+
+    }
+
     function get_crews() {
         return $this->crews;
     }
@@ -86,6 +91,24 @@ class Month {
     }
     function set_crew($i, $crew) {
     	$this->crews[$i] = $crew;
+    }
+
+    function get_name(){
+        $year = 2000 + intval(explode("-", $this->id)[0]);
+        $month = intval(explode("-", $this->id)[1]);
+        return date("F", mktime(0, 0, 0, $month, 1, "20".$year));
+    }
+
+    function get_dates() {
+        $year = 2000 + intval(explode("-", $this->id)[0]);
+        $month = intval(explode("-", $this->id)[1]);
+
+        $num = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+        $dates = [];
+        for ($i = 1; $i <= $num; $i++){
+            array_push($dates, $i);
+        }
+        return $dates;
     }
 
 }

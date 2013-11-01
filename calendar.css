@@ -29,12 +29,32 @@ table#shiftbox td{
 
 table#calendar {
 	background-color:white;
-//	width:950px;
+	width:950px;
 }
 table#calendar td{
 	padding:0px;
 	border: solid 1px #264576;
 }
+
+#calendar td.dow {
+	height:25px;
+}
+
+#calendar td.cell{
+	height:75px;
+	position:relative;
+}
+
+#calendar td p.date {
+	position:absolute;
+	left:0;
+	top:0;
+	margin:0;
+	padding:1px 1px;
+	font-size:9pt;
+}
+
+
 .hour{
 	width:90px;
 	height:30px;
