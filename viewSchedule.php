@@ -115,7 +115,7 @@ function get_people_for_shift($master_shift) {
     $p = "<br>";
     for ($i = 0; $i < count($people); ++$i) {
         if (is_array($people[$i]))
-            $p = $p . "&nbsp;" . $people[$i]['first_name'] . " " . $people[$i]['last_name'] . " (" . $people[$i]['roles'] .")<br>";
+            $p = $p . "&nbsp;" . $people[$i]['first_name'] . " " . $people[$i]['last_name'] . " (" . $people[$i]['role'] .")<br>";
         else
             $p = $p . "&nbsp;" . $people[$i] . "<br>";
     }

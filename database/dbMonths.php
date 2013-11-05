@@ -172,8 +172,9 @@ function newMonth ($id) {
 				if ($person_id=="") continue;
 				$p = retrieve_person($person_id);
 				if ($p)
-					$crew_names[] = $person_id . "+" . $p->get_first_name() . "+" . $p->get_last_name();
-				else $crew_names[] = $person_id . "++";			
+					$crew_names[] = $person_id . "+" . $p->get_first_name() . "+" . 
+									$p->get_last_name() . "+(" . $p->get_role() . ")";
+				else $crew_names[] = $person_id . "+++";			
 			}
 			$newbie = new Crew(substr($id,0,5).$dd, substr($id,6),
 					$schedule_entry -> get_slots(),

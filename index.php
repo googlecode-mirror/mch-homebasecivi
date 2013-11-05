@@ -26,8 +26,8 @@ session_cache_expire(30);
                 include_once('database/dbPersons.php');
                 include_once('domain/Person.php');
                 include_once('database/dbLog.php');
-                include_once('domain/Shift.php');
-                include_once('database/dbShifts.php');
+                include_once('domain/Crew.php');
+                include_once('database/dbCrews.php');
                 if ($_SESSION['_id'] != "guest") {
                     $person = retrieve_person($_SESSION['_id']);
                     echo "<p>Welcome, " . $person->get_first_name() . ", to Homebase!";
@@ -44,7 +44,7 @@ session_cache_expire(30);
                     if ($_SESSION['access_level'] == 1)
                         echo('<p>
 							This is your personal homepage:
-							your upcoming scheduled shifts will always be posted here.
+							your upcoming scheduled crews will always be posted here.
 						');
                     if ($_SESSION['access_level'] == 0)
                         echo('<p> To apply for a volunteer position at the Ronald McDonald House, select <a href="' . $path . 'personEdit.php?id=' . 'new' . '">apply</a>.');
@@ -100,39 +100,39 @@ session_cache_expire(30);
                         //VOLUNTEER CHECK
                         if ($_SESSION['access_level'] == 1) {
                             //we need to populate their schedule.
-                            $shifts = selectScheduled_dbShifts($person->get_id());
+                            $crews = selectScheduled_dbCrews($person->get_id());
 
-                            $scheduled_shifts = array();
-                            foreach ($shifts as $shift) {
-                                $shift_month = get_shift_month($shift);
-                                $shift_day = get_shift_day($shift);
-                                $shift_year = get_shift_year($shift);
+                            $scheduled_crews = array();
+                            foreach ($crews as $crew) {
+                                $crew_month = get_crew_month($crew);
+                                $crew_day = get_crew_day($crew);
+                                $crew_year = get_crew_year($crew);
 
-                                $shift_time_s = get_shift_start($shift);
-                                $shift_time_e = get_shift_end($shift);
+                                $crew_time_s = get_crew_start($crew);
+                                $crew_time_e = get_crew_end($crew);
 
                                 $cur_month = date("m");
                                 $cur_day = date("d");
                                 $cur_year = date("y");
 
-                                if ($shift_year > $cur_year)
-                                    $upcoming_shifts[] = $shift;
-                                else if ($shift_year == $cur_year) {
-                                    if ($cur_month < $shift_month)
-                                        $upcoming_shifts[] = $shift;
-                                    else if ($shift_month == $cur_month) {
-                                        if ($cur_day <= $shift_day) {
-                                            $upcoming_shifts[] = $shift;
+                                if ($crew_year > $cur_year)
+                                    $upcoming_crews[] = $crew;
+                                else if ($crew_year == $cur_year) {
+                                    if ($cur_month < $crew_month)
+                                        $upcoming_crews[] = $crew;
+                                    else if ($crew_month == $cur_month) {
+                                        if ($cur_day <= $crew_day) {
+                                            $upcoming_crews[] = $crew;
                                         }
                                     }
                                 }
                             }
-                            if ($upcoming_shifts) {
+                            if ($upcoming_crews) {
                                 echo('<div class="scheduleBox"><p><strong>Your Upcoming Schedule:</strong><br /></p><ul>');
-                                foreach ($upcoming_shifts as $tableId) {
-                                    echo('<li type="circle">' . get_shift_name_from_id($tableId)) . '</li>';
+                                foreach ($upcoming_crews as $tableId) {
+                                    echo('<li type="circle">' . get_crew_name_from_id($tableId)) . '</li>';
                                 }
-                                echo('</ul><p>If you need to cancel an upcoming shift, please contact House Manager (207-980-6282 or <a href="mailto:housemgr@rmhportland.org>">housemgr@rmhportland.org</a>).</p></div>');
+                                echo('</ul><p>If you need to cancel an upcoming crew, please contact House Manager (207-980-6282 or <a href="mailto:housemgr@rmhportland.org>">housemgr@rmhportland.org</a>).</p></div>');
                             }
                         }
 
@@ -156,7 +156,7 @@ session_cache_expire(30);
                             $two_weeks = $today + 14 * 86400;
 
                             connect();
-                            $vacancy_query = "SELECT id,vacancies FROM dbShifts " .
+                            $vacancy_query = "SELECT id,vacancies FROM dbCrews " .
                                     "WHERE vacancies > 0 ORDER BY id;";
                             $vacancy_list = mysql_query($vacancy_query);
                             if (!$vacancy_list)
@@ -167,9 +167,9 @@ session_cache_expire(30);
                                 echo('<div class="vacancyBox">');
                                 echo('<p><strong>Upcoming Vacancies:</strong><ul>');
                                 while ($thisRow = mysql_fetch_array($vacancy_list, MYSQL_ASSOC)) {
-                                    $shift_date = mktime(0, 0, 0, substr($thisRow['id'], 0, 2), substr($thisRow['id'], 3, 2), substr($thisRow['id'], 6, 2));
-                                    if ($shift_date > $today && $shift_date < $two_weeks) {
-                                        echo('<li type="circle"><a href="' . $path . 'editShift.php?shift=' . $thisRow['id'] . '">' . get_shift_name_from_id($thisRow['id']) . '</a></li>');
+                                    $crew_date = mktime(0, 0, 0, substr($thisRow['id'], 0, 2), substr($thisRow['id'], 3, 2), substr($thisRow['id'], 6, 2));
+                                    if ($crew_date > $today && $crew_date < $two_weeks) {
+                                        echo('<li type="circle"><a href="' . $path . 'editCrew.php?crew=' . $thisRow['id'] . '">' . get_crew_name_from_id($thisRow['id']) . '</a></li>');
                                     }
                                 }
                                 echo('</ul></p></div><br>');
@@ -217,12 +217,12 @@ session_cache_expire(30);
                                 echo('<table class="searchResults"><tr><td class="searchResults"><u>Name</u></td><td class="searchResults"><u>Date Last Worked</u></td></tr>');
                                 while ($thisRow = mysql_fetch_array($everyone, MYSQL_ASSOC)) {
                                     if (!preg_match("/manager/", $thisRow['type'])) {
-                                        $shifts = selectScheduled_dbShifts($thisRow['id']);
+                                        $crews = selectScheduled_dbCrews($thisRow['id']);
                                         $havent_worked = true;
                                         $last_worked = "";
-                                        for ($i = 0; $i < count($shifts) && $havent_worked; $i++) {
-                                            $date_worked = mktime(0, 0, 0, get_shift_month($shifts[$i]), get_shift_day($shifts[$i]), get_shift_year($shifts[$i]));
-                                            $last_worked = substr($shifts[$i], 0, 8);
+                                        for ($i = 0; $i < count($crews) && $havent_worked; $i++) {
+                                            $date_worked = mktime(0, 0, 0, get_crew_month($crews[$i]), get_crew_day($crews[$i]), get_crew_year($crews[$i]));
+                                            $last_worked = substr($crews[$i], 0, 8);
                                             if ($date_worked > $two_months_ago) 
                                                 $havent_worked = false;
                                         }
