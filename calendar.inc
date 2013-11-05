@@ -145,11 +145,25 @@ function show_month($days, $month, $edit, $year, $group) {
 function get_crewinfo($crews, $day){
     foreach($crews as $crew){
         if($crew && explode("-", $crew->get_date())[2] == $day){
-            $info = "<p>";
+            $person_ids = explode(",", $crew->get_persons()[0]);
 
-            $info = $info . $crew->get_persons()[0];
+            var_dump($person_ids);
 
-            $info = $info . "</p>";
+            $info = "";
+
+            foreach($person_ids as $person_id){
+                $id_exploded = explode("+", $person_id);
+                $base_url = strrev(substr(strrev($_SERVER['SCRIPT_NAME']), strpos(strrev($_SERVER['SCRIPT_NAME']), '/')));
+                $url = $base_url."personEdit.php?id=".$id_exploded[0];
+
+                $display_name = $id_exploded[1]. " " . $id_exploded[2];
+
+                $info = $info . "<a href=".$url.">";
+
+                $info = $info . $display_name;
+
+                $info = $info . "</a><br/>";
+            }
 
             return $info;
         }
