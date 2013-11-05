@@ -149,28 +149,39 @@ function delete_dbMonths($month) {
 // $id = yy-mm-group
 function newMonth ($id) {
 	$days = array (1=>"Mon", 2=>"Tue", 3=>"Wed", 4=>"Thu", 5=>"Fri", 6=>"Sat", 7=>"Sun");
-	$new_month = new Month($id, "unpublished");
+
+	// We switched new months to default to published, because otherwise they won't be available for viewing.
+    // We're unsure if this was the right move to make.
+    $new_month = new Month($id, "published");
+
 	$new_crews = $new_month->get_crews();
+
 	$dom = 1;			// day of the month, 1, 2, ..., 31
 	$week_no = 1;		// master schedule week number
+
 	$firstdow = $dow = date("N", mktime(0,0,0,substr($id,3,2), "01", substr($id,0,2)));  // day of week, 1 = Monday
+
 	foreach ($new_crews as $new_crew) {
 		$id1 = substr($id,6).$days[$dow].$week_no;
 		$schedule_entry = retrieve_dbMasterSchedule($id1);
+
 		if ($schedule_entry  && $schedule_entry->get_slots()>0) {
-			echo "\ndow, week_no, dom, area = ".$dow.$week_no.$dom.$id1;
 			if ($dom<10) $dd = "-0".$dom; else $dd = "-".$dom;
-			$new_crew = new Crew(substr($id,0,5).$dd, substr($id,6),
-					$schedule_entry->get_slots(),
+			
+            $new_crew = new Crew(substr($id,0,5).$dd, substr($id,6),
+					$schedule_entry -> get_slots(),
 					$schedule_entry -> get_persons(),"","");
 			$new_month->set_crew($dom, $new_crew->get_id());
 			insert_dbCrews($new_crew);
 		}
-		if ($dow==$firstdow-1) 
+		
+        if ($dow==$firstdow-1) 
 			$week_no++;
-		if ($dow==7)
+		
+        if ($dow==7)
 			$dow = 1;
-		else $dow++;
+		
+        else $dow++;
 		$dom++;
 	}
 	update_dbMonths($new_month);

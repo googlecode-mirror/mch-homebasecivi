@@ -49,9 +49,9 @@ session_cache_expire(30);
 
                     $month = retrieve_dbMonths($monthid); // get the month
 
-                    // if invalid week or unpublished week and not a manager
+                    // if invalid month or unpublished week and not a manager
                     if (!$month instanceof Month || $month->get_status() == "unpublished" && $_SESSION['access_level'] < 2) {
-                        echo 'This week\'s calendar is not available for viewing. ';
+                        echo 'This month\'s calendar is not available for viewing. ';
                         if ($_SESSION['access_level'] >= 2)
                             echo ('<a href="addMonth.php?archive=false"> <br> Manage months</a>');
                     } else {
