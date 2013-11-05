@@ -16,7 +16,7 @@ session_cache_expire(30);
 <head>
     <title>Calendar viewing</title>
     <link rel="stylesheet" href="styles.css" type="text/css" />
-    <link rel="stylesheet" href="calendar.css?v=2" type="text/css" />
+    <link rel="stylesheet" href="calendar.css?v=3" type="text/css" />
 </head>
 <body>
     <div id="container">
