@@ -46,38 +46,34 @@ session_cache_expire(30);
                         $monthid = date("y-m", time())."-".$group;
                     else
                         $monthid = $monthid."-".$group;
-
                     $month = retrieve_dbMonths($monthid); // get the month
-
-                    // if invalid month or unpublished week and not a manager
-                    if (!$month instanceof Month || $month->get_status() == "unpublished" && $_SESSION['access_level'] < 2) {
+                    if (!$month)
+                    	$month = newMonth($monthid);
+                    if ($month->get_status() == "unpublished" && $_SESSION['access_level'] < 2) {
                         echo 'This month\'s calendar is not available for viewing. ';
-                        if ($_SESSION['access_level'] >= 2)
-                            echo ('<a href="addMonth.php?archive=false"> <br> Manage months</a>');
-                    } else {
-                        $days = $month->get_dates();
-                        $year = date("Y", time());
-
-                        // if notes were edited, processes notes
-                        if (array_key_exists('_submit_check_edit_notes', $_POST) && $_SESSION['access_level'] >= 2) {
+                        die();
+                    } // if month not present, create one
+                    $days = $month->get_dates();
+                    $year = date("Y", time());
+                    // if notes were edited, processes notes
+                    if (array_key_exists('_submit_check_edit_notes', $_POST) && $_SESSION['access_level'] >= 2) {
                             process_edit_notes($month, $group, $_POST, $year);
                             $month = get_dbMonths($monthid);
-                        }
-
-                        // shows the previous month / next month navigation
-                        $month_nav = do_month_nav($month, $edit, $group);
-                        echo $month_nav;
-
-                        // prevents archived months from being edited by anyone
-                        if ($month->get_status() == "archived")
-                            $edit = false;
-
-                        echo '<form method="POST">';
-                        show_month($days, $month, $edit, $year, $group);
-                        if ($edit == true && !($days[6]->get_year() < $year || ($days[6]->get_year() == $year) ) && $_SESSION['access_level'] >= 2)
-                            echo "<p align=\"center\"><input type=\"submit\" value=\"Save changes to all notes\" name=\"submit\">";
-                        echo '</form>';
                     }
+
+                    // shows the previous month / next month navigation
+                    $month_nav = do_month_nav($month, $edit, $group);
+                    echo $month_nav;
+
+                    // prevents archived months from being edited by anyone
+                    if ($month->get_status() == "archived")
+                        $edit = false;
+
+                    echo '<form method="POST">';
+                    show_month($days, $month, $edit, $year, $group);
+                    if ($edit == true && !($days[6]->get_year() < $year || ($days[6]->get_year() == $year) ) && $_SESSION['access_level'] >= 2)
+                        echo "<p align=\"center\"><input type=\"submit\" value=\"Save changes to all notes\" name=\"submit\">";
+                    echo '</form>';
                 }
 
                 echo " </div>";

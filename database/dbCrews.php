@@ -60,18 +60,18 @@ function insert_dbCrews($s) {
     $query = 'SELECT * FROM dbCrews WHERE id ="' . $s->get_id() . '"';
     $result = mysql_query($query);
     if (mysql_num_rows($result) != 0) {
-        delete_dbCrews($s);
+        delete_dbCrews($s->get_id());
         connect();
     }
     $query = "INSERT INTO dbCrews VALUES (\"" . $s->get_id() . "\",\"" .
             $s->get_date() . "\",\"" . $s->get_group() . "\"," .
             $s->get_slots() . ",\"" . implode(",", $s->get_persons()) . "\",\"" . 
             $s->get_sub_call_list() . "\",\"" . $s->get_notes() . "\")";
-            $result = mysql_query($query);
+    $result = mysql_query($query);
     if (!$result) {
         echo "unable to insert into dbCrews " . $s->get_id() . mysql_error();
         mysql_close();
-        return false;
+        die();
     }
     mysql_close();
     return true;

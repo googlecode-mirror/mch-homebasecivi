@@ -39,9 +39,6 @@ function do_month_nav($month, $edit, $group) {
     
     // determines if there is a next month
     $next_month = retrieve_dbMonths($next_id);
-    if (!$next_month instanceof Month) {
-        newMonth($next_id);
-    }
 
     $s = $s . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="calendar.php?month=' . substr($next_id, 0, 5) . '&group=' . $group;
     if ($edit)
