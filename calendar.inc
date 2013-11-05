@@ -65,7 +65,9 @@ function show_month($days, $month, $edit, $year, $group) {
     $crews = array();
 
     foreach($crew_ids as $crew){
-        array_push($crews, select_dbCrews($crew));
+    	if (select_dbCrews($crew)!=null)
+        	array_push($crews, select_dbCrews($crew));
+        else array_push($crews, new Crew(substr($crew,0,6),substr($crew,9),0,array(),"",""));
     }
 
     $startday = date("w", mktime(0, 0, 0, $month->get_month_number(), 1, $year));
