@@ -58,7 +58,8 @@ class Month {
     }
 
     function get_month_number(){
-        return intval(explode("-", $this->id)[1]);
+    	$eti = explode("-", $this->id);
+        return intval($eti[1]);
 
     }
 
@@ -94,17 +95,19 @@ class Month {
     }
 
     function get_name(){
-        $year = 2000 + intval(explode("-", $this->id)[0]);
-        $month = intval(explode("-", $this->id)[1]);
+    	$eti = explode("-", $this->id);
+        $year = 2000 + intval($eti[0]);
+        $month = intval($eti[1]);
         return date("F", mktime(0, 0, 0, $month, 1, "20".$year));
     }
 
     function get_dates() {
-        $year = 2000 + intval(explode("-", $this->id)[0]);
-        $month = intval(explode("-", $this->id)[1]);
+    	$eti = explode("-", $this->id);
+        $year = 2000 + intval($eti[0]);
+        $month = intval($eti[1]);
 
         $num = cal_days_in_month(CAL_GREGORIAN, $month, $year);
-        $dates = [];
+        $dates = array();
         for ($i = 1; $i <= $num; $i++){
             array_push($dates, $i);
         }

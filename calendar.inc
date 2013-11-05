@@ -65,7 +65,7 @@ function show_month($days, $month, $edit, $year, $group) {
 
     $crew_ids = $month->get_crews();
 
-    $crews = [];
+    $crews = array();
 
     foreach($crew_ids as $crew){
         array_push($crews, select_dbCrews($crew));
@@ -76,7 +76,7 @@ function show_month($days, $month, $edit, $year, $group) {
     echo ('<table id="calendar" align="center" ><tr class="weekname"><td colspan="16" ' .
     'align="center" >' . 'Calendar: ' . $month->get_name() . '</td></tr>');
 
-    $daynames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    $daynames = array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
 
     foreach($daynames as $name)
         echo ('<td class="dow">&nbsp; ' . $name . '</td>');
@@ -104,8 +104,10 @@ function show_month($days, $month, $edit, $year, $group) {
 
 function get_crewinfo($crews, $day){
     foreach($crews as $crew){
-        if($crew && explode("-", $crew->get_date())[2] == $day){
-            $person_ids = explode(",", $crew->get_persons()[0]);
+    	$cgde = explode("-", $crew->get_date());
+        if($crew && $cgde[2] == $day){
+        	$cgp = $crew->get_persons();
+            $person_ids = explode(",", $cgp[0]);
 
             $info = "";
 
