@@ -1,22 +1,25 @@
 <p>
-    <strong>Calendar Month Management</strong><br />
-    Here you can add new months to the calendar and you can edit months that are already there. <br>Click the "Add new month" button for adding a new month, or select an option at the right of an existing month.</p>
+    <strong><?php echo $groups[$group]?> Calendar Month Management</strong><br />
+    Here you can add new months to the calendar, publish or unpublish future months, 
+    or remove and re-add a month that is already there. This last optiion is handy 
+    when you want to repopulate a future month after having added or removed people 
+    from the master schedule.</p>
 <span class="nextMonthTable">
     <form method="POST">
         <p><table border="1">
-            <tr><td>Months</td><td>Monthday Group</td><td>Monthend Group</td><td>Status (options)</td></tr>
+            <tr><td>Month</td><td>Status (options)</td></tr>
             <?php
-            $result = get_all_dbMonths();
             for ($i = 0; $i < sizeof($result); ++$i) {
+                echo "we are here";
                 $month = $result[$i];
                 if ($i == sizeof($result)-1 || $i == 0)
                     $remove = true;
                 else
                     $remove = false;
+                    echo $month->get_name() . " ". $month->get_id(); 
                 if(($month->get_status()=="archived" && $_GET['archive']=="true") || $month->get_status()=="published" || 
-                    ($month->get_status()=="unpublished" && $_SESSION['access_level']>=2))
-                echo ("<tr><td>" . $month->get_name() . "</td><td>" . $month->get_monthday_group() . "</td>" .
-                "<td>" . $month->get_monthend_group() . "</td>" .
+                    ($month->get_status()=="unpublished" && $_SESSION['access_level']>=2))     
+                    echo ("<tr><td>" . $month->get_name() . " ". $month->get_id()."</td>" .
                 "<td>" . show_month_options($month, $remove) . "</td></tr>");
             }
             // finds the parameters for "generate next month" button
@@ -106,12 +109,11 @@
 
             // determines what options apply to each month
             function show_month_options($month, $remove) {
-                $id = $month->get_id();
+            	$id = $month->get_id();
                 $status = $month->get_status();
-                $end = $month->get_end();
+                $end = $month->get_end_of_month_timestamp();
                 $options = "";
                 $rightnow = time();
-                $onemonth = 60 * 60 * 24 * 7;
                 if ($status == "archived") {
                     $options = "archived (<a href=\"calendar.php?id=" . $id . "&venue=house\">view</a>)";
                 }

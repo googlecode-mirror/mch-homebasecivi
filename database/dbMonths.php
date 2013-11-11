@@ -72,7 +72,7 @@ function insert_dbMonths($month) {
 
 /*
  * @return a single row from dbMonths table matching a particular id.
- * if not in table, return false
+ * if not in table, make a new month on the fly aand return it
  */
 
 function retrieve_dbMonths($id) {
@@ -82,7 +82,7 @@ function retrieve_dbMonths($id) {
     // can't find month with id
     if (mysql_num_rows($result) != 1) {
         mysql_close();
-        return false;
+        return newMonth($id);
     }
     $result_row = mysql_fetch_assoc($result);
     $theMonth = new Month($result_row['id'], $result_row['status']);
@@ -90,22 +90,20 @@ function retrieve_dbMonths($id) {
 }
 
 /*
- * @return all rows from dbMonths table ordered by last day of month
+ * @return all rows from dbMonths table for the given group, ordered by date
  * if none there, return false
  */
 
-function getall_months() {
+function getall_dbMonths($group) {
     connect();
-    $query = "SELECT * FROM dbMonthsORDER BY end_of_month_timestamp";
+    $query = "SELECT * FROM dbMonths WHERE `group` = ".$group." ORDER BY end_of_month_timestamp";
     $result = mysql_query($query);
     $theMonths = array();
-
-    while ($result_row = mysql_fetch_assoc($result)) {
-        $theMonth = new Month($result_row['id'], $result_row['group'], $result_row['status']);
-        $theMonth->set_end_of_month_timestamp($result_row['end_of_month_timestamp']);
+    for ($i=0; $i<sizeof($result); $i++) {
+    	$result_row = mysql_fetch_array($result, MYSQL_ASSOC);
+    	$theMonth = new Month($result_row['id'], $result_row['status']);
         $theMonths[] = $theMonth;
     }
-
     return $theMonths;
 }
 
@@ -153,7 +151,7 @@ function newMonth ($id) {
 
 	// We switched new months to default to published, because otherwise they won't be available for viewing.
     // We're unsure if this was the right move to make.
-    $new_month = new Month($id, "published");
+    $new_month = new Month($id, "unpublished");
 	$new_crews = $new_month->get_crews();
 
 	$dom = 1;			// day of the month, 1, 2, ..., 31
@@ -192,7 +190,7 @@ function newMonth ($id) {
 	update_dbMonths($new_month);
 	foreach ($newbies as $newbie)
 		update_dbCrews($newbie);
-	return true;
+	return $new_month;
 }
 
 ?>

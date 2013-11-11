@@ -78,9 +78,9 @@
         if ($_SESSION['access_level'] == 0)
             echo(' | <a href="' . $path . 'personEdit.php?id=' . 'new' . '"><b>apply</b></a>');
         if ($_SESSION['access_level'] >= 1) {
-            echo(' | <strong>calendars:</strong> <a href="' . $path . 'calendar.php?group=foodbank&month='.$month.'">food bank, </a>');
-            echo('<a href="' . $path . 'calendar.php?group=foodpantry&month='.$month.'">food pantry, </a>');
-            echo('<a href="' . $path . 'calendar.php?group=soupkitchen&month='.$month.'">soup kitchen  </a>');
+            echo(' | <strong>calendars:</strong> <a href="' . $path . 'calendar.php?month='.$month.'&group=foodbank&edit=false">food bank, </a>');
+            echo('<a href="' . $path . 'calendar.php?group=foodpantry&edit=false&month='.$month.'">food pantry, </a>');
+            echo('<a href="' . $path . 'calendar.php?group=soupkitchen&edit=false&month='.$month.'">soup kitchen  </a>');
         }
         if ($_SESSION['access_level'] >= 2) {
             echo('<br><strong>master schedules : </strong><a href="' . $path . 'viewSchedule.php?group=foodbank">food bank, </a>

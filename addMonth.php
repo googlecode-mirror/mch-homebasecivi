@@ -29,8 +29,10 @@ session_cache_expire(30);
                 
                 // Check to see if there are already months in the db
                 // connects to the database to see if there are any months in the dbMonths table
-                $result = get_all_dbMonths();
-                // If no months for either the house or the family room, show first month form
+                $group = $_GET['group'];
+                $groups = array("foodbank"=>"Food Bank", "foodpantry"=>"Food Pantry","soupkitchen"=>"Soup Kitchen");
+                $result = getall_dbMonths($group);
+            // If no months for either the house or the family room, show first month form
                 if (sizeof($result) == 0)
                     $firstmonth = true;
                 else
@@ -49,7 +51,7 @@ session_cache_expire(30);
                             $month->get_status() . ' the month of <a href=\"calendar.php?id=' . $month->get_id() . '&edit=true\">' . $month->get_name() . '</a>.');
                     echo "<p>Month \"" . $month->get_name() . "\" " .
                     $month->get_status() . ".<br>";
-					include('addMonth_newmonth.inc');
+					include('addMonth.inc');
                 }
                 // removes a month if user is a manager
                 else if ($_GET['remove'] && $_SESSION['access_level'] >= 2) {
@@ -63,14 +65,14 @@ session_cache_expire(30);
                       }
                       else
                         echo "<p>Month \"" . $month->get_name() . "\" is published, so it cannot be removed.<br>";
-					  include('addMonth_newmonth.inc');
+					  include('addMonth.inc');
                     }
                 }
                 else if (!array_key_exists('_submit_check_newmonth', $_POST)) {
-                    include('addMonth_newmonth.inc');
+                    include('addMonth.inc');
                 } else {
                     process_form($firstmonth);
-                    include('addMonth_newmonth.inc');
+                    include('addMonth.inc');
                 }
                 
                 // must be a manager

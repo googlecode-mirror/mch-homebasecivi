@@ -19,30 +19,26 @@ function do_month_nav($month, $edit, $group) {
     $next_id = date("y-m", mktime(0, 0, 0, substr($cur_id, 3, 2)+1, 1, substr($cur_id, 0, 2)))."-".$group;
     $s = "<p><table id=\"weeknav\" align=\"center\"><tr><td align=\"left\" >";
 
-    // determines if there is a previous month
-    $prev_month = retrieve_dbMonths($prev_id);
-    
-    $s = $s . '<a href="calendar.php?month=' . substr($prev_id, 0, 5) . '&group=' . $group;
+    $s = $s . '<a href="calendar.php?month=' . substr($prev_id, 0, 5) . '&group=' . $group ;
     if ($edit)
         $s = $s . "&edit=true";
+    else $s = $s . "&edit=false";
     $s = $s . "\" id=\"weeknavlink\"><< Previous Month</a>";
     
     if ($_SESSION['access_level'] >= 1)
         if ($edit != true)
-            $s = $s . '<td align="left"> <a href="calendar.php?id=' . substr($cur_id, 0, 5) . '&group=' . $group . '&edit=true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(edit this month)</a></td>';
+            $s = $s . '<td align="left"> <a href="calendar.php?month=' . substr($cur_id, 0, 5) . '&group=' . $group . '&edit=true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(edit this month)</a></td>';
         else
-            $s = $s . '<td align="left"> <a href="calendar.php?id=' . substr($cur_id, 0, 5) . '&group=' . $group . '&edit=false">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(view this month)</a></td>';
+            $s = $s . '<td align="left"> <a href="calendar.php?month=' . substr($cur_id, 0, 5) . '&group=' . $group . '&edit=false">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(view this month)</a></td>';
     
     if ($_SESSION['access_level'] >= 2)
-        $s = $s . '<td align="right"> <a href="addMonth.php?archive=false">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(manage months)</a></td>';
+        $s = $s . '<td align="right"> <a href="addMonth.php?archive=false&group='.$group.'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(manage months)</a></td>';
     $s = $s . "</td><td align=\"right\">";
     
-    // determines if there is a next month
-    $next_month = retrieve_dbMonths($next_id);
-
     $s = $s . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="calendar.php?month=' . substr($next_id, 0, 5) . '&group=' . $group;
     if ($edit)
         $s = $s . "&edit=true";
+    else $s = $s . "&edit=false";
     $s = $s . "\" id=\"weeknavlink\">Next Month>></a>";
 
     $s = $s . "</td></tr></table></p><br><br>";
