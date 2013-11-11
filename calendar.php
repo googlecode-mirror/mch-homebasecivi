@@ -23,36 +23,28 @@ session_cache_expire(30);
         <?PHP include('header.php'); ?>
         <div id="content">
             <?PHP
-
-                if ($_SESSION['type'] == "staff" || $_SESSION['type'] == "volunteer") {
-                    include_once('database/dbMonths.php');
+            		include_once('database/dbMonths.php');
                     include_once('database/dbCrews.php');
                     include_once('database/dbPersons.php');
-                    include_once('database/dbLog.php');
-                    include_once 'calendar.inc';
-
-                    // checks to see if in edit mode
+                    include_once('database/dbLog.php');                    
+                    
+				// checks to see if in edit mode
                     $edit = $_GET['edit'];
                     if ($edit != "true")
                         $edit = false;
                     else
                         $edit = true;
-
                     // gets the week to show, if no week then defaults to current week
                     $group = $_GET['group'];
-                    $monthid = $_GET['month'];
-
-                    if (!$monthid)
-                        $monthid = date("y-m", time())."-".$group;
-                    else
-                        $monthid = $monthid."-".$group;
-                    $month = retrieve_dbMonths($monthid); // get the month
-                    if (!$month)
-                    	$month = newMonth($monthid);
+                    $monthid = $_GET['month']."-".$group;
+            		$month = retrieve_dbMonths($monthid); // get or create the month, as needed
+            		include_once 'calendar.inc';
+                    
+                if ($_SESSION['type'] == "staff" || $_SESSION['type'] == "volunteer") {
                     if ($month->get_status() == "unpublished" && $_SESSION['access_level'] < 2) {
                         echo 'This month\'s calendar is not available for viewing. ';
                         die();
-                    } // if month not present, create one
+                    } 
                     $days = $month->get_dates();
                     $year = date("Y", time());
                     // if notes were edited, processes notes

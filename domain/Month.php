@@ -98,7 +98,12 @@ class Month {
     	$eti = explode("-", $this->id);
         $year = 2000 + intval($eti[0]);
         $month = intval($eti[1]);
-        return date("F", mktime(0, 0, 0, $month, 1, "20".$year));
+        return date("F", mktime(0, 0, 0, $month, 1, $year));
+    }
+    
+	function get_year(){
+    	$eti = explode("-", $this->id);
+        return 2000 + intval($eti[0]);
     }
 
     function get_dates() {
