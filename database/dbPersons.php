@@ -209,11 +209,13 @@ function getonlythose_dbPersons($type, $status, $name, $day, $week) {
     if ($type=="manager")
         {$string1 = " = '"; $string2 = "'";}
     else {$string1 = " LIKE '%"; $string2 = "%'";}
+    if ($day=="" || $week == "") $avail = "";
+    	else $avail = $day . ":" . $week;
     $query = "SELECT * FROM dbPersons WHERE type ".$string1. $type . $string2 .
             " AND status LIKE '%" . $status . "%'" .
             " AND (first_name LIKE '%" . $name . "%' OR last_name LIKE'%" . $name . "%')" .
-            " AND availability LIKE '%" . $day . ":" . $week .
-            "%' ORDER BY last_name,first_name";
+            " AND availability LIKE '%" . $avail . "%'" .
+            " ORDER BY last_name,first_name";
     $result = mysql_query($query);
     $thePersons = array();
     while ($result_row = mysql_fetch_assoc($result)) {
