@@ -53,13 +53,14 @@ session_cache_expire(30);
                             $month = get_dbMonths($monthid);
                     }
 
+                    // prevents archived months from being edited by anyone
+                    $today = mktime();
+                    if ($month->get_status() == "archived" || $month->get_end_of_month_timestamp()>$today)
+                        $edit = false;
+
                     // shows the previous month / next month navigation
                     $month_nav = do_month_nav($month, $edit, $group);
                     echo $month_nav;
-
-                    // prevents archived months from being edited by anyone
-                    if ($month->get_status() == "archived")
-                        $edit = false;
 
                     echo '<form method="POST">';
                     show_month($days, $month, $edit, $year, $group);

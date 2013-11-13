@@ -190,7 +190,23 @@ function getall_type($t) {
 }
 
 /*
- *   get all active volunteers and subs of $type who are available for the given $frequency,$week,$day,and $week
+ * @return all active people in group $group of type $t or subs from dbPersons table ordered by last name
+ */
+
+function getall_typegroup($t, $group) {
+    connect();
+    $query = "SELECT * FROM dbPersons WHERE (type LIKE '%" . $t . "%' OR type LIKE '%sub%') AND group LIKE '%" . $group . "%' AND status = 'active'  ORDER BY last_name,first_name";
+    $result = mysql_query($query);
+    if ($result == null || mysql_num_rows($result) == 0) {
+        mysql_close();
+        return false;
+    }
+    mysql_close;
+    return $result;
+}
+
+/*
+ *   get all active volunteers and subs of $type who are available for the given $day and $week
  */
 
 function getall_available($type, $day, $week) {
@@ -198,6 +214,19 @@ function getall_available($type, $day, $week) {
     $query = "SELECT * FROM dbPersons WHERE (type LIKE '%" . $type . "%' OR type LIKE '%sub%')" .
             " AND availability LIKE '%" . $day .":". $week .
             "%' AND status = 'active' ORDER BY last_name,first_name";
+    $result = mysql_query($query);
+    mysql_close();
+    return $result;
+}
+/*
+ *   get all active volunteers and subs of $type who are available for the given $day and $group
+ */
+
+function getall_availablegroup($type, $day, $group) {
+    connect();
+    $query = "SELECT * FROM dbPersons WHERE (type LIKE '%" . $type . "%' OR type LIKE '%sub%')" .
+            " AND availability LIKE '%" . $day ."%'  AND group LIKE '%" . $group . 
+            "%'AND status = 'active' ORDER BY last_name,first_name";
     $result = mysql_query($query);
     mysql_close();
     return $result;
