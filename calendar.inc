@@ -69,7 +69,7 @@ function show_month($days, $month, $edit, $year, $group) {
     $startday = date("w", mktime(0, 0, 0, $month->get_month_number(), 1, $year));
 
     echo ('<table id="calendar" align="center" ><tr class="weekname"><td colspan="16" ' .
-    'align="center" >' . 'Calendar: ' . $month->get_name() . '</td></tr>');
+    'align="center" >' . ucfirst($group) . ' Calendar: ' . $month->get_name() . " " . $month->get_year() . '</td></tr>');
 
     $daynames = array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
 
@@ -89,7 +89,7 @@ function show_month($days, $month, $edit, $year, $group) {
         if(($i+$startday)%7==0){
             echo("<tr>");
         }
-        echo("<td class='cell'><p class='date'>".$days[$i]."</p>".get_crewinfo($crews, $days[$i])."</td>");
+        echo("<td class='cell'><p class='date'>".$days[$i]."</p><br/>".get_crewinfo($crews, $days[$i])."</td>");
         if(($i+$startday)%7==7){
             echo("</tr>");
         }
@@ -104,23 +104,19 @@ function get_crewinfo($crews, $day){
         	$cgp = $crew->get_persons();
             $person_ids = explode(",", $cgp[0]);
 
-            $info = "";
+            $info = "<a class='celllink' href='/editCrew.php?id=".$crew->get_id()."'>";
 
             foreach($person_ids as $person_id){
                 $id_exploded = explode("+", $person_id);
-                $base_url = strrev(substr(strrev($_SERVER['SCRIPT_NAME']), strpos(strrev($_SERVER['SCRIPT_NAME']), '/')));
-                $url = $base_url."personEdit.php?id=".$id_exploded[0];
 
                 $display_name = $id_exploded[1]. " " . $id_exploded[2];
 
-                $info = $info . "<a href=".$url.">";
-
-                $info = $info . $display_name;
-
-                $info = $info . "</a><br/>";
+                $info = $info . "<p class='name'>" . $display_name . "</p><br/>";
             }
 
-            return $info;
+            $info = $info . "<p class='vacancies'>Vacancies: " . $crew->num_vacancies() . "</p></br>";
+
+            return $info."</a>";
         }
     }
 }

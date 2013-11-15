@@ -37,6 +37,7 @@ session_cache_expire(30);
                     // gets the week to show, if no week then defaults to current week
                     $group = $_GET['group'];
                     $monthid = $_GET['month']."-".$group;
+                    $year = "20" . explode("-", $_GET['month'])[0];
             		$month = retrieve_dbMonths($monthid); // get or create the month, as needed
             		include_once 'calendar.inc';
                     
@@ -46,7 +47,6 @@ session_cache_expire(30);
                         die();
                     } 
                     $days = $month->get_dates();
-                    $year = date("Y", time());
                     // if notes were edited, processes notes
                     if (array_key_exists('_submit_check_edit_notes', $_POST) && $_SESSION['access_level'] >= 2) {
                             process_edit_notes($month, $group, $_POST, $year);

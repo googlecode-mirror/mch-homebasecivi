@@ -49,7 +49,7 @@
 		<tr><td><form method=\"POST\" style=\"margin-bottom:0;\">
 			<select name=\"scheduled_vol\">
 			<option value=\"0\" style=\"width: 371px;\">Select a volunteer available for this day </option>"
-			.get_available_volunteer_options($crew->get_day(),$crew->get_persons(),$group).
+			.get_available_volunteer_options($crew->get_date(),$crew->get_persons(),$group).
 			"</select><br>
 			<br>or<br><br>
 			<select name=\"all_vol\">
@@ -90,7 +90,7 @@
 		else {
 			$persons[]=$vol;
 			$crew->assign_persons($persons);
-			$crew->reemove_slot();
+			$crew->remove_slot();
 			update_dbCrews($crew);
 			$name=explode("+",$vol);
 			add_log_entry('<a href=\"personEdit.php?id='.$_SESSION['_id'].'\">'.$_SESSION['f_name'].' '.
@@ -116,7 +116,6 @@
 				if(count($p2)==0)
 					$p2=array();
 				$crew->assign_persons($p2);
-				$crew->add_vacancy();
 				if($name)
 					$name=explode("+",$name);
 				update_dbCrews($crew);
@@ -141,7 +140,7 @@
 	}
 	function process_clear_crew($post,$crew,$group) {
 		if(array_key_exists('_submit_clear_crew',$post)) {
-			$crew = new Crew($crew->get_date(),get_group(),$crew->get_slots(), null, "", "");
+			$crew = new Crew($crew->get_date(),$crew->get_group(),$crew->get_slots(), null, "", "");
 			update_dbCrews($crew);
 			add_log_entry('<a href=\"personEdit.php?id='.$_SESSION['_id'].'\">'.$_SESSION['f_name'].' '.
 			    $_SESSION['l_name'].'</a> cleared the crew: <a href=\"editCrew.php?crew='.$crew->get_id().'\">'.
@@ -209,6 +208,7 @@
 		}
 		return $s;
 	}
+
 	function get_crew_name_from_id($crewid) {
 		$yy_mm_dd = explode("-",$crewid);
 		$groups = array("foodbank"=>"Food Bank", "foodpantry"=>"Food Pantry", "soupkitchen"=>"Soup Kitchen");

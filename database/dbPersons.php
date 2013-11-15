@@ -22,7 +22,7 @@ function create_dbPersons() {
     $result = mysql_query("CREATE TABLE dbPersons(id TEXT NOT NULL, first_name TEXT NOT NULL, last_name TEXT, " .
             "    address TEXT, city TEXT, state VARCHAR(2), zip TEXT, phone1 VARCHAR(12) NOT NULL, phone2 VARCHAR(12), " .
             "    email TEXT, ".
-            "    type TEXT, group TEXT, role TEXT, status TEXT, " .
+            "    type TEXT, `group` TEXT, role TEXT, status TEXT, " .
             "    availability TEXT, schedule TEXT, " .
             "    birthday TEXT, start_date TEXT, notes TEXT, password TEXT)");
     if (!$result)
@@ -195,7 +195,7 @@ function getall_type($t) {
 
 function getall_typegroup($t, $group) {
     connect();
-    $query = "SELECT * FROM dbPersons WHERE (type LIKE '%" . $t . "%' OR type LIKE '%sub%') AND group LIKE '%" . $group . "%' AND status = 'active'  ORDER BY last_name,first_name";
+    $query = "SELECT * FROM dbPersons WHERE (type LIKE '%" . $t . "%' OR type LIKE '%sub%') AND `group` LIKE '%" . $group . "%' AND status = 'active'  ORDER BY last_name,first_name";
     $result = mysql_query($query);
     if ($result == null || mysql_num_rows($result) == 0) {
         mysql_close();
@@ -225,7 +225,7 @@ function getall_available($type, $day, $week) {
 function getall_availablegroup($type, $day, $group) {
     connect();
     $query = "SELECT * FROM dbPersons WHERE (type LIKE '%" . $type . "%' OR type LIKE '%sub%')" .
-            " AND availability LIKE '%" . $day ."%'  AND group LIKE '%" . $group . 
+            " AND availability LIKE '%" . $day ."%'  AND `group` LIKE '%" . $group . 
             "%'AND status = 'active' ORDER BY last_name,first_name";
     $result = mysql_query($query);
     mysql_close();
