@@ -102,19 +102,19 @@ function get_crewinfo($crews, $day){
     	$cgde = explode("-", $crew->get_date());
         if($crew && $cgde[2] == $day){
         	$cgp = $crew->get_persons();
-            $person_ids = explode(",", $cgp[0]);
+        	 //$person_ids = explode(",", $cgp);
 
-            $info = "<a class='celllink' href='/editCrew.php?id=".$crew->get_id()."'>";
+            $info = "<a class='celllink' href='editCrew.php?id=".$crew->get_id()."'><br>&nbsp;&nbsp;";
 
-            foreach($person_ids as $person_id){
+            foreach($cgp as $person_id){
                 $id_exploded = explode("+", $person_id);
-
                 $display_name = $id_exploded[1]. " " . $id_exploded[2];
-
-                $info = $info . "<p class='name'>" . $display_name . "</p><br/>";
+				if ($id_exploded[3]!="()")
+					$display_name .= " ".$id_exploded[3];
+                $info = $info . $display_name . "<br>&nbsp;&nbsp;";
             }
 
-            $info = $info . "<p class='vacancies'>Vacancies: " . $crew->num_vacancies() . "</p></br>";
+            $info = $info . "<strong>Vacancies (" . $crew->num_vacancies() . ")</strong><br>";
 
             return $info."</a>";
         }

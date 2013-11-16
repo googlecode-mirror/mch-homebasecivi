@@ -45,7 +45,7 @@ class Person {
     private $email; // email address as a string
     private $type; // "volunteer" or "staff"
     private $group; // array of "soupkitchen", "foodpantry", "foodbank", "other"
-    private $role; // array of roles e.g., [“C”,”D”,”B”,”T”]
+    private $role; // array of roles e.g., [c;d;p]
     private $status; // "active", "on-leave", or "former"
     private $availability; // array of day:week-of-month pairs; e.g. [“Mon:1”, “Thu:4”]
     private $schedule; // array of dates actually worked e.g., [“09-19-13”,”09-16-13”]
@@ -87,7 +87,7 @@ class Person {
         else
             $this->group = explode(',', $g);
         if ($r !== "")
-            $this->role = explode(',', $r);
+            $this->role = explode(';', $r);
         else
             $this->role = array();
         $this->status = $st;

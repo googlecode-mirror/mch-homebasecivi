@@ -15,8 +15,10 @@
 			array_shift($persons);
 		for($i=0;$i<count($persons);++$i) {
 			$p=explode("+",$persons[$i]);
-			$s=$s."<tr><td width=\"150\" valign=\"top\"><br>&nbsp;".$p[1]." ".$p[2]."</td><td>
-				<form method=\"POST\" style=\"margin-bottom:0;\">
+			$s=$s."<tr><td width=\"150\" valign=\"top\"><br>&nbsp;".$p[1]." ".$p[2];
+			if ($p[3]!="()")
+				$s .= " ".$p[3];
+			$s = $s."</td><td><form method=\"POST\" style=\"margin-bottom:0;\">
 				<input type=\"hidden\" name=\"_submit_filled_slot_".$i."\" value=\"1\"><br>
 				<input type=\"submit\" value=\"Remove Person\" name=\"submit\" style=\"width: 125px\">
 			</form></td></tr>";
@@ -63,7 +65,6 @@
 		echo "<table align=\"center\"><tr><td align=\"center\" width=\"400\">
 		&nbsp;<a href=\"editCrew.php?id=".$crewid."\">Back to Crew</a><br></td></tr></table>";
 		return true;
-
 		// check that person is not already working that crew
 		// check that person is available
 	}
@@ -78,9 +79,10 @@
 			$error="<table align=\"center\"><tr><td width=\"400\">
 				You have selected a volunteer from both menus.  Please choose only one.</td></tr></table><br>";
 		else {
-			$vol=$post['scheduled_vol'];
-			if($vol=="0")
-				$vol=$post['all_vol'];
+			$v=$post['scheduled_vol'];
+			if ($v=="0")
+				$v=$post['all_vol'];  // one or the other must have been selected, so assign it to $p
+			$p = retrieve_person($v);
 			$persons=$crew->get_persons();
 		}
 		if($error) {
@@ -88,9 +90,9 @@
 			return true;
 		}
 		else {
-			$persons[]=$vol;
+			$persons[]=$p->get_id() . "+" . $p->get_first_name() . "+" . 
+									$p->get_last_name() . "+(" . implode(';',$p->get_role()) . ")";
 			$crew->assign_persons($persons);
-			$crew->remove_slot();
 			update_dbCrews($crew);
 			$name=explode("+",$vol);
 			add_log_entry('<a href=\"personEdit.php?id='.$_SESSION['_id'].'\">'.$_SESSION['f_name'].' '.
@@ -122,10 +124,9 @@
 				add_log_entry('<a href=\"personEdit.php?id='.$_SESSION['_id'].'\">'.$_SESSION['f_name'].' '.
 				    $_SESSION['l_name'].'</a> removed <a href=\"personEdit.php?id='.$name[0].'\">'.$name[1].' '.$name[2].'</a> from the crew: <a href=\"editCrew.php?crew='.
 				    $crew->get_id().'\">'.get_crew_name_from_id($crew->get_id()).'</a>.');
-				return true;
+				return false;
 			}
 		}
-		return false;
 	}
 	function process_add_slot($post,$crew,$group) {
 		if(array_key_exists('_submit_add_slot',$post)) {
@@ -168,8 +169,8 @@
 		$s="";
 		for($i=0;$i<mysql_num_rows($result);++$i) {
 			$row=mysql_fetch_row($result);
-			$value=$row[0]."+".$row[1]."+".$row[2];
-			$label=$row[2].", ".$row[1];
+			$value=$row[0]; //."+".$row[1]."+".$row[2];
+			$label=$row[2].", ".$row[1] ." ".$row[12];
 			$match=false;
 			for($j=0;$j<count($persons);++$j) {
 				if($value==$persons[$j]) {
@@ -192,8 +193,8 @@
 		for($i=0;$i<mysql_num_rows($result);$i++) {
 		  $row=mysql_fetch_row($result);
 		//  if (!strpos($row[15],"manager")) {
-			$value=$row[0]."+".$row[1]."+".$row[2];
-			$label=$row[2].", ".$row[1];
+			$value=$row[0]; //."+".$row[1]."+".$row[2];
+			$label=$row[2].", ".$row[1] ." ".$row[12];
 			$match=false;
 			for($j=0;$j<count($persons);++$j) {
 				if($value==$persons[$j]) {
