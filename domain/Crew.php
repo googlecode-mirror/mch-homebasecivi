@@ -64,9 +64,9 @@ class Crew {
     }
 
     function num_vacancies() {
-        if (sizeof($this->persons)>0 && !$this->persons[0])
+        if (!$this->persons[0])
             array_shift($this->persons);
-        return $this->slots - count($this->persons);
+        return $this->slots - sizeof($this->persons);
     }
 
     function has_sub_call_list() {

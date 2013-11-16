@@ -54,7 +54,7 @@ function add_person($person) {
                 $person->get_email() . '","' .
                 $person->get_type() . '","' .
                 implode(',', $person->get_group()) . '","' .
-                implode(',', $person->get_role()) . '","' .
+                implode(';', $person->get_role()) . '","' .
                 $person->get_status() . '","' .
                 implode(',', $person->get_availability()) . '","' .
                 implode(',', $person->get_schedule()) . '","' .

@@ -122,7 +122,7 @@ function select_dbCrews($id) {
         if ($result_row != null) {
         	$persons = array();
         	if ($result_row[4]!="")
-            	$persons = explode("*", $result_row[4]);
+            	$persons = explode(",", $result_row[4]);
         	$s = new Crew($result_row[1], $result_row[2], $result_row[3], $persons, null, $result_row[6]);
         }
     }

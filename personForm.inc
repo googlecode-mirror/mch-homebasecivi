@@ -140,7 +140,7 @@ foreach ($groups as $key => $value) {
     }
 }
 
-$roles = array('c' => 'Chef', 'd' => "Dishwasher", 't' => "Team Leader", 'b' => "Box person");
+$roles = array('C' => 'Chef', 'D' => "Dishwasher", 'T' => "Team Leader", 'B' => "Box person");
 echo('<p>Role(s):');
 echo('<span style="font-size:x-small;color:FF0000">*</span>');
 foreach ($roles as $key => $value) {

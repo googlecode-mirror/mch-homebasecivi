@@ -63,7 +63,7 @@ if ($id == 'new') {
                         else
                             $ima = implode(',', $_POST['availability']);
                         $person = new Person($_POST['first_name'], $_POST['last_name'], $_POST['address'], $_POST['city'], $_POST['state'], $_POST['zip'],
-                                        $_POST['phone1'], $_POST['phone2'], $_POST['email'], implode(',', $_POST['type']), implode(',', $_POST['group']), implode(',', $_POST['role']), 
+                                        $_POST['phone1'], $_POST['phone2'], $_POST['email'], implode(',', $_POST['type']), implode(',', $_POST['group']), implode(';', $_POST['role']), 
                                         $_POST['status'], $ima, $_POST['schedule'], $birthday, $start_date,
                                         $_POST['notes'], $_POST['old_pass']);
                         include('personForm.inc');
@@ -101,7 +101,7 @@ if ($id == 'new') {
 
                     $type = implode(',', $_POST['type']);
                     $group = implode(',', $_POST['group']);
-                    $role = implode(',', $_POST['role']);
+                    $role = implode(';', $_POST['role']);
                     
                     $status = $_POST['status'];
 
