@@ -37,7 +37,8 @@ session_cache_expire(30);
                     // gets the week to show, if no week then defaults to current week
                     $group = $_GET['group'];
                     $monthid = $_GET['month']."-".$group;
-                    $year = "20" . explode("-", $_GET['month'])[0];
+                    $explode_month = explode("-", $_GET['month']);
+                    $year = "20" . $explode_month[0];
             		$month = retrieve_dbMonths($monthid); // get or create the month, as needed
             		include_once 'calendar.inc';
                     
