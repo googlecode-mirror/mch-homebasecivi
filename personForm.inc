@@ -129,7 +129,7 @@ foreach ($types as $key => $value) {
         echo ('&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="type[]" value="' . $key . '">'. $value . '</input>');
 }
 
-$groups= array('soupkitchen' => 'Soup Kitchen', 'foodpantry' => "Food Pantry", 'foodkitchen' => "Food Kitchen", 'other' => "Other");
+$groups= array('soupkitchen' => 'Soup Kitchen', 'foodpantry' => "Food Pantry", 'foodbank' => "Food Bank", 'other' => "Other");
 echo('<p>Group(s):');
 echo('<span style="font-size:x-small;color:FF0000">*</span>');
 foreach ($groups as $key => $value) {

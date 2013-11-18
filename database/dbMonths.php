@@ -171,7 +171,7 @@ function newMonth ($id) {
 				$p = retrieve_person($person_id);
 				if ($p)
 					$crew_names[] = $person_id . "+" . $p->get_first_name() . "+" . 
-									$p->get_last_name() . "+(" . implode(';',$p->get_role()) . ")";
+									$p->get_last_name() . "+(" . implode(' ',$p->get_role()) . ")";
 				else $crew_names[] = $person_id . "+++";			
 			}
 			$newbie = new Crew(substr($id,0,5).$dd, substr($id,6),
