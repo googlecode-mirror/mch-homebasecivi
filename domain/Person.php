@@ -87,7 +87,7 @@ class Person {
         else
             $this->group = explode(',', $g);
         if ($r !== "")
-            $this->role = explode(';', $r);
+            $this->role = explode(' ', $r);
         else
             $this->role = array();
         $this->status = $st;

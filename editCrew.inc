@@ -20,25 +20,25 @@
 				$s .= " ".$p[3];
 			$s = $s."</td><td><form method=\"POST\" style=\"margin-bottom:0;\">
 				<input type=\"hidden\" name=\"_submit_filled_slot_".$i."\" value=\"1\"><br>
-				<input type=\"submit\" value=\"Remove Person\" name=\"submit\" style=\"width: 125px\">
-			</form></td></tr>";
+				<input type=\"submit\" value=\"Remove Person\" name=\"submit\">
+			</form></td><td></td><td></td></tr>";
 		}
-		return $s;
+		return $s."<br>";
 	}
 
 	function display_vacant_slots($vacancies) {
 		$s="";
 		for($i=0;$i<$vacancies;++$i) {
-			$s=$s."<tr><td width=\"150\" valign=\"top\"><br>&nbsp;<b>vacancy</b></td><td>
+			$s=$s."<tr><td width=\"150\" valign=\"top\">&nbsp;<b>vacancy</b></td><td>
 				<form method=\"POST\" style=\"margin-bottom:0;\">
-				<input type=\"hidden\" name=\"_submit_fill_vacancy\" value=\"1\"><br>
-				<input type=\"submit\" value=\"Assign Person\" name=\"submit\" style=\"width: 125px\"></form>";
+				<input type=\"hidden\" name=\"_submit_fill_vacancy\" value=\"1\">
+				<input type=\"submit\" value=\"Assign Person\" name=\"submit\"></form>";
 			if($_SESSION['access_level']>=2) {
- 				$s=$s."<form method=\"POST\" style=\"margin-bottom:0;\">
-				<input type=\"hidden\" name=\"_submit_ignore_vacancy\" value=\"1\">
-				<input type=\"submit\" value=\"Remove Vacancy\" name=\"submit\" style=\"width: 125px\"></form>";
+ 				$s=$s."</td><td><form method=\"POST\" style=\"margin-bottom:0;\">
+ 				<input type=\"hidden\" name=\"_submit_ignore_vacancy\" value=\"1\">
+				<input type=\"submit\" value=\"Remove Slot\" name=\"submit\"></form>";
 			}
-			$s=$s."</td></tr>";
+			$s=$s."</td><td></td></tr>";
 		}
 		return $s;
 	}
@@ -46,20 +46,20 @@
 		if(!array_key_exists('_submit_fill_vacancy',$post))
 			return false;
 		$crewid=$crew->get_id();
-		echo "<br><br><table align=\"center\"><tr><td align=\"center\" width=\"400\"><b>"
+		echo "<br><br><table align=\"center\" border=\"1px\"><tr><td align=\"center\" width=\"400\"><b>"
 			.get_crew_name_from_id($crewid)."</b></td></tr>
-		<tr><td><form method=\"POST\" style=\"margin-bottom:0;\">
+		<tr><td align=\"center\"><form method=\"POST\" style=\"margin-bottom:0;\">
 			<select name=\"scheduled_vol\">
-			<option value=\"0\" style=\"width: 371px;\">Select a volunteer available for this day </option>"
+			<option value=\"0\">Select a volunteer available for this day </option>"
 			.get_available_volunteer_options($crew->get_date(),$crew->get_persons(),$group).
 			"</select><br>
-			<br>or<br><br>
-			<select name=\"all_vol\">
-			<option value=\"0\" style=\"width: 371px;\">Select from all volunteers for this group</option>"
+		</td></tr><tr><td align=\"center\">	<strong>or</strong><br>
+		</td></tr><tr><td align=\"center\">	<select name=\"all_vol\">
+			<option value=\"0\">Select from all volunteers for this group</option>"
 			.get_all_volunteer_options($crew->get_persons(),$group).
 			"</select><br><br>
 			<input type=\"hidden\" name=\"_submit_add_volunteer\" value=\"1\">
-			<input type=\"submit\" value=\"Add Volunteer\" name=\"submit\" style=\"width: 400px\">
+			<input type=\"submit\" value=\"Add Volunteer\" name=\"submit\">
 			</form></td></tr>";
 		echo "</table>";
 		echo "<table align=\"center\"><tr><td align=\"center\" width=\"400\">
@@ -91,7 +91,7 @@
 		}
 		else {
 			$persons[]=$p->get_id() . "+" . $p->get_first_name() . "+" . 
-									$p->get_last_name() . "+(" . implode(';',$p->get_role()) . ")";
+									$p->get_last_name() . "+(" . implode(' ',$p->get_role()) . ")";
 			$crew->assign_persons($persons);
 			update_dbCrews($crew);
 			$name=explode("+",$vol);

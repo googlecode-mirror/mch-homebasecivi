@@ -101,7 +101,7 @@ if ($id == 'new') {
 
                     $type = implode(',', $_POST['type']);
                     $group = implode(',', $_POST['group']);
-                    $role = implode(';', $_POST['role']);
+                    $role = implode(' ', $_POST['role']);
                     
                     $status = $_POST['status'];
 
