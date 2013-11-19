@@ -10,135 +10,71 @@
             <tr><td>Month</td><td>Status (options)</td></tr>
             <?php
             for ($i = 0; $i < sizeof($result); ++$i) {
-                echo "we are here";
                 $month = $result[$i];
-                if ($i == sizeof($result)-1 || $i == 0)
+                if (($i == sizeof($result)-1) || $i == 0)
                     $remove = true;
                 else
                     $remove = false;
-                    echo $month->get_name() . " ". $month->get_id(); 
                 if(($month->get_status()=="archived" && $_GET['archive']=="true") || $month->get_status()=="published" || 
                     ($month->get_status()=="unpublished" && $_SESSION['access_level']>=2))     
-                    echo ("<tr><td>" . $month->get_name() . " ". $month->get_id()."</td>" .
+                    echo ("<tr><td>" . $month->get_name() . "</td>" .
                 "<td>" . show_month_options($month, $remove) . "</td></tr>");
             }
             // finds the parameters for "generate next month" button
             if ($_SESSION['access_level'] >= 2) {
                 if ($month){
                     $last = $month -> get_id();
-                    if ($month->get_monthday_group() == "odd")
-                        $next_monthday_group = "even";
-                    else
-                        $next_monthday_group = "odd";
-                    
-                    $monthend_group = $month -> get_monthend_group(); 
-                    if ($month->get_monthend_group() == "1st")
-                   		$monthend_group = "2nd";
-                    else if ($month->get_monthend_group() == "2nd")
-                    	$monthend_group = "3rd";
-                    else if ($month->get_monthend_group() == "3rd")
-                    	$monthend_group = "4th";
-                    else if ($month->get_monthend_group() == "4th" && substr($last, -5, 2) < 22)
-                    	$monthend_group = "5th";
-                    else $monthend_group = "1st"; 
+                    if (substr($month->get_id(),3,2)=="12")  {
+                        $next_month = "01";
+                        $next_year = $substr($month->get_id(),0,2) + 1;
+                    }
+                    else {
+                        $next_month = $substr($month->get_id(),3,2) + 1;
+                        $next_year = $substr($month->get_id(),0,2);
+                    }
+                    $next_id = date('y-m-d',mktime(0,0,0,$next_month,1,$next_year))."-".$group;
                 }
-                $new_month_timestamp = mktime(0, 0, 0, substr($last, 0, 2), substr($last, 3, 2) + 7, substr($last, 6, 2));
+                echo("next_id=".$next_id);
                 echo ('<tr><td>');
-            	echo "<input type=\"hidden\" name=\"_new_month_timestamp\" value=\"" . $new_month_timestamp . "\">
+            	echo "<input type=\"hidden\" name=\"_new_month_timestamp\" value=\"" . $next_id . "\">
 								<input type=\"hidden\" name=\"_submit_check_newmonth\" value=\"1\">
 								<input type=\"submit\" value=\"Add new month\" name=\"Add new month\">";
                 echo "</td><td>";
-                echo "<select name=\"monthday_group\">";
-                // the group option menus, expected groups selected by default
-                $groups = array("odd", "even");
-                foreach ($groups as $i) {
-                    echo "<option value=\"" . $i . "\"";
-                    if ($i == $next_monthday_group)
-                        echo " SELECTED";
-                    echo ">" . $i . "</option>";
-                }
-                echo "</td><td>";
-                echo "<select name=\"monthend_group\">";
-                // the group option menus, expected groups selected by default
-                $groups = array("1st", "2nd", "3rd", "4th", "5th");
-                foreach ($groups as $i) {
-                    echo "<option value=\"" . $i . "\"";
-                    if ($i == $monthend_group)
-                        echo " SELECTED";
-                    echo ">" . $i . "</option>";
-                }
-                echo "</select></td>";
+                
                 echo('<td align="center"><a href="addMonth.php?archive=');
             	if ($_GET['archive'] == "true")
                 	echo 'false">Hide Archive</a></td></tr><tr>';
             	else
-                	echo 'true">View Archive</a></td></tr><tr>';
-                if ($firstmonth) {
-                    echo ('<td colspan="4"><select name="month">');
-                    $months = array('', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
-                    $today = date("M");
-                    for ($i = 0; $i <= 12; ++$i) {
-                        echo ("<option value=\"" . $i . "\"");
-                        if ($_POST['month'] == $i || $today == $months[$i])
-                            echo (" SELECTED");
-                        echo (">" . $months[$i] . "</option>");
-                    }
-                    echo ('</select> <select name="day"> <option value="0"></option>');
-                    $today = date("j");
-                    for ($i = 1; $i <= 31; ++$i) {
-                        echo ("<option ");
-                        if ($_POST['day'] == $i || $today == $i)
-                            echo (" SELECTED");
-                        echo (">" . $i . "</option>");
-                    }
-                    echo ('</select><select name="year"> <option value="0"></option>');
-                    $i = date("Y");
-                    echo ("<option ");
-                    if ($_POST['year'] == $i || $_POST['year'] != $i + 1)
-                        echo (" SELECTED");
-                    echo (">" . $i . "</option>");
-                    echo ("<option ");
-                    if ($_POST['year'] == $i + 1)
-                        echo (" SELECTED");
-                    echo (">" . ($i + 1) . "</option>");
-                    echo ("</select></td>");
-                }
-                else echo "<td colspan = '4'>";    
+                	echo 'true">View Archive</a></td></tr><tr>';   
             }
-            echo "</td></tr></table>";    
+            echo "</tr></table>";    
 
             // determines what options apply to each month
             function show_month_options($month, $remove) {
             	$id = $month->get_id();
-                $status = $month->get_status();
+            	$status = $month->get_status();
                 $end = $month->get_end_of_month_timestamp();
                 $options = "";
                 $rightnow = time();
                 if ($status == "archived") {
-                    $options = "archived (<a href=\"calendar.php?id=" . $id . "&venue=house\">view</a>)";
+                    $options = "archived (<a href=\"calendar.php?month=" . substr($id,0,5) . "&group=" . $month->get_group() . "\">view</a>)";
                 }
                 // see if right now is part of a new month.  If so, archive the previous month.
-                // here was a BIG BUG -- today might not have an immediate predecessor month in the database,
-                // in which case "month2" below will be null!  So this now accommodates gaps (missing months) in the dbMonths table.
                 else if ($rightnow > $end) {
-                    $options = "archived (<a href=\"calendar.php?id=" . $id . "&venue=house\">view</a>)";
-                    $month2 = get_dbMonths($id);
-                    if ($month2 != null) {
-                        $month2->set_status("archived");
-                        update_dbMonths($month2);
-                    }
+                    $options = "archived (<a href=\"calendar.php?month=" . substr($id,0,5) . "&group=" . $month->get_group() . "\">view</a>)";
+                    $month->set_status("archived");
+                    update_dbMonths($month);
                 } else if ($status == "unpublished") {
                     $options = "unpublished 
-							(<a href=\"calendar.php?id=" . $id. "&venue=house&edit=true\">edit</a>)
-							(<a href=\"addMonth.php?publish=" . $id . "\">publish</a>)
-							(<a href=\"calendar.php?id=" . $id . "&venue=house\">view</a>)";
+							(<a href=\"addMonth.php?monthid=" . $id . "&archive=false&group=" . $month->get_group() . "\">publish</a>)
+							(<a href=\"calendar.php?month=" . substr($id,0,5) . "&group=" . $month->get_group() . "\">view</a>)";
                 } else { // status must be "published"
-                    $options = "published (<a href=\"calendar.php?id=" . $id . "&venue=house&edit=true\">edit</a>)
-							(<a href=\"addMonth.php?publish=" . $id . "\">unpublish</a>)
-							(<a href=\"calendar.php?id=" . $id . "&venue=house\">view</a>)";
+                    $options = "published 
+							(<a href=\"addMonth.php?monthid=" . $id . "&archive=false&group=" . $month->get_group() . "\">unpublish</a>)
+							(<a href=\"calendar.php?month=" . substr($id,0,5) . "&group=" . $month->get_group() . "\">view</a>)";
                 }
                 if ($remove)
-                    $options = $options . " (<a href=\"addMonth.php?remove=" . $id . "&archive=".$_GET['archive']."\">remove</a>)";
+                    $options = $options . " (<a href=\"addMonth.php?monthid=" . $id . "&archive=false&group=" . $month->get_group() . "\">remove</a>)";
                 return $options;
             }
             ?>

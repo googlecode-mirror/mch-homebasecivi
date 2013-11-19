@@ -32,7 +32,7 @@ function do_month_nav($month, $edit, $group) {
             $s = $s . '<td align="left"> <a href="calendar.php?month=' . substr($cur_id, 0, 5) . '&group=' . $group . '&edit=false">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(view this month)</a></td>';
     
     if ($_SESSION['access_level'] >= 2)
-        $s = $s . '<td align="right"> <a href="addMonth.php?archive=false&group='.$group.'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(manage months)</a></td>';
+        $s = $s . '<td align="right"> <a href="addMonth.php?archive=false&group='.$group.'&monthid='.$cur_id.'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(manage months)</a></td>';
     $s = $s . "</td><td align=\"right\">";
     
     $s = $s . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="calendar.php?month=' . substr($next_id, 0, 5) . '&group=' . $group;
@@ -69,7 +69,7 @@ function show_month($days, $month, $edit, $year, $group) {
     $startday = date("w", mktime(0, 0, 0, $month->get_month_number(), 1, $year));
 
     echo ('<table id="calendar" align="center" ><tr class="weekname"><td colspan="16" ' .
-    'align="center" >' . ucfirst($group) . ' Calendar: ' . $month->get_name() . " " . $month->get_year() . '</td></tr>');
+    'align="center" >' . ucfirst($group) . ' Calendar: ' . $month->get_name() . '</td></tr>');
 
     $daynames = array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
 
