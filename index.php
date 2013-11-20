@@ -47,7 +47,7 @@ session_cache_expire(30);
 							your upcoming scheduled crews will always be posted here.
 						');
                     if ($_SESSION['access_level'] == 0)
-                        echo('<p> To apply for a volunteer position at the Ronald McDonald House, select <a href="' . $path . 'personEdit.php?id=' . 'new' . '">apply</a>.');
+                        echo('<p> To apply for a volunteer position at MCHPP, select <a href="' . $path . 'personEdit.php?id=' . 'new' . '">apply</a>.');
                     ?>
 
                     <br>If you just want an overview of Homebase, select <a href="<?php echo($path); ?>dataSearch.php">about</a>.
@@ -66,7 +66,7 @@ session_cache_expire(30);
                          * guests: show link to application form
                          * applicants: show status of application form
                          * Volunteers, subs: show upcoming schedule
-                         * Managers: show vacancies, birthdays, anniversaries, applicants
+                         * Staff: show vacancies, birthdays, anniversaries, applicants
                          */
 
                         //DEFAULT PASSWORD CHECK
@@ -88,7 +88,7 @@ session_cache_expire(30);
                         }
 
                         //NOTES OUTPUT
-                        echo('<div class="infobox"><p class="notes"><strong>Notes from House Manager:</strong><br />');
+                        echo('<div class="infobox"><p class="notes"><strong>Notes from Operations Manager:</strong><br />');
                         echo($person->get_notes() . '</p></div><br>');
 
                         //APPLICANT CHECK
@@ -154,10 +154,11 @@ session_cache_expire(30);
                             //For checking time
                             $today = mktime(0, 0, 0, date('m'), date('d'), date('y'));
                             $two_weeks = $today + 14 * 86400;
-
+							$today_id = date("y-m-d");
+							$two_weeks_id = date("y-m-d",$two_weeks);
                             connect();
-                            $vacancy_query = "SELECT id,vacancies FROM dbCrews " .
-                                    "WHERE vacancies > 0 ORDER BY id;";
+                            $vacancy_query = "SELECT id,slots,persons FROM dbCrews " .
+                                    "WHERE id > '".$today_id."' AND id <= '".$two_weeks_id."' ORDER BY id;";
                             $vacancy_list = mysql_query($vacancy_query);
                             if (!$vacancy_list)
                                 echo mysql_error();
@@ -165,11 +166,11 @@ session_cache_expire(30);
                             if (mysql_num_rows($vacancy_list) > 0) {
 
                                 echo('<div class="vacancyBox">');
-                                echo('<p><strong>Upcoming Vacancies:</strong><ul>');
+                                echo('<p><strong>Upcoming Vacancies (next two weeks):</strong><ul>');
                                 while ($thisRow = mysql_fetch_array($vacancy_list, MYSQL_ASSOC)) {
-                                    $crew_date = mktime(0, 0, 0, substr($thisRow['id'], 0, 2), substr($thisRow['id'], 3, 2), substr($thisRow['id'], 6, 2));
-                                    if ($crew_date > $today && $crew_date < $two_weeks) {
-                                        echo('<li type="circle"><a href="' . $path . 'editCrew.php?crew=' . $thisRow['id'] . '">' . get_crew_name_from_id($thisRow['id']) . '</a></li>');
+                                    $vacancies = $thisRow['slots'] - sizeof(explode(',',$thisRow['persons']));
+                                    if ($vacancies > 0) {
+                                        echo('<li type="circle"><a href="' . $path . 'editCrew.php?id=' . $thisRow['id'] . '">' . get_crew_name_from_id($thisRow['id']) . '</a></li>');
                                     }
                                 }
                                 echo('</ul></p></div><br>');

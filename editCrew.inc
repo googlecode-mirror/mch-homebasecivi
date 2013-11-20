@@ -210,7 +210,7 @@
 		return $s;
 	}
 
-	function get_crew_name_from_id($crewid) {
+	function get_crew_name_from_id2($crewid) {
 		$yy_mm_dd = explode("-",$crewid);
 		$groups = array("foodbank"=>"Food Bank", "foodpantry"=>"Food Pantry", "soupkitchen"=>"Soup Kitchen");
 		return date("l M j, Y", mktime(0,0,0,$yy_mm_dd[1],$yy_mm_dd[2],$yy_mm_dd[0])) . " " . $groups[$yy_mm_dd[3]]. " Crew";
