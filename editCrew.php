@@ -17,16 +17,15 @@
 				<?php
 				include_once('database/dbCrews.php');
 				include_once('database/dbPersons.php');
-				include_once('database/dbSCL.php');
 				include_once('database/dbLog.php');
 				include_once('editCrew.inc');
-					
 				$crewid=$_GET['id'];
 				$group = substr($crewid,9);
+				
 				if($crewid=="") {
 					echo "<p>No Crew ID Supplied.  Click on \"Calendar\" above to edit crews.</p>";
 				}
-				else {
+				else {	
 						$crew=select_dbCrews($crewid);
 						if(!$crew instanceof Crew)
 							echo "<p>Invalid Crew ID Supplied.  Click on \"Calendar\" above to edit crews.</p>";

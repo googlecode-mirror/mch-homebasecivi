@@ -190,7 +190,7 @@ if ($id == 'new') {
                             if (!$result)
                                 echo ('<p class="error">Unable to add " .$first_name." ".$last_name. " in the database. <br>Please report this error to the House Manager.');
                             else if ($_SESSION['access_level'] == 0)
-                                echo("<p>Your application has been successfully submitted.<br>  The House Manager will contact you soon.  Thank you!");
+                                echo("<p>Your application has been successfully submitted.<br>  An MCHPP staff member will contact you soon.  Thank you!");
                             else
                                 echo("<p>You have successfully added " . $first_name . " " . $last_name . " to the database.</p>");
                         }
