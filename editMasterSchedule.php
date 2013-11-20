@@ -167,8 +167,11 @@ session_cache_expire(30);
                         array_shift($persons);
                     for ($i = 0; $i < count($persons); ++$i) {
                         $p = $persons[$i];
-                        if (is_array($persons[$i]))
+                        if (is_array($persons[$i])) {
                             $p = $persons[$i]['first_name'] . " " . $persons[$i]['last_name'];
+                            if ($persons[$i]['role']!="")
+                            	$p = "(".$persons[$i]['role'].") ".$p;
+                        }
                         $s = $s . "<tr><td width=\"150\" valign=\"top\"><br>&nbsp;" . $p . "</td><td>
 				<form method=\"POST\" style=\"margin-bottom:0;\">
 				<input type=\"hidden\" name=\"_submit_filled_slot_" . $i . "\" value=\"1\"><br>

@@ -129,9 +129,9 @@ foreach ($types as $key => $value) {
         echo ('&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="type[]" value="' . $key . '">'. $value . '</input>');
 }
 
-$groups= array('soupkitchen' => 'Soup Kitchen', 'foodpantry' => "Food Pantry", 'foodbank' => "Food Bank", 'other' => "Other");
+$groups= array('foodbank' => "Food Bank", 'foodpantry' => "Food Pantry", 'soupkitchen' => 'Soup Kitchen', );
 echo('<p>Group(s):');
-echo('<span style="font-size:x-small;color:FF0000">*</span>');
+//echo('<span style="font-size:x-small;color:FF0000">*</span>');
 foreach ($groups as $key => $value) {
     if(in_array($key, $person->get_group()))
         echo ('&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="group[]" value="' . $key . '" checked>'. $value . '</input>');
@@ -140,14 +140,19 @@ foreach ($groups as $key => $value) {
     }
 }
 
-$roles = array('C' => 'Chef', 'D' => "Dishwasher", 'T' => "Team Leader", 'B' => "Box person");
-echo('<p>Role(s):');
-echo('<span style="font-size:x-small;color:FF0000">*</span>');
+$roles = array('CC' => 'Crew Chief ', 'B' => "Boxes", 'D' => "Driver", 'P' => "Prep",
+				'I' => 'Intake', 'M' => "Meat", 'PR' => "Produce", 'CA' => "Carryout",
+				'C' => 'Chef', 'PO' => "Pots", 'DI' => "Dishes");
+echo('<p>Role(s):&nbsp;');
+//echo('<span style="font-size:x-small;color:FF0000">*</span>');
+$i=1;
 foreach ($roles as $key => $value) {
     if(in_array($key, $person->get_role()))
-        echo ('&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="role[]" value="' . $key . '" checked>'. $value . '</input>');
+        echo ('<input type="checkbox" name="role[]" value="' . $key . '" checked>'. $value . ' ('.$key.') </input>&nbsp;&nbsp;&nbsp;&nbsp;');
     else
-        echo ('&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="role[]" value="' . $key . '">'. $value . '</input>');
+        echo ('<input type="checkbox" name="role[]" value="' . $key . '">'. $value . ' ('.$key.') </input>&nbsp;&nbsp;&nbsp;&nbsp;');
+    if ($i%4==0) echo "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    $i++;
 }
 ?>
     <fieldset id='availability'>

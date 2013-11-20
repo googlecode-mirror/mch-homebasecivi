@@ -13,37 +13,36 @@
 <html>
 	<head>
 		<title>
-			RMH Homebase
+			MCH Homebase
 		</title>
 	</head>
 	<body>
-		<p><strong>Homebase Help Pages</strong></p>
-<ol>
+	<ol>
 		<li>	<a href="?helpPage=login.php">Signing in and out of the System</a></li><br>
 			<ul><li><a href="?helpPage=index.php">About your Personal Home Page</a></li></ul><br>
-		<li>	<strong>Working with the Volunteer Database</strong> (Managers Only)</li><br>
+		
+		<li>	<a href="?helpPage=addWeek.php">Working with the Calendar</a></li><br>
+				<ul>
+					<li><a href="?helpPage=generateWeek.php">Generating and publishing new calendar months</a> (Staff Only)</li>
+					<li><strong>Editing a Crew on a calendar month</strong></li>
+					<p>	<ul>
+							<li><a href="help.php?helpPage=assignToShift.php">Filling a vacancy</a></li>
+							<li><a href="help.php?helpPage=removeFromShift.php">Removing a volunteer</a></li>
+							<li><a href="help.php?helpPage=addSlotToShift.php">Adding/removing a slot</a></li>
+				
+						</ul>
+					
+				</ul><br>
+		<li>   <a href="?helpPage=masterSchedule.php">Working with the Master Schedule</a> (Staff Only)</li><br>
+		<li>	<strong>Working with the Volunteer Database</strong> (Staff Only)</li><br>
 			<ul><li><a href="?helpPage=searchPeople.php">Searching for People</a></li>
 			    <li><a href="?helpPage=edit.php">Editing People</a></li>
 			    <li><a href="?helpPage=rmh.php">Adding People </a></li>
 			</ul><br>
-		<li>	<a href="?helpPage=addWeek.php">Working with the Calendar</a> (Managers Only)</li><br>
-				<ul>
-					<li><a href="?helpPage=generateWeek.php">Generating and publishing new calendar weeks</a></li>
-					<li><strong>Editing a Shift on the Calendar</strong></li>
-					<p>	<ul>
-							<li><a href="help.php?helpPage=assignToShift.php">Filling a Vacancy</a></li>
-							<li><a href="help.php?helpPage=removeFromShift.php">Removing a volunteer</a></li>
-							<li><a href="help.php?helpPage=addSlotToShift.php">Adding/removing a slot</a></li>
-							<li><a href="help.php?helpPage=subCallList.php">Using a Sub Call List</a></li>
-						</ul>
-						<p>
-					<li><a href="?helpPage=addNotes.php">Adding notes</a></li>
-					
-				</ul><br>
-		 <li>   <a href="?helpPage=masterSchedule.php">Working with the Master Schedule</a> (Managers Only)</li>
+		 
 </ol>
-		<p>If these help pages don't answer your questions, please contact the <a href="mailto:housemgr@rmhportland.org">House Manager</a>
-		 or call the front desk (207-780-6282).</p>
+		<p>If these help pages don't answer your questions, please contact the <a href="mailto:bm@mchpp.org">Operations Manager</a>
+		 or call the oFfice (207-725-2716).</p>
 	</body>
 </html>
 

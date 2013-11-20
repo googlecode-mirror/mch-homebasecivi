@@ -57,7 +57,7 @@ function show_month($days, $month, $edit, $year, $group) {
     //     $free_hour[] = true;
 
     $crew_ids = $month->get_crews();
-
+echo "SESSION['mygroup'] = ".$_SESSION['mygroup'];
     $crews = array();
 
     foreach($crew_ids as $crew){
@@ -110,7 +110,7 @@ function get_crewinfo($crews, $day){
                 $id_exploded = explode("+", $person_id);
                 $display_name = $id_exploded[1]. " " . $id_exploded[2];
                 if ($id_exploded[3]!="()")
-					$display_name .= " ".$id_exploded[3];
+					$display_name = $id_exploded[3]." ".$display_name;
 				$info = $info . $display_name . "<br>&nbsp;&nbsp;";
             }
 

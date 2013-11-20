@@ -13,9 +13,8 @@
 
 	<body>
 		<div id="container">
-			<?PHP include('header.php');?>
 			<div id="content">
-				<div align="center"><p><a href="?">Help Home</a></p></div>
+				<div align="left"><p><a href="?">MCH Homebase Help Page Index</a></p></div>
 
 				<?PHP
 					//This array associates pages a person might be viewing

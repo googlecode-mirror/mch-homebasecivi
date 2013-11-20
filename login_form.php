@@ -30,6 +30,7 @@
             $_SESSION['logged_in'] = 1;
             $_SESSION['access_level'] = 0;
             $_SESSION['type'] = "";
+            $_SESSION['mygroup'] = "";
             $_SESSION['_id'] = "guest";
             echo "<script type=\"text/javascript\">window.location = \"index.php\";</script>";
         }
@@ -50,6 +51,11 @@
                     $_SESSION['f_name'] = $person->get_first_name();
                     $_SESSION['l_name'] = $person->get_last_name();
                     $_SESSION['type'] = $person->get_type();
+                    $mygroup = $person->get_group();
+                    if (sizeof($mygroup)==0)
+                    	$_SESSION['mygroup'] = "";	
+                    else 
+                    	$_SESSION['mygroup'] = $mygroup[0];
                     $_SESSION['_id'] = $_POST['user'];
                     echo "<script type=\"text/javascript\">window.location = \"index.php\";</script>";
                 }
