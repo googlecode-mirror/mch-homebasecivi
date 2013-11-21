@@ -14,7 +14,7 @@
 	<body>
 		<div id="container">
 			<div id="content">
-				<div align="left"><p><a href="?">MCH Homebase Help Page Index</a></p></div>
+				<div align="left"><p><a href="?">MCH Homebase Help</a></p></div>
 
 				<?PHP
 					//This array associates pages a person might be viewing
@@ -33,19 +33,15 @@
 					$assocHelp['searchPeople.php']='searchPersonHelp.inc.php';
 					$assocHelp['edit.php']='editPersonHelp.inc.php';
 					$assocHelp['rmh.php']='addPersonHelp.inc.php';
-					$assocHelp['viewPerson.php']='viewPersonHelp.inc.php';
 
-					//schedule managing
+					//schedule and calendar managing
 					$assocHelp['calendar.php']='viewCalendarHelp.inc.php';
-					$assocHelp['viewCalendar.php']='viewCalendarHelp.inc.php';
-					$assocHelp['addWeek.php']='manageCalendarHelp.inc.php';
-					$assocHelp['generateWeek.php']='generateWeekHelp.inc.php';
-					$assocHelp['addNotes.php']='calendarNotesHelp.inc.php';
-					$assocHelp['editShift.php']='editShiftHelp.inc.php';
-					$assocHelp['addSlotToShift.php']='addSlotToShiftHelp.inc.php';
-					$assocHelp['assignToShift.php']='assignToShiftHelp.inc.php';
-					$assocHelp['removeFromShift.php']='removeFromShiftHelp.inc.php';
-					$assocHelp['subCallList.php']='subCallListHelp.inc.php';
+					$assocHelp['assignToCrew.php']='assignToCrewHelp.inc.php';
+					$assocHelp['removeFromCrew.php']='removeFromCrewHelp.inc.php';
+					$assocHelp['addSlotToCrew.php']='addSlotToCrewHelp.inc.php';
+					$assocHelp['addMonth.php']='manageCalendarHelp.inc.php';
+					$assocHelp['generateMonth.php']='generateMonthHelp.inc.php';
+					$assocHelp['editCrew.php']='editCrewHelp.inc.php';
 					$assocHelp['masterSchedule.php']='schedulingHelp.inc.php';
 
 					//personal home page

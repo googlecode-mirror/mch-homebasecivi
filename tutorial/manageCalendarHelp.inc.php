@@ -1,13 +1,13 @@
 
 	<p> <strong>Working with the Calendar</strong>
 	<p>  The calendar has eight different pages, one for each venue: the <strong>Reception</strong> calendar, the <strong>Family room</strong> calendar, and six others.  
-	Each calendar shows all the persons scheduled to volunteer for each shift on every day of a single week.
+	Each calendar shows all the persons scheduled to volunteer for each crew on every day of a single week.
         <p>  <b>Step 1:</b>  To begin working with a calendar page, find <B>calendar:</B> and select a venue, like <B>Reception</B>:<BR><BR>
 		<a href="tutorial/screenshots/managecalendarstep1.png" class="image" title="managecalendarStep1.png"
 			horizontalalign="center" target="tutorial/screenshots/managecalendarstep1.png">
 		 &nbsp&nbsp&nbsp&nbsp<img src="tutorial/screenshots/managecalendarstep1.png" width="10%" border="1px" align="center"></a>
 	<p>  <b>Step 2:</b>  You will then see the Reception volunteer calendar on the screen.  Here is that calendar for the week beginning March 14, 2011.
-	Notice that <b>Vacancies</b> are highlighted for each shift that isn't fully staffed.'<BR><BR>
+	Notice that <b>Vacancies</b> are highlighted for each crew that isn't full.'<BR><BR>
 		<a href="tutorial/screenshots/managecalendarstep2.png" class="image" title="managecalendarStep2.png"
 			horizontalalign="center" target="tutorial/screenshots/managecalendarstep2.png">
 		 &nbsp&nbsp&nbsp&nbsp<img src="tutorial/screenshots/managecalendarstep2.png" width="10%" border="1px" align="center"></a>
@@ -23,10 +23,10 @@
 
 	<p> Managers make the following changes on any calendar:
 			<ul>
-			<li><a href="help.php?helpPage=assignToShift.php">Fill a vacancy on any upcoming shift.</a></li>
-			<li><a href="help.php?helpPage=removeFromShift.php">Remove a volunteer from any upcoming shift.</a></li>
-			<li><a href="help.php?helpPage=addSlotToShift.php">Add or remove a slot from an upcoming shift.</a></li>
-			<li><a href="help.php?helpPage=addNotes.php">Add notes to any upcoming shift or day.</a></li>
+			<li><a href="help.php?helpPage=assignToCrew.php">Fill a vacancy on an upcoming crew.</a></li>
+			<li><a href="help.php?helpPage=removeFromCrew.php">Remove a volunteer from any upcoming crew.</a></li>
+			<li><a href="help.php?helpPage=addSlotToCrew.php">Add or remove a slot from an upcoming crew.</a></li>
+			
 		</ul>
 
 	<p> <B>Step 5:</B>  You can return to any other function by selecting it on the navigation bar.

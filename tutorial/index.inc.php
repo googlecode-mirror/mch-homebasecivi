@@ -21,16 +21,16 @@
 		<li>	<a href="?helpPage=login.php">Signing in and out of the System</a></li><br>
 			<ul><li><a href="?helpPage=index.php">About your Personal Home Page</a></li></ul><br>
 		
-		<li>	<a href="?helpPage=addWeek.php">Working with the Calendar</a></li><br>
+		<li>	<a href="?helpPage=addMonth.php">Working with the Calendar</a></li><br>
 				<ul>
-					<li><a href="?helpPage=generateWeek.php">Generating and publishing new calendar months</a> (Staff Only)</li>
 					<li><strong>Editing a Crew on a calendar month</strong></li>
 					<p>	<ul>
-							<li><a href="help.php?helpPage=assignToShift.php">Filling a vacancy</a></li>
-							<li><a href="help.php?helpPage=removeFromShift.php">Removing a volunteer</a></li>
-							<li><a href="help.php?helpPage=addSlotToShift.php">Adding/removing a slot</a></li>
+							<li><a href="help.php?helpPage=assignToCrew.php">Filling a vacancy</a></li>
+							<li><a href="help.php?helpPage=removeFromCrew.php">Removing a volunteer</a></li>
+							<li><a href="help.php?helpPage=addSlotToCrew.php">Adding/removing a slot</a> (Staff Only)</li>
 				
-						</ul>
+						</ul><br>
+					<li><a href="?helpPage=generateMonth.php">Publishing, removing, and generating future calendar months</a> (Staff Only)</li>
 					
 				</ul><br>
 		<li>   <a href="?helpPage=masterSchedule.php">Working with the Master Schedule</a> (Staff Only)</li><br>
