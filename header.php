@@ -78,14 +78,10 @@
         if ($_SESSION['access_level'] == 0)
             echo(' | <a href="' . $path . 'personEdit.php?id=' . 'new' . '"><b>apply</b></a>');
         if ($_SESSION['access_level'] >= 1) {
-            echo(' | <strong>calendars:</strong> <a href="' . $path . 'calendar.php?month='.$month.'&group=foodbank&edit=false">food bank, </a>');
-            echo('<a href="' . $path . 'calendar.php?group=foodpantry&edit=false&month='.$month.'">food pantry, </a>');
-            echo('<a href="' . $path . 'calendar.php?group=soupkitchen&edit=false&month='.$month.'">soup kitchen  </a>');
+            echo(' | <a href="' . $path . 'calendar.php?month='.$month.'&edit=false"><strong>calendars</strong> </a>');
         }
         if ($_SESSION['access_level'] >= 2) {
-            echo('<br><strong>master schedules : </strong><a href="' . $path . 'viewSchedule.php?group=foodbank">food bank, </a>
-            	<a href="' . $path . 'viewSchedule.php?group=foodpantry">food pantry, </a>
-            	<a href="' . $path . 'viewSchedule.php?group=soupkitchen">soup kitchen </a>');
+            echo('| <a href="' . $path . 'viewSchedule.php?group=foodbank"><strong>master schedule</strong></a>');
             echo('<br><strong>volunteers :</strong> <a href="' . $path . 'personSearch.php">search</a>, 
 			        <a href="personEdit.php?id=' . 'new' . '">add, </a> <a href="viewScreenings.php?type=new">screenings</a> | ');
             echo('<a href="' . $path . 'dataSearch.php"><strong>reports</strong></a> ');

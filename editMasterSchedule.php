@@ -18,6 +18,11 @@ session_cache_expire(30);
                 if ($_SESSION['access_level'] < 2) {
                     die("<p>Only staff can edit the master schedule.</p>");
                 }
+                if(isset($_SESSION['mygroup'])){
+                    $group = $_SESSION['mygroup'];
+                } else {
+                    $group = "foodbank";
+                }
                 $group = $_GET['group'];
                 $day = $_GET['day'];
                 $week_no = $_GET['week_no'];

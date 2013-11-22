@@ -35,7 +35,12 @@ session_cache_expire(30);
                     else
                         $edit = true;
                     // gets the week to show, if no week then defaults to current week
-                    $group = $_GET['group'];
+                    if(isset($_SESSION['mygroup'])){
+                        $group = $_SESSION['mygroup'];
+                    } else {
+                        $group = "foodbank";
+                    }
+                    
                     $monthid = $_GET['month']."-".$group;
                     $explode_month = explode("-", $_GET['month']);
                     $year = "20" . $explode_month[0];
