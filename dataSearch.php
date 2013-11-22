@@ -44,8 +44,8 @@ session_cache_expire(30);
                         $last_name = $_POST['last_name']; else
                         $last_name = '';
                     if ($_POST['check3'] == 'on')
-                        $gender = $_POST['gender']; else
-                        $gender = '';
+                        $role = $_POST['rolde']; else
+                        $role = '';
                     if ($_POST['check4'] == 'on')
                         $type = $_POST['type'][0]; else
                         $type = '';
@@ -56,64 +56,66 @@ session_cache_expire(30);
                         $start_date = $_POST['start_date']; else
                         $start_date = '';
                     if ($_POST['check7'] == 'on')
-                        $hours_worked = $_POST['hours_worked']; else
-                        $hours_worked = '';
-                    if ($_POST['check8'] == 'on')
                         $day_of_the_week = $_POST['day_of_the_week']; else
                         $day_of_the_week = '';
-                    if ($_POST['check9'] == 'on')
-                        $month = $_POST['month']; else
-                        $month = '';
-                    if ($_POST['check10'] == 'on')
-                        $employer_school = $_POST['employer_school']; else
-                        $employer_school = '';
-                    if ($_POST['check11'] == 'on')
+                    if ($_POST['check8'] == 'on')
                         $street = $_POST['street']; else
                         $street = '';
-                    if ($_POST['check12'] == 'on')
+                    if ($_POST['check9'] == 'on')
                         $city = $_POST['city']; else
                         $city = '';
-                    if ($_POST['check13'] == 'on')
-                        $county = $_POST['county']; else
-                        $county = '';
-                    if ($_POST['check14'] == 'on')
+                    if ($_POST['check10'] == 'on')
                         $state = $_POST['state']; else
                         $state = '';
-                    if ($_POST['check15'] == 'on')
+                    if ($_POST['check11'] == 'on')
                         $zip = $_POST['zip']; else
                         $zip = '';
-                    if ($_POST['check16'] == 'on')
+                    if ($_POST['check12'] == 'on')
                         $phone1 = $_POST['phone1']; else
                         $phone1 = '';
-                    if ($_POST['check17'] == 'on')
+                    if ($_POST['check13'] == 'on')
                         $phone2 = $_POST['phone2']; else
                         $phone2 = '';
-                    if ($_POST['check18'] == 'on')
+                    if ($_POST['check14'] == 'on')
                         $email = $_POST['email']; else
                         $email = '';
-                    if ($_POST['check19'] == 'on')
+                    if ($_POST['check15'] == 'on')
                         $notes = $_POST['notes']; else
                         $notes = '';
 
-                    $attribute_array = array(1 => array(1 => $_POST['check1'], 'First Name', $first_name), array(1 => $_POST['check2'], 'Last Name', $last_name),
-                        array(1 => $_POST['check3'], 'Gender', $gender), array(1 => $_POST['check4'], 'Type', $type), array(1 => $_POST['check5'], 'Status', $status),
-                        array(1 => $_POST['check6'], 'Start Date', $start_date), array(1 => $_POST['check7'], 'Hours Worked', $hours_worked),
-                        array(1 => $_POST['check8'], 'Day of the Week', $day_of_the_week), array(1 => $_POST['check9'], 'Month', $month),
-                        array(1 => $_POST['check10'], 'Employer/School', $employer_school), array(1 => $_POST['check11'], 'Street Address', $street),
-                        array(1 => $_POST['check12'], 'City', $city), array(1 => $_POST['check13'], 'County', $county),
-                        array(1 => $_POST['check14'], 'State', $state), array(1 => $_POST['check15'], 'Zip', $zip),
-                        array(1 => $_POST['check16'], 'Phone 1', $phone1), array(1 => $_POST['check17'], 'Phone 2', $phone2),
-                        array(1 => $_POST['check18'], 'Email', $email), array(1 => $_POST['check19'], 'Notes', $notes));
+                    $attribute_array = array(1 =>
+                        array(1 => $_POST['check1'], 'First Name', $first_name),
+                        array(1 => $_POST['check2'], 'Last Name', $last_name),
+                        array(1 => $_POST['check3'], 'Role', $role),
+                        array(1 => $_POST['check4'], 'Type', $type),
+                        array(1 => $_POST['check5'], 'Status', $status),
+                        array(1 => $_POST['check6'], 'Start Date', $start_date),
+                        array(1 => $_POST['check7'], 'Day of the Week', $day_of_the_week),
+                        array(1 => $_POST['check8'], 'Street Address', $street),
+                        array(1 => $_POST['check9'], 'City', $city),
+                        array(1 => $_POST['check10'], 'State', $state),
+                        array(1 => $_POST['check11'], 'Zip', $zip),
+                        array(1 => $_POST['check12'], 'Phone 1', $phone1),
+                        array(1 => $_POST['check13'], 'Phone 2', $phone2),
+                        array(1 => $_POST['check14'], 'Email', $email),
+                        array(1 => $_POST['check15'], 'Notes', $notes));
 
-                    $export_attribute_array = array(1 => array(1 => $_POST['e_check1'], 'First Name', 'get_first_name'), array(1 => $_POST['e_check2'], 'Last Name', 'get_last_name'),
-                        array(1 => $_POST['e_check3'], 'Gender', 'get_gender'), array(1 => $_POST['e_check4'], 'Type', 'get_type'), array(1 => $_POST['e_check5'], 'Status', 'get_status'),
-                        array(1 => $_POST['e_check6'], 'Start Date', 'get_start_date'), array(1 => $_POST['e_check7'], 'Hours Worked', 'get_hours_worked'),
-                        array(1 => $_POST['e_check8'], 'Day of the Week', 'get_day_of_the_week'), array(1 => $_POST['e_check9'], 'Month', 'get_month'),
-                        array(1 => $_POST['e_check10'], 'Employer/School', 'get_employer_school'), array(1 => $_POST['e_check11'], 'Address', 'get_address'),
-                        array(1 => $_POST['e_check12'], 'City', 'get_city'), array(1 => $_POST['e_check13'], 'County', 'get_county'),
-                        array(1 => $_POST['e_check14'], 'State', 'get_state'), array(1 => $_POST['e_check15'], 'Zip', 'get_zip'),
-                        array(1 => $_POST['e_check16'], 'Phone 1', 'get_phone1'), array(1 => $_POST['e_check17'], 'Phone 2', 'get_phone2'),
-                        array(1 => $_POST['e_check18'], 'Email', 'get_email'), array(1 => $_POST['e_check19'], 'Notes', 'get_notes'));
+                    $export_attribute_array = array(1 =>
+                        array(1 => $_POST['e_check1'], 'First Name', 'get_first_name'),
+                        array(1 => $_POST['e_check2'], 'Last Name', 'get_last_name'),
+                        array(1 => $_POST['e_check3'], 'Role', 'get_role'),
+                        array(1 => $_POST['e_check4'], 'Type', 'get_type'),
+                        array(1 => $_POST['e_check5'], 'Status', 'get_status'),
+                        array(1 => $_POST['e_check6'], 'Start Date', 'get_start_date'),
+                        array(1 => $_POST['e_check7'], 'Day of the Week', 'get_day_of_the_week'),
+                        array(1 => $_POST['e_check8'], 'Address', 'get_address'),
+                        array(1 => $_POST['e_check9'], 'City', 'get_city'),
+                        array(1 => $_POST['e_check10'], 'State', 'get_state'),
+                        array(1 => $_POST['e_check11'], 'Zip', 'get_zip'),
+                        array(1 => $_POST['e_check12'], 'Phone 1', 'get_phone1'),
+                        array(1 => $_POST['e_check13'], 'Phone 2', 'get_phone2'),
+                        array(1 => $_POST['e_check14'], 'Email', 'get_email'),
+                        array(1 => $_POST['e_check15'], 'Notes', 'get_notes'));
                     //$value_array = array(1 => $first_name, $last_name, $gender, $type, $status, $start_date, $hours_worked,
                     //							  $day_of_the_week, $month, $employer_school, $street, $city,
                     //							  $county, $state, $zip, $phone1, $phone2, $email, $notes);
