@@ -45,25 +45,22 @@ echo('">');
         <td valign="top"><table>
                 <td><input type="checkbox" id="e_check1" name="e_check1" /> First Name </td>
                 <tr><td><input type="checkbox" id="e_check2" name="e_check2" /> Last Name </td></tr>
-                <tr><td><input type="checkbox" id="e_check3" name="e_check3"/> Gender </td></tr>
+                <tr><td><input type="checkbox" id="e_check3" name="e_check3"/> Role </td></tr>
                 <tr><td><input type="checkbox" id="e_check4" name="e_check4" /> Type </td></tr>
                 <tr><td><input type="checkbox" id="e_check5" name="e_check5" /> Status </td></tr>
                 <tr><td><input type="checkbox" id="e_check6" name="e_check6" /> Start Date </td></tr>
-                <tr><td><input disabled type="checkbox" id="e_check7" name="e_check7" /> Hours worked </td></tr>
-                <tr><td><input disabled type="checkbox" id="e_check8" name="e_check8" /> Day of the week </td></tr>
-                <tr><td><input disabled type="checkbox" id="e_check9" name="e_check9" /> Month </td></tr>
-                <tr><td><input disabled type="checkbox" id="e_check10" name="e_check10" /> Employer/School </td></tr>
+                <tr><td><input disabled type="checkbox" id="e_check7" name="e_check7" /> Day of the week </td></tr>
             </table></td>
         <td valign="top"><table>
-                <td><input type="checkbox" id="e_check11" name="e_check11" /> Street Address </td>
-                <tr><td><input type="checkbox" id="e_check12" name="e_check12" /> City </td></tr>
-                <tr><td><input type="checkbox" id="e_check13" name="e_check13" /> County </td></tr>
-                <tr><td><input type="checkbox" id="e_check14" name="e_check14" /> State </td></tr>
-                <tr><td><input type="checkbox" id="e_check15" name="e_check15" /> Zip </td></tr>
-                <tr><td><input type="checkbox" id="e_check16" name="e_check16" /> Phone 1 </td></tr>
-                <tr><td><input type="checkbox" id="e_check17" name="e_check17" /> Phone 2 </td></tr>
-                <tr><td><input type="checkbox" id="e_check18" name="e_check18" /> Email </td></tr>
-                <tr><td><input type="checkbox" id="e_check19" name="e_check19" /> Notes </td></tr>
+                <tr><td><input type="checkbox" id="e_check8" name="e_check8" /> Street Address </td></tr>
+                <td><input type="checkbox" id="e_check9" name="e_check9" /> City </td>
+                <tr><td><input type="checkbox" id="e_check10" name="e_check10" /> State </td></tr>
+                <tr><td><input type="checkbox" id="e_check11" name="e_check11" /> Zip </td></tr>
+                <tr><td><input type="checkbox" id="e_check12" name="e_check12" /> Phone 1 </td></tr>
+                <tr><td><input type="checkbox" id="e_check13" name="e_check13" /> Phone 2 </td></tr>
+                <tr><td><input type="checkbox" id="e_check14" name="e_check14" /> Email</td></tr>
+                <tr><td><input type="checkbox" id="e_check15" name="e_check15" /> Notes </td></tr>
+                
             </table></td>
     </table>
     <table>

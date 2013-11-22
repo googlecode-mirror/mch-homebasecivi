@@ -34,19 +34,32 @@
                                                                                               onkeyup="if(this.value=='')document.getElementById('check2').checked=false;
                                                                                                   else document.getElementById('check2').checked=true"/>
                     </td></tr>
-                <tr><td><input type="checkbox" id="check3" name="check3"/> 
-                        Gender: <input type="radio" id="gender1" name="gender" value="male" onclick="document.getElementById('check3').checked=true" /> Male 
-                        <input type="radio" id="gender2" name="gender" value="female" onclick="document.getElementById('check3').checked=true "/> Female
+                <tr><td><input type="checkbox" id="check3" name="check3"/> Role:
+                        <select name="role" onmouseup="if(this.value=='')document.getElementById('check3').checked=false;
+                            else document.getElementById('check3').checked=true">
+                            <option value="">--Select One--</option>
+                            <option value="Crew Chief">Crew Chief</option>
+                            <option value="Boxes">Boxes</option>
+                            <option value="Driver">Driver</option>
+                            <option value="Prep">Prep</option>
+                            <option value="Intake">Intake</option>
+
+                            <option value="Produce">Produce</option>
+                        
+                            <option value="Meat">Meat</option>
+                            <option value="Carryout">Carryout</option>
+
+                            <option value="Chef">Chef</option>
+                            <option value="Pots">Pots</option>
+                            <option value="Dishes">Dishes</option>
+                        </select>
                     </td></tr>
                 <tr><td valign="top"><input style="position:relative;float:left" type="checkbox" id="check4" name="check4" />
                         &nbsp;Type: <select multiple name="type[]" onmouseup="if(this.value=='')document.getElementById('check4').checked=false;
                             else document.getElementById('check4').checked=true">
                             <option value="volunteer">Volunteer</option>
                             <option value="manager">Manager</option>
-                            <option value="guestchef">Guest Chef</option>
-                            <option value="parking">Parking</option>
-                            <option value="cleaning">Cleaning</option>
-                            <option value="other">Other...</option>
+                            <option value="staff">Staff</option>
                         </select>
                     </td></tr>
                 <tr><td><input type="checkbox" id="check5" name="check5" /> Status: 
@@ -64,52 +77,26 @@
                                onfocus="if(this.value==this.defaultValue) value=''" onblur="if(this.value=='')value=this.defaultValue" 
                                onkeyup="if(this.value=='')document.getElementById('check6').checked=false; else document.getElementById('check6').checked=true" />
                     </td></tr>
-                <tr><td><input disabled type="checkbox" id="check7" name="check7" /> Hours worked: 
-                        <input disabled type="text" name="hours_worked" value="(e.g. 1-5pm)" 
-                               onfocus="if(this.value==this.defaultValue) value=''" onblur="if(this.value=='')value=this.defaultValue"
-                               onkeyup="if(this.value=='')document.getElementById('check7').checked=false; else document.getElementById('check7').checked=true" />
-                    </td></tr>
-                <tr><td><input disabled type="checkbox" id="check8" name="check8" /> Day of the week:
-                        <select disabled name="day_of_the_week" onmouseup="if(this.value=='--Select One--')document.getElementById('check8').checked=false;
+                <tr><td><input type="checkbox" id="check7" name="check7" /> Day of the week:
+                        <select name="day_of_the_week" onmouseup="if(this.value=='--Select One--')document.getElementById('check8').checked=false;
                             else document.getElementById('check8').checked=true">
                                     <?php
                                     $week_array = array("--Select One--", "Monday", "Tuesday", "Wednesday",
                                         "Thursday", "Friday", "Saturday", "Sunday");
                                     foreach ($week_array as $w) {
                                         ?>
-                                <option value="<?php echo($w) ?>"><?php echo($w) ?></option>
-<?php } ?>
+                                <option value="<?php echo($w) ?>"><?php echo($w) ?></option><?php } ?>
                         </select>
-                    </td></tr>
-                <tr><td><input disabled type="checkbox" id="check9" name="check9" /> Month:
-                        <select disabled name="month" onmouseup="if(this.value=='--Select One--')document.getElementById('check9').checked=false;
-                            else document.getElementById('check9').checked=true">
-                                    <?php
-                                    $month_array = array("--Select One--", "January", "February", "March",
-                                        "April", "May", "June", "July", "August", "September",
-                                        "October", "November", "December");
-                                    foreach ($month_array as $m) {
-                                        ?> 
-                                <option value="<?php echo($m) ?>"><?php echo($m) ?></option>	
-<?php } ?>
-                        </select>
-                    </td></tr>
-                <tr><td><input disabled type="checkbox" id="check10" name="check10" /> Employer/School: 
-                        <input disabled type="text" name="employer_school" style="width:135px" onkeyup="if(this.value=='')document.getElementById('check10').checked=false; 
-                            else document.getElementById('check10').checked=true"/>
                     </td></tr>
             </table></td>
         <td valign="top"><table>
-                <td><input type="checkbox" id="check11" name="check11" /> Street Address: <input type="text" name="street" 
+                <td><input type="checkbox" id="check8" name="check8" /> Street Address: <input type="text" name="street" 
                                                                                                  onkeyup="if(this.value=='')document.getElementById('check11').checked=false; else document.getElementById('check11').checked=true" />
                 </td>
-                <tr><td><input type="checkbox" id="check12" name="check12" /> City: <input type="text" name="city" onkeyup="if(this.value=='')document.getElementById('check12').checked=false; 
+                <tr><td><input type="checkbox" id="check9" name="check9" /> City: <input type="text" name="city" onkeyup="if(this.value=='')document.getElementById('check12').checked=false; 
                     else document.getElementById('check12').checked=true"/>
                     </td></tr>
-                <tr><td><input type="checkbox" id="check13" name="check13" /> County: <input type="text" name="county" onkeyup="if(this.value=='')document.getElementById('check13').checked=false; 
-                    else document.getElementById('check13').checked=true"/>
-                    </td></tr>
-                <tr><td><input type="checkbox" id="check14" name="check14" /> State:
+                <tr><td><input type="checkbox" id="check10" name="check10" /> State:
                         <select name="state" onmouseup="if(this.value=='')document.getElementById('check14').checked=false;
                             else document.getElementById('check14').checked=true">
                                     <?php
@@ -124,24 +111,24 @@
                                                                                           <?php } ?>
                         </select>
                     </td></tr>
-                <tr><td><input type="checkbox" id="check15" name="check15" /> Zip: <input type="text" name="zip" onkeyup="if(this.value=='')document.getElementById('check15').checked=false; 
+                <tr><td><input type="checkbox" id="check11" name="check11" /> Zip: <input type="text" name="zip" onkeyup="if(this.value=='')document.getElementById('check15').checked=false; 
                     else document.getElementById('check15').checked=true"/>
                     </td></tr>
-                <tr><td><input type="checkbox" id="check16" name="check16" /> Phone 1: 
+                <tr><td><input type="checkbox" id="check12" name="check12" /> Phone 1: 
                         <input type="text" name="phone1" value="(e.g. 2071234567)" 
                                onfocus="if(this.value==this.defaultValue) value=''" onblur="if(this.value=='')value=this.defaultValue" 
                                onkeyup="if(this.value=='')document.getElementById('check16').checked=false; else document.getElementById('check16').checked=true" />
                     </td></tr>
-                <tr><td><input type="checkbox" id="check17" name="check17" /> Phone 2: 
+                <tr><td><input type="checkbox" id="check13" name="check13" /> Phone 2: 
                         <input type="text" name="phone2" value="(e.g. 2079876543)" 
                                onfocus="if(this.value==this.defaultValue) value=''" onblur="if(this.value=='')value=this.defaultValue" 
                                onkeyup="if(this.value=='')document.getElementById('check17').checked=false; else document.getElementById('check17').checked=true" />
                     </td></tr>
-                <tr><td><input type="checkbox" id="check18" name="check18" /> Email: <input type="text" name="email" 
+                <tr><td><input type="checkbox" id="check14" name="check14" /> Email: <input type="text" name="email" 
                                                                                             onkeyup="if(this.value=='')document.getElementById('check18').checked=false; 
                                                                                                 else document.getElementById('check18').checked=true"/>
                     </td></tr>
-                <tr><td valign=top><input style="position:relative;float:left" type="checkbox" id="check19" name="check19" />
+                <tr><td valign=top><input style="position:relative;float:left" type="checkbox" id="check15" name="check15" />
                         &nbsp;Notes: <textarea rows="5" cols="25" name="notes" onkeyup="if(this.value=='')document.getElementById('check19').checked=false; 
                             else document.getElementById('check19').checked=true"></textarea>
                     </td></tr>
