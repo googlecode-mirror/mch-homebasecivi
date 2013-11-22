@@ -57,7 +57,6 @@ function show_month($days, $month, $edit, $year, $group) {
     //     $free_hour[] = true;
 
     $crew_ids = $month->get_crews();
-echo "SESSION['mygroup'] = ".$_SESSION['mygroup'];
     $crews = array();
 
     foreach($crew_ids as $crew){
