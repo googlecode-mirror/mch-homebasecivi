@@ -21,6 +21,9 @@
 <div align="center" id="navigationLinks">
 
     <?PHP
+    //set the time zone for all pages
+    date_default_timezone_set("America/New_York"); 
+
     //Log-in security
     //If they aren't logged in, display our log-in form.
     if (!isset($_SESSION['logged_in'])) {
@@ -50,7 +53,7 @@
         $permission_array['personEdit.php'] = 2;
         $permission_array['viewSchedule.php'] = 2;
         $permission_array['addMonth.php'] = 2;
-        $permission_array['rmh.php'] = 2;
+        $permission_array['editCrew.php'] = 2;
         $permission_array['log.php'] = 2;
 
         //Check if they're at a valid page for their access level.

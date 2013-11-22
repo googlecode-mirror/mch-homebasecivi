@@ -16,8 +16,6 @@
 		for($i=0;$i<count($persons);++$i) {
 			$p=explode("+",$persons[$i]);
 			$s=$s."<tr><td width=\"150\" valign=\"top\"><br>&nbsp;".$p[1]." ".$p[2];
-			if ($p[3]!="()")
-				$s .= " ".$p[3];
 			$s = $s."</td><td><form method=\"POST\" style=\"margin-bottom:0;\">
 				<input type=\"hidden\" name=\"_submit_filled_slot_".$i."\" value=\"1\"><br>
 				<input type=\"submit\" value=\"Remove Person\" name=\"submit\">
