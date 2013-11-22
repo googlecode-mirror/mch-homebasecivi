@@ -78,7 +78,6 @@ session_cache_expire(30);
                     include_once('domain/Person.php');
 
                     $result = getonlythose_dbPersons($type, $status, $name, $day, $week);
-echo sizeof($result);
                     echo '<p><strong>Search Results:</strong> <p>Found ' . sizeof($result) . ' ' . $status . ' ';
                     if ($type != "")
                         echo $type . "s";
