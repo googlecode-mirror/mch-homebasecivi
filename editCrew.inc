@@ -163,19 +163,22 @@
 	function get_available_volunteer_options($day,$persons,$group){
 		if(!$persons[0])
 			array_shift($persons);
+		
+		$personsfixed = [];
+		foreach ($persons as $person) {
+			$pex = explode("+", $person);
+			$person = $pex[0];
+			array_push($personsfixed, $person);
+		}
+
 		$result = getall_availablegroup("volunteer", $day, $group);
 		$s="";
 		for($i=0;$i<mysql_num_rows($result);++$i) {
 			$row=mysql_fetch_row($result);
 			$value=$row[0]; //."+".$row[1]."+".$row[2];
 			$label=$row[2].", ".$row[1] ." ".$row[12];
-			$match=false;
-			for($j=0;$j<count($persons);++$j) {
-				if($value==$persons[$j]) {
-					$match=true;
-				}
-			}
-			if(!$match) {
+
+			if(!in_array($value, $personsfixed)) {
 				$s=$s."<option value=\"".$value."\">".$label."</option>";
 				$match=false;
 			}
@@ -183,27 +186,28 @@
 		return $s;
 	}
 
-	function get_all_volunteer_options($name,$day,$persons,$group) {
+	function get_all_volunteer_options($persons,$group) {
 		if(!$persons[0])
 			array_shift($persons);
+
+		$personsfixed = [];
+		foreach ($persons as $person) {
+			$pex = explode("+", $person);
+			$person = $pex[0];
+			array_push($personsfixed, $person);
+		}
+
 		$result = getall_typegroup("volunteer",$group);
 		$s="";
 		for($i=0;$i<mysql_num_rows($result);$i++) {
-		  $row=mysql_fetch_row($result);
-		//  if (!strpos($row[15],"manager")) {
+		  	$row=mysql_fetch_row($result);
 			$value=$row[0]; //."+".$row[1]."+".$row[2];
 			$label=$row[2].", ".$row[1] ." ".$row[12];
-			$match=false;
-			for($j=0;$j<count($persons);++$j) {
-				if($value==$persons[$j]) {
-					$match=true;
-				}
-			}
-			if(!$match) {
+
+			if(!in_array($value, $personsfixed)) {
 				$s=$s."<option value=\"".$value."\">".$label."</option>";
 				$match=false;
 			}
-		//  }
 		}
 		return $s;
 	}
