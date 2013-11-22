@@ -108,8 +108,6 @@ function get_crewinfo($crews, $day){
             foreach($cgp as $person_id){
                 $id_exploded = explode("+", $person_id);
                 $display_name = $id_exploded[1]. " " . $id_exploded[2];
-                if ($id_exploded[3]!="()")
-					$display_name = $id_exploded[3]." ".$display_name;
 				$info = $info . $display_name . "<br>&nbsp;&nbsp;";
             }
 

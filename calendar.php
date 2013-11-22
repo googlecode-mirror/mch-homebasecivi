@@ -17,6 +17,23 @@ session_cache_expire(30);
     <title>Calendar viewing</title>
     <link rel="stylesheet" href="styles.css" type="text/css" />
     <link rel="stylesheet" href="calendar.css?v=3" type="text/css" />
+    <!-- CSS for printing the calendar -->
+    <style>
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #calendar, #calendar * {
+                visibility: visible;
+            }
+            #calendar {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+            @page { size: landscape; }
+        }
+    </style>
 </head>
 <body>
     <div id="container">
@@ -68,6 +85,11 @@ session_cache_expire(30);
                     $month_nav = do_month_nav($month, $edit, $group);
                     echo $month_nav;
 
+                    ?>
+
+                    <button id="printcal" onclick="printpage()">Print Calendar</button><script>function printpage(){window.print();}</script>
+
+                    <?PHP
                     echo '<form method="POST">';
                     show_month($days, $month, $edit, $year, $group);
                     if ($edit == true && !($days[6]->get_year() < $year || ($days[6]->get_year() == $year) ) && $_SESSION['access_level'] >= 2)

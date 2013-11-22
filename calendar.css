@@ -27,6 +27,11 @@ table#shiftbox td{
 	//border-style: none;
 }
 
+button#printcal {
+	position:relative;
+	left:84%;
+}
+
 table#calendar {
 	background-color:white;
 	width:950px;
