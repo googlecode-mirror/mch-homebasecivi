@@ -36,8 +36,8 @@
 		<li>   <a href="?helpPage=masterSchedule.php">Working with the Master Schedule</a> (Staff Only)</li><br>
 		<li>	<strong>Working with the Volunteer Database</strong> (Staff Only)</li><br>
 			<ul><li><a href="?helpPage=searchPeople.php">Searching for People</a></li>
-			    <li><a href="?helpPage=edit.php">Editing People</a></li>
-			    <li><a href="?helpPage=rmh.php">Adding People </a></li>
+			    <li><a href="?helpPage=editPerson.php">Editing People</a></li>
+			    <li><a href="?helpPage=addPerson.php">Adding People </a></li>
 			</ul><br>
 		 
 </ol>
