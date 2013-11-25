@@ -38,11 +38,11 @@ session_cache_expire(30);
                 if (sizeof($result) == 0) {
                 	$result[] = retrieve_dbMonths($month_id); // create a new month as needed
                 }
-                
                 // publishes a month if the user is a manager
                 if ($_GET['publish'] && $_SESSION['access_level'] >= 2) {
-                    $id = $_GET['publish'];
-                    $month = retrieve_dbMonths($id);
+                	$id = $_GET['publish'];
+                    $monthid = $_GET['monthid'];
+                    $month = retrieve_dbMonths($monthid);
                     if ($month->get_status() == "unpublished")
                         $month->set_status("published");
                     else if ($month->get_status() == "published")
@@ -56,7 +56,7 @@ session_cache_expire(30);
                 }
                 // removes a month if user is a manager
                 else if ($_GET['remove'] && $_SESSION['access_level'] >= 2) {
-                    $id = $_GET['remove'];
+                    $id = $_GET['monthid'];
                     $month = retrieve_dbMonths($id);
                     if ($month) {
                       if ($month->get_status() == "unpublished" || $month->get_status() == "archived") {
@@ -72,21 +72,10 @@ session_cache_expire(30);
                 else if (!array_key_exists('_submit_check_newmonth', $_POST)) {
                     include('addMonth.inc');
                 } else {
-                	$month_id = $_GET['_new_month_timestamp'];
-                    generate_populate_and_save_new_month($month_id);
-                    include('addMonth.inc');
-                }
-                
-                // for the given id, deletes ande regenerates a new month in dbMonths,
-                // and a new set of crews in dbCrews, using the master schedule
-                // 
-                function generate_populate_and_save_new_month($month_id) {
-                	if ($_SESSION['access_level'] < 2)
-                        return null;
-                    $themonth = retrieve_dbMonths($month_id);
-                    delete_dbMonths($themonth);
-                    $newmonth = retrieve_dbMonths($month_id);
-                    add_log_entry('<a href=\"personEdit.php?id=' . $_SESSION['_id'] . '\">' . $_SESSION['f_name'] . ' ' . $_SESSION['l_name'] . '</a> generated a new month: <a href=\"calendar.php?id=' . $newmonth->get_id() . '&edit=true\">' . $newmonth->get_name() . '</a>.');        
+                	$month_id = $_POST['_new_month_timestamp'];
+                	// add the newe month to the database and refresh the view
+                	newMonth($month_id);
+                	include('addMonth.inc');
                 }
                 ?>
                 <?PHP include('footer.inc'); ?>

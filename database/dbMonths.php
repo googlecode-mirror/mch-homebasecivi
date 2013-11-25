@@ -58,7 +58,6 @@ function insert_dbMonths($month) {
             $month->get_end_of_month_timestamp() .
             "');";
 
-
     $result = mysql_query($query);
 
     if (!$result) {
