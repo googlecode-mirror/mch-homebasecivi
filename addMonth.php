@@ -30,8 +30,10 @@ session_cache_expire(30);
                 // connects to the database to see if there are any months in the dbMonths table
                 $group = $_GET['group'];
                 $month_id = $_GET['monthid'];
+                $archive = $_GET['archive'];
                 $groups = array("foodbank"=>"Food Bank", "foodpantry"=>"Food Pantry","soupkitchen"=>"Soup Kitchen");
                 $result = getall_dbMonths($group);
+                
             // If no months exist, then create the current one
                 if (sizeof($result) == 0) {
                 	$result[] = retrieve_dbMonths($month_id); // create a new month as needed
@@ -70,14 +72,15 @@ session_cache_expire(30);
                 else if (!array_key_exists('_submit_check_newmonth', $_POST)) {
                     include('addMonth.inc');
                 } else {
-                    generate_populate_and_save_new_month($month_id, $group);
+                	$month_id = $_GET['_new_month_timestamp'];
+                    generate_populate_and_save_new_month($month_id);
                     include('addMonth.inc');
                 }
                 
-                // for the given group and id, deletes ande regenerates a new month in dbMonths,
+                // for the given id, deletes ande regenerates a new month in dbMonths,
                 // and a new set of crews in dbCrews, using the master schedule
                 // 
-                function generate_populate_and_save_new_month($month_id, $group) {
+                function generate_populate_and_save_new_month($month_id) {
                 	if ($_SESSION['access_level'] < 2)
                         return null;
                     $themonth = retrieve_dbMonths($month_id);

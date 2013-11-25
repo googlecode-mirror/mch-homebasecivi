@@ -31,8 +31,8 @@
 
 					//person editing, searching, viewing
 					$assocHelp['searchPeople.php']='searchPersonHelp.inc.php';
-					$assocHelp['edit.php']='editPersonHelp.inc.php';
-					$assocHelp['rmh.php']='addPersonHelp.inc.php';
+					$assocHelp['editPerson.php']='editPersonHelp.inc.php';
+					$assocHelp['addPerson.php']='addPersonHelp.inc.php';
 
 					//schedule and calendar managing
 					$assocHelp['calendar.php']='viewCalendarHelp.inc.php';

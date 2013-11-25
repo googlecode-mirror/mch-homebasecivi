@@ -96,11 +96,10 @@ function retrieve_dbMonths($id) {
 
 function getall_dbMonths($group) {
     connect();
-    $query = "SELECT * FROM dbMonths WHERE `group` = '".$group."' ORDER BY end_of_month_timestamp";
+    $query = "SELECT * FROM dbMonths where `group` = '".$group."' order by end_of_month_timestamp";
     $result = mysql_query($query);
     $theMonths = array();
-    for ($i=0; $i<sizeof($result); $i++) {
-    	$result_row = mysql_fetch_assoc($result);
+    while ($result_row = mysql_fetch_assoc($result)) {
     	$theMonth = new Month($result_row['id'], $result_row['status']);
         $theMonths[] = $theMonth;
     }
