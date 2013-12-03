@@ -164,7 +164,7 @@
 		if(!$persons[0])
 			array_shift($persons);
 		
-		$personsfixed = [];
+		$personsfixed = array();
 		foreach ($persons as $person) {
 			$pex = explode("+", $person);
 			$person = $pex[0];
@@ -190,7 +190,7 @@
 		if(!$persons[0])
 			array_shift($persons);
 
-		$personsfixed = [];
+		$personsfixed = array();
 		foreach ($persons as $person) {
 			$pex = explode("+", $person);
 			$person = $pex[0];
