@@ -43,7 +43,7 @@ session_cache_expire(30);
             		include_once('database/dbMonths.php');
                     include_once('database/dbCrews.php');
                     include_once('database/dbPersons.php');
-                    include_once('database/dbLog.php');                    
+                    include_once('database/dbLog.php');
                     
 				// checks to see if in edit mode
                     $edit = $_GET['edit'];
@@ -57,7 +57,7 @@ session_cache_expire(30);
                     } else {
                         $group = "foodbank";
                     }
-                    
+
                     $monthid = $_GET['month']."-".$group;
                     $explode_month = explode("-", $_GET['month']);
                     $year = "20" . $explode_month[0];
