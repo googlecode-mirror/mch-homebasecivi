@@ -24,9 +24,7 @@
 			            <td><input type="text" name="user" tabindex="1"></td></tr>
 			        <tr><td>Password:</td><td><input type="password" name="pass" tabindex="2"></td></tr>
 			        <tr><td colspan="2" align="center"><input type="submit" name="Login" value="Login"></td></tr></table>
-		<p>If you are a <i>new applicant</i>, you can sign in with the Username <strong>guest</strong> and no Password.
-		Once you sign in you will be able to fill out and submit an application form on-line.
-			<p>If you are a <i>volunteer or staff member</i>, your Username is your first name followed by your phone number with no spaces.
+			<p>Your Username is your first name followed by your phone number with no spaces.
 			<ul><li>For example, if your first name is John and your phone number is (207)-123-4567, your Username would be <strong>John2071234567</strong>.
 				<li>Remember that your Username and Password are <em>case-sensitive</em>.
 				<li>If you mistype your Username or Password, the following error message will appear:

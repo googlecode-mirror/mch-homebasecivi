@@ -17,7 +17,6 @@
         echo('<div align="left"><p>Access to Homebase requires a Username and a Password. ' .
         '<ul>'
         );
-        echo('<li>If you are applying for a volunteer position, enter the Username \'guest\' and a blank Password. ');
         echo('<li>If you are a volunteer logging in for the first time, your Username is your first name followed by your phone number. ' .
         'After you have logged in, you can change your password.  ');
         echo('(If you are having difficulty logging in or if you have forgotten your Password, please contact the <a href="mailto:housemgr@rmhportland.org"><i>House Manager</i></a>.) ');

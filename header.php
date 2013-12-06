@@ -41,7 +41,6 @@
         //pages guests are allowed to view
         $permission_array['index.php'] = 0;
         $permission_array['about.php'] = 0;
-        $permission_array['apply.php'] = 0;
         //pages volunteers can view
         $permission_array['help.php'] = 1;
         $permission_array['view.php'] = 1;
@@ -85,7 +84,7 @@
         if ($_SESSION['access_level'] >= 2) {
             echo('| <a href="' . $path . 'viewSchedule.php?group=foodbank"><strong>master schedule</strong></a>');
             echo('<br><strong>volunteers :</strong> <a href="' . $path . 'personSearch.php">search</a>, 
-			        <a href="personEdit.php?id=' . 'new' . '">add, </a> <a href="viewScreenings.php?type=new">screenings</a> | ');
+			        <a href="personEdit.php?id=' . 'new' . '">add </a> | ');
             echo('<a href="' . $path . 'dataSearch.php"><strong>reports</strong></a> ');
         }
     }
