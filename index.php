@@ -46,8 +46,6 @@ session_cache_expire(30);
 							This is your personal homepage:
 							your upcoming scheduled crews will always be posted here.
 						');
-                    if ($_SESSION['access_level'] == 0)
-                        echo('<p> To apply for a volunteer position at MCHPP, select <a href="' . $path . 'personEdit.php?id=' . 'new' . '">apply</a>.');
                     ?>
 
                     <br>If you just want an overview of Homebase, select <a href="<?php echo($path); ?>dataSearch.php">about</a>.
@@ -108,8 +106,8 @@ session_cache_expire(30);
                                 $crew_day = get_crew_day($crew);
                                 $crew_year = get_crew_year($crew);
 
-                                $crew_time_s = get_crew_start($crew);
-                                $crew_time_e = get_crew_end($crew);
+                                //$crew_time_s = get_crew_start($crew);
+                                //$crew_time_e = get_crew_end($crew);
 
                                 $cur_month = date("m");
                                 $cur_day = date("d");
@@ -175,38 +173,6 @@ session_cache_expire(30);
                                 }
                                 echo('</ul></p></div><br>');
                             }
-                            //active applicants
-                            connect();
-                            $app_query = "SELECT first_name,last_name,id FROM dbPersons WHERE status LIKE '%applicant%' order by last_name";
-                            $applicants_tab = mysql_query($app_query);
-                         //   if (mysql_num_rows($applicants_tab) > 0) {
-                                echo('<div class="applicantsBox"><p><strong>Open Applications:</strong><ul>');
-                                while ($thisRow = mysql_fetch_array($applicants_tab, MYSQL_ASSOC)) {
-                                    echo('<li type="circle"><a href="' . $path . 'personEdit.php?id=' . $thisRow['id'] . '">' . $thisRow['first_name'] . ' ' . $thisRow['last_name'] . '</a></li>');
-                                }
-                                echo('</ul></p></div><br>');
-                        //    }
-                            mysql_close();
-                        //volunteer birthdays and anniversary days
-                            connect();
-                            $anniv_query = "SELECT id,first_name,last_name,birthday,start_date FROM dbPersons WHERE status LIKE '%active%'";
-                            $anniversaries = mysql_query($anniv_query);
-                            if (!$anniversaries)
-                                echo mysql_error();
-                            if (mysql_num_rows($anniversaries) > 0) {
-                                echo('<div class="anniversaryBox">');
-                                echo('<p><strong>Upcoming Birthdays and Anniversaries:</strong>');
-
-                                echo('<table class="searchResults"><tr><td class="searchResults"><u>Name</u></td><td class="searchResults"><u>Birthday</u></td><td class="searchResults"><u>Start Date</u></td></tr>');
-                                while ($thisRow = mysql_fetch_array($anniversaries, MYSQL_ASSOC)) {
-                                	$birthday_val = mktime(0, 0, 0, substr($thisRow['birthday'], 0, 2), substr($thisRow['birthday'], 3, 2), date('y'));
-                                	$startdate_val = mktime(0, 0, 0, substr($thisRow['start_date'], 0, 2), substr($thisRow['start_date'], 3, 2), date('y'));
-                                    if (($birthday_val >= $today && $birthday_val <= $two_weeks) || ($startdate_val >= $today && $startdate_val <= $two_weeks))
-                                        echo('<tr><td class="searchResults"><a href="personEdit.php?id=' . $thisRow['id'] . '">' . $thisRow['first_name'] . ' ' . $thisRow['last_name'] . '</a></td><td class="searchResults">' . $thisRow['birthday'] . '</td><td class="searchResults">' . $thisRow['start_date'] . '</td></tr>');
-                                }
-                                echo('</table></p></div><br>');
-                            }
-                            mysql_close();
                             
                         // active volunteers who haven't worked recently
                             $everyone = getall_names("active", "volunteer");
