@@ -32,6 +32,14 @@ $_SESSION['logged_in'] = 1;
                     die("<p>Only managers can view the master schedule.</p>");
                 }
                 $this_group = $_GET["group"];
+                $groups = ['foodbank', 'foodpantry', 'soupkitchen'];
+                echo("<p style='width:40%;text-align:center;margin:0 auto;'><strong>Wrong schedule? Go to: ");
+                foreach ($groups as $group) {
+                    if($group != $this_group) {
+                        echo("<a href='/viewSchedule.php?group=".$group."'>".$group."  </a>");
+                    }
+                }
+                echo("</strong></p>");
                 show_master_month($this_group);
                 ?>
             </div>
