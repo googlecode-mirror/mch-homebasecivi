@@ -6,14 +6,14 @@
 
 	<p>  <b>Step 2:</b>  You will then see the calendar on the screen.  Here is an example calendar for the week beginning March 14, 2011.
 	Notice that <b>Vacancies</b> are highlighted for each crew that isn't full.'<BR><BR>
-		<img src="tutorial/screenshots/managecalendar1.png" width="10%" border="1px" align="middle"></a>
+		<img src="tutorial/screenshots/managecalendar1.png" width="400px" border="1px" align="middle"></a>
 
 	<p> <B>Step 3:</B> You can view the calendar schedule for future and previous weeks by selecting the <strong>Next Week &gt&gt</strong>
 			 or <strong>&lt&lt Previous Week</strong> button on the top right or left corner of the calendar, like this:<BR><BR>
-		<img src="tutorial/screenshots/managecalendar2.png" width="10%" border="1px" align="middle"></a>
+		<img src="tutorial/screenshots/managecalendar2.png" width="400px" border="1px" align="middle"></a>
 
 	<p> <B>Step 4:</B> To make any calendar changes, you must first select <strong>(edit this month)</strong> at the top of the calendar, like this:<BR><BR>
-		<img src="tutorial/screenshots/managecalendar3.png" width="10%" border="1px" align="middle"></a>
+		<img src="tutorial/screenshots/managecalendar3.png" width="400px" border="1px" align="middle"></a>
 
 	<p> Managers make the following changes on any calendar:
 			<ul>

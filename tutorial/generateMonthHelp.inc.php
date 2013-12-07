@@ -4,11 +4,11 @@
 	<p> To begin this activity, select <B>(manage weeks)</B> at the top of any calendar page, like this:<BR><BR>
 		<a href="tutorial/screenshots/managecal1.png" class="image" title="managecal1.png"
 			target="tutorial/screenshots/managecal1.png">
-		   <img src="tutorial/screenshots/managecal1.png" width="10%" border="1px"></a>
+		   <img src="tutorial/screenshots/managecal1.png" width="400px" border="1px"></a>
 	</p> <p>You should then see this page:
 		<a href="tutorial/screenshots/managecal2.png" class="image" title="managecal2.png"
 			target="tutorial/screenshots/managecal2.png">
-		 &nbsp&nbsp&nbsp&nbsp<img src="tutorial/screenshots/managecal2.png" width="10%" border="1px" align="center"></a>
+		 &nbsp&nbsp&nbsp&nbsp<img src="tutorial/screenshots/managecal2.png" width="400px" border="1px" align="center"></a>
 		 <p>Each calendar week in this list has the status <i>archived</i>, <i>published</i>, or <i>unpublished</i>.
 					 <ul>
 					 An <i>archived</i> week is any week that is fully in the past (as of the current date) -- its calendar cannot be changed.
@@ -36,7 +36,7 @@
 				<p> <B>Step 0:</B> (<i>You will do this step only once.</i>)  When the system is first installed and you select <B>(manage weeks)</B>  on the
 				at the top of the calendar, you will see the following form:<p>
 					<a href="tutorial/screenshots/managecal3.png" class="image" title="managecal3.png" horizontalalign="center">
-					 &nbsp&nbsp&nbsp&nbsp <img src="tutorial/screenshots/managecal3.png" width="10%" border="1px" align="middle"></a>
+					 &nbsp&nbsp&nbsp&nbsp <img src="tutorial/screenshots/managecal3.png" width="400px" border="1px" align="middle"></a>
 				<p> This form asks you to select the Month, Day, Year, Weekday Group, Weekend Group, and Family Room Group that will be used to
 				populate the <i>very first</i> week on your calendar.
 
@@ -44,16 +44,16 @@
 				calendar week, and it should be populated with volunteers from Weekday Group 1, Weekend Group 1, and Family Room Group 1 from the Master Schedule.
 				When you hit <b>submit</b>, the first week of your calendar will be populated and the following 1-row table will appear:<p>
 				<a href="tutorial/screenshots/managecal4.png" class="image" title="manageCal4.png" >
-			    &nbsp&nbsp&nbsp&nbsp<img src="tutorial/screenshots/manageCal4.png" width="10%" border="1px" align="middle"></a>
+			    &nbsp&nbsp&nbsp&nbsp<img src="tutorial/screenshots/manageCal4.png" width="400px" border="1px" align="middle"></a>
 
 				<p> <B>Step 1:</B> At any time in the future, you can use the <strong>Add new week</strong> button to generate and populate the next successive week on the calendar with volunteers from the Master Schedule.
 					<p><a href="tutorial/screenshots/managecal4.png" class="image" title="managecal4.png"
 	        			target="tutorial/screenshots/managecal4.png">
-			 		&nbsp&nbsp&nbsp&nbsp <img src="tutorial/screenshots/managecal4.png" width="10%" border="1px" align="bottom"></a>
+			 		&nbsp&nbsp&nbsp&nbsp <img src="tutorial/screenshots/managecal4.png" width="400px" border="1px" align="bottom"></a>
 				<p> <B>Step 2:</B> So here is the result of adding the next calendar week following the week of September 29.<p>
 					<a href="tutorial/screenshots/managecal5.png" class="image" title="managecal5.png" horizontalalign="center"
 						target="tutorial/screenshots/managecal5.png">
-					 &nbsp&nbsp&nbsp&nbsp <img src="tutorial/screenshots/managecal5.png" width="10%" border="1px" align="middle"></a>
+					 &nbsp&nbsp&nbsp&nbsp <img src="tutorial/screenshots/managecal5.png" width="400px" border="1px" align="middle"></a>
 				<p> &nbsp&nbsp&nbsp Notice that this new week is populated with a different Weekday/Weekend/Family Room group from the Master Schedule.
 				Since there are two weekday groups on the master schedule, each shift's volunteers in Group One (or Group Two) are scheduled every other week.
 				<br>Notice also that you may choose which group is scheduled before adding a new week.  Before you click the button, simply choose the weekday group, weekend group
@@ -80,8 +80,8 @@
 				 <p> For example, here is what you see when you unpublish a published week on the calendar:<p>
 				 <a href="tutorial/screenshots/managecal6.png" class="image" title="managecal6.png"
 		        		target="tutorial/screenshots/managecal6.png">
-				 &nbsp&nbsp&nbsp&nbsp<img src="tutorial/screenshots/managecal6.png" width="10%" border="1px" align="middle"></a>
+				 &nbsp&nbsp&nbsp&nbsp<img src="tutorial/screenshots/managecal6.png" width="400px" border="1px" align="middle"></a>
 				 <p>Hitting the <b>Back</b> button will return you to where you left off, like this:<p>
 				 <a href="tutorial/screenshots/managecal7.png" class="image" title="managecal7.png"
 		        		target="tutorial/screenshots/managecal7.png">
-				 &nbsp&nbsp&nbsp&nbsp<img src="tutorial/screenshots/managecal7.png" width="10%" border="1px" align="middle"></a>
+				 &nbsp&nbsp&nbsp&nbsp<img src="tutorial/screenshots/managecal7.png" width="400px" border="1px" align="middle"></a>
