@@ -8,13 +8,13 @@
 
 <p>You may change your password by entering it and then entering your new password twice.  After you
 change your password in this way, it will be known only to you.  If you forget your password, please contact
-the house manager. Until you change your password, this display continue to appear here.</p>
+the Operations Manager. Until you change your password, this display continue to appear here.</p>
 
 <p> <B>If you are a volunteer</B>, you will see a display of your upcoming scheduled shifts, which looks like this:</p>
 
 <br><img src="tutorial/screenshots/yourupcomingshifts.png" width="30%" border="1px" align="center"></br> 
 
-<p>If you need to cancel a shift, please call the front desk (302-656-4847).</p>
+<p>If you need to cancel a shift, please call the oFfice (207-725-2716).</p>
 
 <p> <B>If you are a manager</B>, you will also see the following current information displayed:</p>
 
