@@ -263,7 +263,7 @@ function phone_edit($phone) {
 	else return "";
 }
 
-function get_people_for_export($first_name, $last_name, $gender, $type, $status, $start_date, $street, $city, $county, $state, $zip, $phone1, $phone2, $email, $notes) {
+function get_people_for_export($first_name, $last_name, $role, $type, $status, $start_date, $street, $city, $state, $zip, $phone1, $phone2, $email, $notes) {
     connect();
     //hours_worked, day_of_the_week, month, employer_school...
     $query = "SELECT * FROM dbPersons WHERE first_name LIKE '%" . $first_name . "%' AND last_name LIKE '%" .

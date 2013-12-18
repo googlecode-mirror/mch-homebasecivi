@@ -64,12 +64,11 @@ echo('">');
             </table></td>
     </table>
     <table>
-        <td><input style="font-size:10px;margin-left:120px" type="button" id="check_all" name="check_all" value="Check All" 
-                   onclick="<?php for ($i = 1; $i < 20; $i++) {
-        if ($i < 7 || $i > 10) { ?>document.getElementById('e_check<?php echo($i); ?>').checked=true;<?php }
-    } ?>"/><br /></td>
-        <td><input style="font-size:10px; margin-left:-20px" type="reset" id="uncheck_all" name="uncheck_all" 
-                   value="Uncheck All" /><br /></td>
+        <td>
+            <input style="font-size:10px;margin-left:120px" type="button" id="check_all" name="check_all" value="Check All" onclick="
+                <?php for ($i = 1; $i < 20; $i++) { ?>document.getElementById('e_check<?php echo($i); ?>').checked=true;<?php } ?>"/><br />
+        </td>
+        <td><input style="font-size:10px; margin-left:-20px" type="reset" id="uncheck_all" name="uncheck_all" value="Uncheck All" /><br /></td>
     </table>
 
     <input style="font-size:15px;margin-left:180px" type="submit" id="export_data" name="export_data" value="Export to CSV" />
