@@ -1,22 +1,14 @@
 <?php
-
-/**
- * This class will be most of what we need for the Crew class from the design document.
- * It already has an ID and an array of persons, and generally represents a group of people working
- * together so it should be a good fir for conversion into the required Crew class. 
- * It will probably no longer need variables $venue, $sub_call_list, and possibly others.
- * @author Brian, Simon
- * @version Sept. 20, 2013
-**/
-
-
 /*
- * Copyright 2008 by Oliver Radwan, Maxwell Palmer, Nolan McNair,
- * Taylor Talmage, and Allen Tucker.  This program is part of RMH Homebase.
+ * Copyright 2013 by Brian Jacobel, Oliver Fisher, and Simon Brooks.
+ * This program is part of RMH Homebase.
  * RMH Homebase is free software.  It comes with absolutely no warranty.
  * You can redistribute it and/or modify it under the terms of the GNU
  * General Public License as published by the Free Software Foundation
  * (see <http://www.gnu.org/licenses/ for more information).
+ * 
+ * Based on work by Oliver Radwan, Maxwell Palmer, Nolan McNair,
+ * Taylor Talmage, and Allen Tucker.
  */
 
 /*

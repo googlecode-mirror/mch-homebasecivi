@@ -2,6 +2,7 @@
 /*
  * Created on April 1, 2012
  * @author Judy Yang <jyang2@bowdoin.edu>
+ * Updated Dec 2013 by Brian Jacobel
  */
 
 session_start();
