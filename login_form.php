@@ -52,7 +52,7 @@
                     $_SESSION['type'] = $person->get_type();
                     $mygroup = $person->get_group();
                     if (sizeof($mygroup)==0)
-                    	$_SESSION['mygroup'] = "";	
+                    	$_SESSION['mygroup'] = "foodbank";	
                     else 
                     	$_SESSION['mygroup'] = $mygroup[0];
                     $_SESSION['_id'] = $_POST['user'];

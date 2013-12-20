@@ -70,20 +70,20 @@ session_cache_expire(30);
                         $persons = get_persons($group, $day, $week_no);
                         echo ("<br><table align=\"center\" width=\"450\" border=\"1px\"><tr><td align=\"center\" colspan=\"2\"><b>
 								Editing master schedule crew for " . 
-                        do_group_name($group) . ", " . do_week_name($week_no) . " " . do_day_name($day) . "
+                        do_group_name($group) . "<br>" . do_week_name($week_no) . " " . do_day_name($day) . "
 								</b>
 								<form method=\"POST\" style=\"margin-bottom:0;\">
 									<input type=\"hidden\" name=\"_submit_remove_crew\" value=\"1\"><br>
 									<input type=\"submit\" value=\"Remove Entire Crew\"
 									name=\"submit\">
-									</form><br>
+									</form>
 								</td></tr>"
                         . "<tr><td valign=\"top\"><br>&nbsp;" . do_slot_num($group, $day, $week_no) . "</td><td>
 									<form method=\"POST\" style=\"margin-bottom:0;\">
 									<input type=\"hidden\" name=\"_submit_add_slot\" value=\"1\"><br>
 									<input type=\"submit\" value=\"Add Slot\"
 									name=\"submit\" style=\"width: 250px\">
-									</form><br></td></tr>");
+									</form></td></tr>");
                         echo (display_filled_slots($persons)
                         . display_vacant_slots(get_total_vacancies($group, $day, $week_no))
                         . "</table>");
@@ -152,7 +152,7 @@ session_cache_expire(30);
                     return $group_names[$id];
                 }
 				function do_day_name($id) {
-                    $day_names = array ("Mon"=>"Monday", "Tue"=>"Tuesday", "Wed"=>"Wednesday", "Thu"=>"Thursday", "Fri"=>"Friday", "Sat"=>"Saturday", "Sun"=>"Sunday");
+                    $day_names = array ("Mon"=>"Monday", "Tue"=>"Tuesday", "Wed"=>"Wednesday", "Wed930"=>"Wednesday 9:30", "Wed1100"=>"Wednesday 11:00", "Thu"=>"Thursday", "Fri"=>"Friday", "Sat"=>"Saturday", "Sun"=>"Sunday");
                     return $day_names[$id];
                 }
                 function do_week_name($id) {
@@ -181,7 +181,7 @@ session_cache_expire(30);
 				<form method=\"POST\" style=\"margin-bottom:0;\">
 				<input type=\"hidden\" name=\"_submit_filled_slot_" . $i . "\" value=\"1\"><br>
 				<input type=\"submit\" value=\"Remove Person / Create Vacancy\" name=\"submit\" style=\"width: 250px\">
-			</form><br></td></tr>";
+			</form></td></tr>";
                     }
                     return $s;
                 }
@@ -196,7 +196,7 @@ session_cache_expire(30);
 				<form method=\"POST\" style=\"margin-bottom:0;\">
 				<input type=\"hidden\" name=\"_submit_ignore_vacancy\" value=\"1\">
 				<input type=\"submit\" value=\"Remove Vacant Slot\" name=\"submit\" style=\"width: 250px\"></form>
-				<br></td></tr>";
+				</td></tr>";
                     }
                     return $s;
                 }

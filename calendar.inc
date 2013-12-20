@@ -41,7 +41,7 @@ function do_month_nav($month, $edit, $group) {
     else $s = $s . "&edit=false";
     $s = $s . "\" id=\"weeknavlink\">Next Month>></a>";
 
-    $s = $s . "</td></tr></table></p><br><br>";
+    $s = $s . "</td></tr></table></p>";
     
     return $s;
 }
@@ -52,45 +52,68 @@ function do_month_nav($month, $edit, $group) {
 function show_month($days, $month, $edit, $year, $group) {
     // gets all of the dates for this week
     // sets up the table, with title, and then day of month
-    // $free_hour = array();
-    // for ($i = 0; $i < 91; $i++)
-    //     $free_hour[] = true;
-
+	$groups = array('foodbank'=>'Food Bank', 'foodpantry'=>'Food Pantry', 'soupkitchen'=>'Soup Kitchen');
     $crew_ids = $month->get_crews();
     $crews = array();
-
     foreach($crew_ids as $crew){
     	if (select_dbCrews($crew)!=null)
         	array_push($crews, select_dbCrews($crew));
         else array_push($crews, new Crew(substr($crew,0,6),substr($crew,9),0,array(),"",""));
     }
 
-    $startday = date("w", mktime(0, 0, 0, $month->get_month_number(), 1, $year));
-
+    $startday = $startindex = date("w", mktime(0, 0, 0, $month->get_month_number(), 1, $year));
+    if ($group=="foodpantry" && $startday==3) 
+			$startindex=2;
+// echo 'startday='.$startday.' startindex='.$startindex;
     echo ('<table id="calendar" align="center" ><tr class="weekname"><td colspan="16" ' .
-    'align="center" >' . ucfirst($group) . ' Calendar: ' . $month->get_name() . '</td></tr>');
+    'align="center" >' . $groups[$group] . ' Calendar ' . $month->get_name() . '</td></tr>');
 
-    $daynames = array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
-
-    foreach($daynames as $name)
+    $daynames = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+	$fpdaynames = array("Monday", "Tuesday", "Wednesday 9:30", "Wednesday 11:00", "Thursday", "Friday", "Saturday");
+    if ($group=="foodpantry")
+    	$thisdaynames = $fpdaynames;
+    else $thisdaynames = $daynames;
+    foreach($thisdaynames as $name)
         echo ('<td class="dow">&nbsp; ' . $name . '</td>');
-
-    // TABLE STARTS HERE
-    
-    // days of the "month" that actually belong to the last month
     echo("<tr>");
-    for ($i = 0; $i < $startday; $i++) {
-        echo("<td class='dow'></td>");
+    // days of the "month" that actually belong to the last month
+    if ($startday>=2) {
+     	for ($i = 1; $i < $startday; $i++) 
+        	echo("<td class='dow'></td>");
     }
-
-    // actual days of the month
+    if ($group=="foodpantry" && $startday>3) 
+    	echo("<td class='dow'></td>");
     for ($i = 0; $i < count($days); $i++) {
-        if(($i+$startday)%7==0){
+    	if(($i+$startday)%7==0)  // skip sundays
+    		continue;
+        if(($i+$startday)>6 && ($i+$startday)%7==1){ // new row on successive mondays
             echo("<tr>");
         }
-        echo("<td class='cell'><p class='date'>".$days[$i]."</p><br/>".get_crewinfo($crews, $days[$i])."</td>");
-        if(($i+$startday)%7==7){
-            echo("</tr>");
+        if ($group=="foodpantry") {
+          if (($i+$startday)%7==2) { // skip Tuesdays
+          	  echo("<td class='cell'><p class='date'>".($days[$i])."</p><br/>"."</td>");
+          }
+          else if (($i+$startday)%7==3) { // handle Wednesdays
+            if ($startday==$startindex) { // real start day is Tuesday
+          	  echo("<td class='cell'><p class='date'>".($days[$i])."</p><br/>".get_crewinfo($crews, $days[$i-1])."</td>");
+        	  echo("<td class='cell'><p class='date'>"."</p><br/>".get_crewinfo($crews, $days[$i])."</td>");
+            }
+            else {  // real start day is Wednesday
+              echo("<td class='cell'><p class='date'>".($days[$i])."</p><br/>".get_crewinfo($crews, $days[$i])."</td>");
+        	  echo("<td class='cell'><p class='date'>"."</p><br/>".get_crewinfo($crews, $days[$i+1])."</td>");
+            }
+          }
+          else if (($i+$startday)%7==6 && $startday!=$startindex)  // handle saturdays when real start day is Wednesday
+              echo("<td class='cell'><p class='date'>".($days[$i])."</p><br/></td>");
+          else if (($i+$startday)%7==1 && $startday!=$startindex) // handle mondays when real start day is Wednesday      	  
+              echo("<td class='cell'><p class='date'>".$days[$i]."</p><br/>".get_crewinfo($crews, $days[$i+1])."</td>");
+          else 
+          	  echo("<td class='cell'><p class='date'>".$days[$i]."</p><br/>".get_crewinfo($crews, $days[$i])."</td>");
+        }
+        else 
+          echo("<td class='cell'><p class='date'>".$days[$i]."</p><br/>".get_crewinfo($crews, $days[$i])."</td>");
+        if(($i+$startday)%7==6){
+          echo("</tr>");     // end row on saturdays
         }
     }
     echo "</table>";
@@ -110,9 +133,8 @@ function get_crewinfo($crews, $day){
                 $display_name = $id_exploded[1]. " " . $id_exploded[2];
 				$info = $info . $display_name . "<br>&nbsp;&nbsp;";
             }
-
-            $info = $info . "<strong>Vacancies (" . $crew->num_vacancies() . ")</strong><br>";
-                
+			if ($crew->num_vacancies()>0)
+            	$info = $info . "<strong>Vacancies (" . $crew->num_vacancies() . ")</strong><br>";    
             return $info."</a>";
         }
     }

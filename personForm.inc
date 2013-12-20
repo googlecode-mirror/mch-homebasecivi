@@ -140,9 +140,9 @@ foreach ($groups as $key => $value) {
     }
 }
 
-$roles = array('CC' => 'Crew Chief ', 'B' => "Boxes", 'D' => "Driver", 'P' => "Prep",
-				'I' => 'Intake', 'M' => "Meat", 'PR' => "Produce", 'CA' => "Carryout",
-				'C' => 'Chef', 'PO' => "Pots", 'DI' => "Dishes");
+$roles = array('CC' => 'Crew Chief/Chef', 'B' => "Boxes", 'DD' => "Delivery Driver", 'PR' => "Prep",
+				'I' => 'Intake', 'M' => "Meat", 'P' => "Produce", 'C' => "Carryout",
+				'Pots' => "Pots", 'Dishes' => "Dishes");
 echo('<p>Role(s):&nbsp;');
 //echo('<span style="font-size:x-small;color:FF0000">*</span>');
 $i=1;
@@ -151,8 +151,8 @@ foreach ($roles as $key => $value) {
         echo ('<input type="checkbox" name="role[]" value="' . $key . '" checked>'. $value . ' ('.$key.') </input>&nbsp;&nbsp;&nbsp;&nbsp;');
     else
         echo ('<input type="checkbox" name="role[]" value="' . $key . '">'. $value . ' ('.$key.') </input>&nbsp;&nbsp;&nbsp;&nbsp;');
-    if ($i%4==0) echo "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
     $i++;
+    if ($i%3==1 && $i<9) echo "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 }
 ?>
     <fieldset id='availability'>

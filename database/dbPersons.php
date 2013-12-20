@@ -233,15 +233,16 @@ function getall_availablegroup($type, $day, $group) {
 }
 
 // retrieve only those persons that match the criteria given in the arguments
-function getonlythose_dbPersons($type, $status, $name, $day, $week) {
+function getonlythose_dbPersons($type, $status, $group, $name, $day, $week) {
     connect();
     if ($type=="manager")
         {$string1 = " = '"; $string2 = "'";}
     else {$string1 = " LIKE '%"; $string2 = "%'";}
-    if ($day=="" || $week == "") $avail = "";
+    if ($day=="" && $week == "") $avail = "";
     	else $avail = $day . ":" . $week;
     $query = "SELECT * FROM dbPersons WHERE type ".$string1. $type . $string2 .
             " AND status LIKE '%" . $status . "%'" .
+            " AND `group` LIKE '%" . $group . "%'" .
             " AND (first_name LIKE '%" . $name . "%' OR last_name LIKE'%" . $name . "%')" .
             " AND availability LIKE '%" . $avail . "%'" .
             " ORDER BY last_name,first_name";

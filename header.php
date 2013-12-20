@@ -82,7 +82,8 @@
             echo(' | <a href="' . $path . 'calendar.php?month='.$month.'&edit=false"><strong>calendars</strong> </a>');
         }
         if ($_SESSION['access_level'] >= 2) {
-            echo('| <a href="' . $path . 'viewSchedule.php?group=foodbank"><strong>master schedule</strong></a>');
+        	$mygroup=$_SESSION['mygroup'];
+            echo('| <a href="' . $path . 'viewSchedule.php?group='.$mygroup.'"><strong>master schedule</strong></a>');
             echo('<br><strong>volunteers :</strong> <a href="' . $path . 'personSearch.php">search</a>, 
 			        <a href="personEdit.php?id=' . 'new' . '">add </a> | ');
             echo('<a href="' . $path . 'dataSearch.php"><strong>reports</strong></a> ');

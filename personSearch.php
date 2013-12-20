@@ -34,6 +34,10 @@ session_cache_expire(30);
                 '<option value="" SELECTED></option>' . '<option value="applicant">Applicant</option>' . '<option value="active">Active</option>' .
                 '<option value="LOA">On Leave</option>' . '<option value="former">Former</option>' .
                 '</select>');
+                echo('&nbsp;&nbsp;Group:<select name="s_group">' .
+                '<option value="" SELECTED></option>' . '<option value="foodbank">Food Bank</option>' .
+                '<option value="foodpantry">Food Pantry</option>' . '<option value="soupkitchen">Soup Kitchen</option>' .
+                '</select>');
                 echo '<p>Name (type a few letters): ';
                 echo '<input type="text" name="s_name">';
 
@@ -69,6 +73,7 @@ session_cache_expire(30);
                 if (@$_POST['s_submitted']) {
                     $type = $_POST['s_type'];
                     $status = $_POST['s_status'];
+                    $group = $_POST['s_group'];
                     $name = trim(str_replace('\'', '&#39;', htmlentities($_POST['s_name'])));
                     $day = $_POST['s_day'];
                     $week = $_POST['s_week'];
@@ -77,7 +82,7 @@ session_cache_expire(30);
                     include_once('database/dbPersons.php');
                     include_once('domain/Person.php');
 
-                    $result = getonlythose_dbPersons($type, $status, $name, $day, $week);
+                    $result = getonlythose_dbPersons($type, $status, $group, $name, $day, $week);
                     echo '<p><strong>Search Results:</strong> <p>Found ' . sizeof($result) . ' ' . $status . ' ';
                     if ($type != "")
                         echo $type . "s";
@@ -85,6 +90,8 @@ session_cache_expire(30);
                         echo "persons";
                     if ($name != "")
                         echo ' with name like "' . $name . '"';
+                    if ($group != "")
+                        echo ' with group like "' . $group . '"';
                     $availability = $_POST['s_day'] ." ". $_POST['s_week'];
                     if ($availability != " ") {
                         echo " with availability " . $availability;

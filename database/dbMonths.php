@@ -145,8 +145,11 @@ function delete_dbMonths($month) {
 // generate a new month for a group of crews from the master schedule
 // $id = yy-mm-group
 function newMonth ($id) {
-	$days = array (1=>"Mon", 2=>"Tue", 3=>"Wed", 4=>"Thu", 5=>"Fri", 6=>"Sat", 7=>"Sun");
-
+	$days = array (1=>"Mon", 2=>"Tue", 3=>"Wed", 4=>"Thu", 5=>"Fri", 6=>"Sat");
+	$fpdays = array (1=>"Mon", 2=>"Wed930", 3=>"Wed1100", 4=>"Thu", 5=>"Fri", 6=>"Sat");
+	if (substr($id,6)=="foodpantry")
+		$thisdays = $fpdays;
+	else $thisdays = $days;
 	// We switched new months to default to published, because otherwise they won't be available for viewing.
     // We're unsure if this was the right move to make.
     $new_month = new Month($id, "unpublished");
@@ -156,9 +159,13 @@ function newMonth ($id) {
 	$week_no = 1;		// master schedule week number
 
 	$firstdow = $dow = date("N", mktime(0,0,0,substr($id,3,2), "01", substr($id,0,2)));  // day of week, 1 = Monday
+	if (substr($id,6)=="foodpantry" && $firstdow==3)
+		$firstdow=$dow=2;
 	$newbies = array();
 	foreach ($new_crews as $new_crew) {
-		$id1 = substr($id,6).$days[$dow].$week_no;
+		if ($dom==sizeof($new_crews) && substr($id,6)=="foodpantry" && $dow==2)
+			break;
+		$id1 = substr($id,6).$thisdays[$dow].$week_no;
 		$schedule_entry = retrieve_dbMasterSchedule($id1);
 		if ($schedule_entry  && $schedule_entry->get_slots()>0) {	
 			if ($dom<10) $dd = "-0".$dom; else $dd = "-".$dom;
@@ -178,11 +185,11 @@ function newMonth ($id) {
 			$new_month->set_crew($dom, $newbie->get_id());
 			$newbies[] = $newbie;;		
 		}	
-        if ($dow==$firstdow-1) 
-			$week_no++;	
         if ($dow==7)
 			$dow = 1;	
         else $dow++;
+        if ($dow==$firstdow) 
+			$week_no++;	
 		$dom++;
 	}
 	update_dbMonths($new_month);
