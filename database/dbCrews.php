@@ -1,12 +1,14 @@
 <?php
 
-/*
- * Copyright 2008 by Oliver Radwan, Maxwell Palmer, Nolan McNair,
- * Taylor Talmage, and Allen Tucker.  This program is part of RMH Homebase.
- * RMH Homebase is free software.  It comes with absolutely no warranty.
- * You can redistribute it and/or modify it under the terms of the GNU
- * General Public License as published by the Free Software Foundation
+ /*
+ * Copyright 2013 by Brian Jacobel, Oliver Fisher, Simon Brooks and Allen Tucker.
+ * This program is part of RMH Homebase, which is free software.  It comes with 
+ * absolutely no warranty. You can redistribute and/or modify it under the terms 
+ * of the GNU General Public License as published by the Free Software Foundation
  * (see <http://www.gnu.org/licenses/ for more information).
+
+ * Based on previous work by Johnny Coster, Judy Yang, Jackson Moniaga, Oliver Radwan, 
+ * Maxwell Palmer, Nolan McNair, Taylor Talmage, and Allen Tucker. 
  */
 
 /**
@@ -14,8 +16,8 @@
  * dbCrews table in the database.  This table is used with the Crew
  * class.  Crews are generated using the master schedule (through the
  * addWeek.php form), and retrieved by the calendar form and editCrew.
- * @version May 1, 2008
- * @author Maxwell Palmer
+ * @version Dec 18, 2013
+ * @author Brian Jacobel
  */
 include_once('domain/Crew.php');
 include_once('dbPersons.php');

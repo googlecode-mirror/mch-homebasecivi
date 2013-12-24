@@ -1,19 +1,9 @@
-"Export date: November 4, 2013, 2:51 pm"
-"Based on"
- First_Name Last_Name
-1 Toby Jones
-2 Tom Jones
-3 Tricia Jones
-4 Ursula Jones
-5 Vera Jones
-6 Vicki Jones
-7 Victor Jones
-8 Virginia Jones
-9 Walter Jones
-10 William Jones
-11 William Jones
-12 William Jones
-13 William Jones
-14 William Jones
-15 Winnie Jones
-16 Won Jones
+"Export date: December 18, 2013, 1:58 pm"
+"Based on: Type"
+,First_Name,Last_Name,Role,Type,Status,Start_Date,Address,City,State,Zip,Phone_1,Phone_2,Email,Notes
+1,A.Scott,Jones,Array,v,active,,270_Way_Street,Portland,ME,4280,4761234567,,jonesey@aol.com,
+2,Alan,Jones,Array,v,active,,181_Way_Street,Portland,ME,4191,3871234567,,jonesey@aol.com,
+3,Alan,Jones,Array,v,active,,144_Way_Street,Portland,ME,4154,3501234567,,jonesey@aol.com,
+4,Alex,Jones,Array,v,active,,134_Way_Street,Portland,ME,4144,3401234567,,jonesey@aol.com,
+5,AM,Jones,Array,v,active,,260_Way_Street,Portland,ME,4270,4661234567,,jonesey@aol.com,
+6,Amy,Jones,Array,v,active,,158_Way_Street,Portland,ME,4168,3641234567,,jonesey@aol.com,

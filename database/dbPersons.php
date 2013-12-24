@@ -1,17 +1,19 @@
 <?php
 
-/*
- * Copyright 2012 by Johnny Coster, Judy Yang, Jackson Moniaga, Oliver Radwan, 
- * Maxwell Palmer, Nolan McNair, Taylor Talmage, and Allen Tucker. 
+ /*
+ * Copyright 2013 by Brian Jacobel, Oliver Fisher, Simon Brooks and Allen Tucker.
  * This program is part of RMH Homebase, which is free software.  It comes with 
  * absolutely no warranty. You can redistribute and/or modify it under the terms 
  * of the GNU General Public License as published by the Free Software Foundation
  * (see <http://www.gnu.org/licenses/ for more information).
+
+ * Based on previous work by Johnny Coster, Judy Yang, Jackson Moniaga, Oliver Radwan, 
+ * Maxwell Palmer, Nolan McNair, Taylor Talmage, and Allen Tucker. 
  */
 
 /**
- * @version March 1, 2012
- * @author Oliver Radwan and Allen Tucker
+ * @version December 18, 2013
+ * @author Brian Jacobel, Oliver Fisher, Simon Brooks and Allen Tucker.
  */
 include_once('dbinfo.php');
 include_once('domain/Person.php');
@@ -262,7 +264,7 @@ function phone_edit($phone) {
 	else return "";
 }
 
-function get_people_for_export($first_name, $last_name, $gender, $type, $status, $start_date, $street, $city, $county, $state, $zip, $phone1, $phone2, $email, $notes) {
+function get_people_for_export($first_name, $last_name, $role, $type, $status, $start_date, $street, $city, $state, $zip, $phone1, $phone2, $email, $notes) {
     connect();
     //hours_worked, day_of_the_week, month, employer_school...
     $query = "SELECT * FROM dbPersons WHERE first_name LIKE '%" . $first_name . "%' AND last_name LIKE '%" .

@@ -4,8 +4,8 @@ session_cache_expire(30);
 ?>
 <!--
         calendar.inc
-        @author Max Palmer and Allen Tucker
-        @version 3/26/08, revised 9/15/2008
+        @author Max Palmer Allen Tucker, Brian Jacobel
+        @version 3/26/08, revised 9/15/2008, 12/17/2013
 -->
 
 <?php
