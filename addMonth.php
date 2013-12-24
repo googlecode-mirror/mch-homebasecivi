@@ -4,8 +4,8 @@ session_cache_expire(30);
 ?>
 <!--
         addMonth.php
-        @author Max Palmer and Allen Tucker
-        @version 3/25/08, revised 10/19/13
+        @author Max Palmer, Allen Tucker, Brian Jacobel
+        @version 3/25/08, revised 10/19/13, 12/17/2013
 -->
 <html>
     <head>

@@ -44,7 +44,7 @@ session_cache_expire(30);
                         $last_name = $_POST['last_name']; else
                         $last_name = '';
                     if ($_POST['check3'] == 'on')
-                        $role = $_POST['rolde']; else
+                        $role = $_POST['role']; else
                         $role = '';
                     if ($_POST['check4'] == 'on')
                         $type = $_POST['type'][0]; else
@@ -116,13 +116,9 @@ session_cache_expire(30);
                         array(1 => $_POST['e_check13'], 'Phone 2', 'get_phone2'),
                         array(1 => $_POST['e_check14'], 'Email', 'get_email'),
                         array(1 => $_POST['e_check15'], 'Notes', 'get_notes'));
-                    //$value_array = array(1 => $first_name, $last_name, $gender, $type, $status, $start_date, $hours_worked,
-                    //							  $day_of_the_week, $month, $employer_school, $street, $city,
-                    //							  $county, $state, $zip, $phone1, $phone2, $email, $notes);
-
 
                     if ($_POST['_form_submit'] == 1) {
-                        $returned_people = get_people_for_export($first_name, $last_name, $gender, $type, $status, $start_date, $street, $city, $county, $state, $zip, $phone1, $phon2, $email, $notes);
+                        $returned_people = get_people_for_export($first_name, $last_name, $role, $type, $status, $start_date, $street, $city, $state, $zip, $phone1, $phon2, $email, $notes);
                         include('dataResults.inc.php');
                     } else if ($_POST['_form_submit'] == 2) {
                         $_SESSION['results'] = $_POST['results_list'];
@@ -130,6 +126,7 @@ session_cache_expire(30);
                             $select_people_array = array();
                             if ($_POST['results_list']) 
                               foreach ($_POST['results_list'] as $export_person) {
+                                //this will fail if multiple copies of the same person exist, which should never happen
                                 $temp_dude = retrieve_person($export_person);
                                 $select_people_array[] = $temp_dude->get_first_name() . " " . $temp_dude->get_last_name();
                               }
@@ -161,7 +158,8 @@ session_cache_expire(30);
                         date_default_timezone_set('America/New_York');
                         $current_time = array("Export date: " . date("F j, Y, g:i a"));
                         export_data($current_time, array($search_attr), $attribute_row, $export_data);
-                        echo "Data have been exported: browse to dataexport.csv to retrieve the Excel file.";
+                        echo "Data have been exported. Right-click the following link and select 'Save Link As' to download the Excel file.";
+                        echo "<br/><br/><a href='/dataexport.csv' type='file'>dataexport.csv</a>";
               //          header("File name: dataexport.csv");
                     }
                 }
@@ -171,9 +169,9 @@ session_cache_expire(30);
                     $handle = fopen($filename, "w");
                     fputcsv($handle, $ct);
                     fputcsv($handle, $sa);
-                    fputcsv($handle, str_replace(' ', '_', $ar), ' ', ' ');
+                    fputcsv($handle, str_replace(' ', '_', $ar), ',', "'");
                     foreach ($ed as $person_data) {
-                        fputcsv($handle, str_replace(' ', '_', $person_data), ' ', ' ');
+                        fputcsv($handle, str_replace(' ', '_', $person_data), ',', "'");
                     }
                     fclose($handle);
                 }
