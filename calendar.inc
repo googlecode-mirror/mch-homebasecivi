@@ -69,7 +69,7 @@ function show_month($days, $month, $edit, $year, $group) {
     'align="center" >' . $groups[$group] . ' Calendar ' . $month->get_name() . '</td></tr>');
 
     $daynames = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
-	$fpdaynames = array("Monday", "Tuesday", "Wednesday 9:30", "Wednesday 11:00", "Thursday", "Friday", "Saturday");
+	$fpdaynames = array("Monday", "Tuesday", "Wednesday 9:30", "Wednesday 11:45", "Thursday", "Friday", "Saturday");
     if ($group=="foodpantry")
     	$thisdaynames = $fpdaynames;
     else $thisdaynames = $daynames;
@@ -103,8 +103,10 @@ function show_month($days, $month, $edit, $year, $group) {
         	  echo("<td class='cell'><p class='date'>"."</p><br/>".get_crewinfo($crews, $days[$i+1])."</td>");
             }
           }
-          else if (($i+$startday)%7==6 && $startday!=$startindex)  // handle saturdays when real start day is Wednesday
-              echo("<td class='cell'><p class='date'>".($days[$i])."</p><br/></td>");
+          else if (($i+$startday)%7==4)
+          	  echo("<td class='cell'><p class='date'>".($days[$i])."</p><br/>"."</td>");
+          else if ((($i+$startday)%7==5 || ($i+$startday)%7==6) && $startday!=$startindex)  // handle fridays and saturdays when real start day is Wednesday
+              echo("<td class='cell'><p class='date'>".($days[$i])."</p><br/>".get_crewinfo($crews, $days[$i+1])."</td>");
           else if (($i+$startday)%7==1 && $startday!=$startindex) // handle mondays when real start day is Wednesday      	  
               echo("<td class='cell'><p class='date'>".$days[$i]."</p><br/>".get_crewinfo($crews, $days[$i+1])."</td>");
           else 
@@ -130,7 +132,10 @@ function get_crewinfo($crews, $day){
 
             foreach($cgp as $person_id){
                 $id_exploded = explode("+", $person_id);
-                $display_name = $id_exploded[1]. " " . $id_exploded[2];
+                if ($id_exploded[3]=="()")
+                	$display_name = $id_exploded[1]. " " . $id_exploded[2];
+                else 
+                	$display_name = $id_exploded[3]. " " . $id_exploded[1]. " " . $id_exploded[2];
 				$info = $info . $display_name . "<br>&nbsp;&nbsp;";
             }
 			if ($crew->num_vacancies()>0)

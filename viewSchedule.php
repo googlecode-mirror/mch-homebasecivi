@@ -34,7 +34,7 @@ $_SESSION['logged_in'] = 1;
                 }
                 $this_group = $_GET["group"];
                 $groups = array('foodbank'=>'Food Bank', 'foodpantry'=>'Food Pantry', 'soupkitchen'=>'Soup Kitchen');
-                echo("<p style='width:40%;text-align:left;margin:0 auto;'>( Wrong schedule? Switch to: ");
+                echo("<p style='text-align:center;margin:0 auto;'>( Wrong schedule? Switch to: ");
                 foreach ($groups as $group=>$group_name) {
                     if($group != $this_group) {
                         echo("<a href='viewSchedule.php?group=".$group."'>".$group_name."  </a>");
@@ -59,9 +59,9 @@ $_SESSION['logged_in'] = 1;
 
 function show_master_month($group) {
 	$group_names = array("foodbank"=>"Food Bank", "foodpantry"=>"Food Pantry","soupkitchen"=>"Soup Kitchen");
-    $days = array("Mon" => "Monday", "Tue" => "Tuesday", "Wed" => "Wednesday",
+    $days = array("Sun" => "Sunday", "Mon" => "Monday", "Tue" => "Tuesday", "Wed" => "Wednesday",
                     "Thu" => "Thursday", "Fri" => "Friday", "Sat"=> "Saturday");
-    $fpdays = array("Mon" => "Monday", "Tue" => "Tuesday", "Wed930" => "Wed 9:30", "Wed1100" => "Wed 11:00",
+    $fpdays = array("Sun" => "Sunday", "Mon" => "Monday", "Tue" => "Tuesday", "Wed930" => "Wed 9:30", "Wed1100" => "Wed 11:45",
                     "Thu" => "Thursday", "Fri" => "Friday", "Sat"=> "Saturday");
     $weeks = array (1=>"1st",2=>"2nd",3=>"3rd",4=>"4th",5=>"5th");
     if ($group=="foodpantry") $thisdays =  $fpdays;
@@ -80,7 +80,17 @@ function show_master_month($group) {
             /* retrieves a MasterScheduleEntry for this group, day, and week of the month */
             if ($master_shift) 
                 echo do_shift($master_shift); 
-            else if ($day=="Sat" || $group=="foodpantry" && $day=="Tue") {
+            else if ($group=="foodpantry" && ($day=="Sun" || $day=="Tue" || $day=="Thu")) {
+            	$master_shift = new MasterScheduleEntry($group, $day, $week_no, 0, "", "");
+            	insert_dbMasterSchedule($master_shift);
+                echo do_shift($master_shift);
+            }
+            else if ($group=="foodbank" && ($day=="Sat" || $day=="Sun")) {
+            	$master_shift = new MasterScheduleEntry($group, $day, $week_no, 1, "", "");
+            	insert_dbMasterSchedule($master_shift);
+                echo do_shift($master_shift);
+            }
+    		else if ($group=="soupkitchen" && ($day=="Sat" || $day=="Sun")) {
             	$master_shift = new MasterScheduleEntry($group, $day, $week_no, 0, "", "");
             	insert_dbMasterSchedule($master_shift);
                 echo do_shift($master_shift);
@@ -101,7 +111,7 @@ function show_master_month($group) {
 function do_shift($master_shift) {
     /* $master_shift is a MasterScheduleEntry object
      */
-    if ($master_shift->get_slots() == 0) {
+/*    if ($master_shift->get_slots() == 0) {
         $s = "<td>" .
                 "<a id=\"shiftlink\" href=\"editMasterSchedule.php?group=" .
                 $master_shift->get_group() . "&day=" . $master_shift->get_day() . "&week_no=" .
@@ -110,13 +120,13 @@ function do_shift($master_shift) {
                 "</td>";
     } 
     else {
-        $s = "<td>" .
+*/        $s = "<td>" .
                 "<a id=\"shiftlink\" href=\"editMasterSchedule.php?group=" .
                 $master_shift->get_group() . "&day=" . $master_shift->get_day() . "&week_no=" .
                 $master_shift->get_week_no() . "\">" .
-                get_people_for_shift($master_shift, $master_shift_length) .
+                get_people_for_shift($master_shift) .
                 "</td>";
-    }
+//    }
     return $s;
 }
 
@@ -141,7 +151,7 @@ function get_people_for_shift($master_shift) {
     if ($slots - count($people) > 0)
         $p = $p . "&nbsp;<b>Vacancies (" . ($slots - count($people)) . ")</b><br>";
     else if (count($people) == 0)
-        $p = $p . "&nbsp;)<br>";
+        $p = $p . "&nbsp;<br>";
     return substr($p, 0, strlen($p) - 4); // remove the last )<br>
 }
 ?>
