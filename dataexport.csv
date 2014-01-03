@@ -1,9 +1,45 @@
-"Export date: December 18, 2013, 1:58 pm"
-"Based on: Type"
-,First_Name,Last_Name,Role,Type,Status,Start_Date,Address,City,State,Zip,Phone_1,Phone_2,Email,Notes
-1,A.Scott,Jones,Array,v,active,,270_Way_Street,Portland,ME,4280,4761234567,,jonesey@aol.com,
-2,Alan,Jones,Array,v,active,,181_Way_Street,Portland,ME,4191,3871234567,,jonesey@aol.com,
-3,Alan,Jones,Array,v,active,,144_Way_Street,Portland,ME,4154,3501234567,,jonesey@aol.com,
-4,Alex,Jones,Array,v,active,,134_Way_Street,Portland,ME,4144,3401234567,,jonesey@aol.com,
-5,AM,Jones,Array,v,active,,260_Way_Street,Portland,ME,4270,4661234567,,jonesey@aol.com,
-6,Amy,Jones,Array,v,active,,158_Way_Street,Portland,ME,4168,3641234567,,jonesey@aol.com,
+"Export date: December 24, 2013, 10:49 am"
+"Based on: First Name, Last Name"
+,First_Name,Last_Name,Address,City,State,Zip
+1,Claudia,Adams,15_Shearwater_Way,Brunswick,ME,04011
+2,Reinhard,Adler,70_Gurnet_Landing_Ledge_Road,Harpswell,ME,04079
+3,Tim,Banks,306_Simpsons_Point_Road,Brunswick,ME,04011
+4,Michael,Becker,19_Everett_Street__#7,Brunswick,ME,04011
+5,Teeter,Bibber,1979_Harpswell_Island_Rd,Bailey_Island,ME,04003
+6,Evelyn,Bryant,11_Caribou_Drive,Brunswick,ME,04011
+7,Shari,Burke,24_Spring_Street__Apt_C,Brunswick,ME,04011
+8,Pamela_Susan,Corrigan,134_Hildreth_Road,Harpswell,ME,04079
+9,John,Cotton,2_Brookmere_Way,Brunswick,ME,04011
+10,Don,Crane,198_Pleasant_Point_Road,Topsham,ME,04086
+11,Donna,Doering,57_Beechridge_Road,Dresden,ME,04342
+12,Ritalee,Doty,428_Woodside_Road,Brunswick,ME,04011
+13,Ben,Ford,324_Simpson_Point_Road,Brunswick,ME,04011
+14,Nancy,Garland,41_Weymouth_Street,Brunswick,ME,04011
+15,Daniel,Gatchell,296_Maquoit_Road,Brunswick,ME,04011
+16,Jack,Ginty,16_Sparwell_Lane,Brunswick,ME,04011
+17,Slavek,Grzelkowski,40_Surprenant_Circle,Brunswick,ME,04011
+18,Bill,Heaphy,1557_Harpswell_Neck_Road,Harpswell,ME,04079
+19,GWilliam,Higbee,98_Breezy_Point_Road,Brunswick,ME,04011
+20,Sue,Kennedy,60_Bagatelle_Lane,Brunswick,ME,04011
+21,Jack,Kieffer,23_Appletree_Drive,Brunswick,ME,04011
+22,Anthony,LeBlanc,4_Balsam_Avenue,Brunswick,ME,04011
+23,Judith,Liston,16_Willow_Grove_Road,Brunswick,ME,04011
+24,Candace,Litchfield,611_Mere_Point_Road,Brunswick,ME,04011
+25,Judith,Long,14_Baxter_Lane,Brunswick,ME,04011
+26,Ann,Marden,23_Flicker_Drive,Topsham,ME,04086
+27,Susan,Martens,188_Merrill_Road,Pownal,ME,04069
+28,Elaine,Mower,45_Cluf_Bay_Road,Brunswick,ME,04011
+29,Alex,Olshansky,5_Washburn_Lane,Topsham,ME,04086
+30,Sandy,Olson,60_Amy_Circle,Dresden,ME,04342
+31,Susan_Russell,Paluska,32_Webber_Avenue,Bath,ME,04530
+32,Dotti,Pelletier,29_Serenity_LN,Topsham,ME,04086
+33,Kay,Richardson,215_Ash_Point_Road,Harpswell,ME,04079
+34,Susan,Sabrowski,80_Austin_Point_Road,Harpswell,ME,04079
+35,Mollie,Sandock,222_Pennellville_Road,Brunswick,ME,04011
+36,Elaine,Sells,22_Baribeau_Dr_Apt_202,Brunswick,ME,04011
+37,Alan,Shaver,139_High_Head_Road,Harpswell,ME,04079
+38,Beth,Simonsen,15_Sea_Mist,Bailey_Island,ME,04003
+39,Nancy,Stambach,4_Woodcock_Drive,Topsham,ME,04086
+40,Burton,Taylor,45_Taylor_Road,Harpswell,ME,04079
+41,Terry,Townsend,11_Sewall_Lane,Topsham,ME,04086
+42,Mike,Wilson,115_Echo_Road,Brunswick,ME,04011

@@ -152,7 +152,7 @@ session_cache_expire(30);
                     return $group_names[$id];
                 }
 				function do_day_name($id) {
-                    $day_names = array ("Mon"=>"Monday", "Tue"=>"Tuesday", "Wed"=>"Wednesday", "Wed930"=>"Wednesday 9:30", "Wed1100"=>"Wednesday 11:00", "Thu"=>"Thursday", "Fri"=>"Friday", "Sat"=>"Saturday", "Sun"=>"Sunday");
+                    $day_names = array ("Mon"=>"Monday", "Tue"=>"Tuesday", "Wed"=>"Wednesday", "Wed930"=>"Wednesday 9:30", "Wed1100"=>"Wednesday 11:45", "Thu"=>"Thursday", "Fri"=>"Friday", "Sat"=>"Saturday", "Sun"=>"Sunday");
                     return $day_names[$id];
                 }
                 function do_week_name($id) {
@@ -267,7 +267,7 @@ session_cache_expire(30);
 
                     $query = "SELECT * FROM dbPersons WHERE status = 'active' " .
                     		"AND `group` LIKE '%" . $group . "%' " .
-                            "AND availability LIKE '%" . $day . ":" . $week_no . "%' ORDER BY last_name,first_name";
+                            "AND availability LIKE '%" . substr($day,0,3) . ":" . $week_no . "%' ORDER BY last_name,first_name";
                     $result = mysql_query($query);
                     mysql_close();
                     $s = "";
