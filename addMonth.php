@@ -47,7 +47,7 @@ session_cache_expire(30);
                         $month->set_status("published");
                     else if ($month->get_status() == "published")
                         $month->set_status("unpublished");
-                    update_dbMonths($month);
+                    update_monthstatus($month);
                     add_log_entry('<a href=\"personEdit.php?id=' . $_SESSION['_id'] . '\">' . $_SESSION['f_name'] . ' ' . $_SESSION['l_name'] . '</a> ' .
                             $month->get_status() . ' the month of <a href=\"calendar.php?id=' . $month->get_id() . '&edit=true\">' . $month->get_name() . '</a>.');
                     echo "<p>Month \"" . $month->get_name() . "\" " .
