@@ -126,6 +126,16 @@ function update_dbMonths($month) {
     }
 }
 
+function update_monthstatus($month){
+    if (!$month instanceof Month) {
+        echo ("Invalid argument for update_dbMonths function call");
+        return false;
+    }
+    $query = "UPDATE dbMonths SET status='" .
+            $month->get_status() . "' where id='" . $month->get_id() . "'";
+    $result = mysql_query($query);
+}
+
 /*
  * remove a month from dbMonths table and its crews from the dbCrews table
  */
