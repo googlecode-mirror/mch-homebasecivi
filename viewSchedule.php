@@ -85,12 +85,12 @@ function show_master_month($group) {
             	insert_dbMasterSchedule($master_shift);
                 echo do_shift($master_shift);
             }
-            else if ($group=="foodbank" && ($day=="Sat" || $day=="Sun")) {
+            else if ($group=="foodbank" && ($day=="Sat" || $day=="Sun") || $group=="soupkitchen" && $day=="Sat") {
             	$master_shift = new MasterScheduleEntry($group, $day, $week_no, 1, "", "");
             	insert_dbMasterSchedule($master_shift);
                 echo do_shift($master_shift);
             }
-    		else if ($group=="soupkitchen" && ($day=="Sat" || $day=="Sun")) {
+    		else if ($group=="soupkitchen" && $day=="Sun") {
             	$master_shift = new MasterScheduleEntry($group, $day, $week_no, 0, "", "");
             	insert_dbMasterSchedule($master_shift);
                 echo do_shift($master_shift);
