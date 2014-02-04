@@ -19,8 +19,8 @@
         );
         echo('<li>If you are a volunteer logging in for the first time, your Username is your first name followed by your phone number. ' .
         'After you have logged in, you can change your password.  ');
-        echo('(If you are having difficulty logging in or if you have forgotten your Password, please contact the <a href="mailto:housemgr@rmhportland.org"><i>House Manager</i></a>.) ');
-        echo ('<li><i>If you need to cancel your volunteer shift, you may do so here (after logging in), or else you may the House at 207-780-6282.</i>');
+        echo('(If you are having difficulty logging in or if you have forgotten your Password, please contact the <a href="mailto:bm@mchpp.org"><i>Operations Manager</i></a>.) ');
+        echo ('<li><i>If you need to cancel your volunteer shift, you may do so here (after logging in), or else you may the House at 207-725-2716.</i>');
         echo '</ul>';
         echo('<p><table><form method="post"><input type="hidden" name="_submit_check" value="true"><tr><td>Username:</td><td><input type="text" name="user" tabindex="1"></td></tr><tr><td>Password:</td><td><input type="password" name="pass" tabindex="2"></td></tr><tr><td colspan="2" align="center"><input type="submit" name="Login" value="Login"></td></tr></table>');
     } else {
@@ -39,7 +39,11 @@
             $db_id = $_POST['user'];
             $person = retrieve_person($db_id);
             if ($person) { //avoids null results
-                if ($person->get_password() == $db_pass) { //if the passwords match, login
+            	if ($person->get_password()=="") {
+            		$person->set_password(md5($person->get_id()));  echo "default password = ".$person->get_pasword();
+            		change_password($person->get_id(), $person->get_password()); // set default password in the db
+            	}
+            	if ($person->get_password() == $db_pass) { //if the passwords match, login
                     $_SESSION['logged_in'] = 1;
                     if ($person->get_status() == "applicant")
                         $_SESSION['access_level'] = 0;
@@ -63,7 +67,7 @@
                     echo('<p>If you are a volunteer, your Username is your first name followed by your phone number with no spaces. ' .
                     'For instance, if your first name were John and your phone number were (207)-123-4567, ' .
                     'then your Username would be <strong>John2071234567</strong>.  ');
-                    echo('If you do not remember your password, please contact the <a href="mailto:housemngr@rmhportlandme.org">House Manager</a>.');
+                    echo('If you do not remember your password, please contact the <a href="mailto:bm@mchpp.org">Operations Manager</a>.');
                     echo('<p><table><form method="post"><input type="hidden" name="_submit_check" value="true"><tr><td>Username:</td><td><input type="text" name="user" tabindex="1"></td></tr><tr><td>Password:</td><td><input type="password" name="pass" tabindex="2"></td></tr><tr><td colspan="2" align="center"><input type="submit" name="Login" value="Login"></td></tr></table>');
                 }
             } else {
@@ -72,7 +76,7 @@
                 echo('<p>If you are a volunteer, your Username is your first name followed by your phone number with no spaces. ' .
                 'For instance, if your first name were John and your phone number were (207)-123-4567, ' .
                 'then your Username would be <strong>John2071234567</strong>.  ');
-                echo('If you do not remember your password, please contact the <a href="mailto:housemngr@rmhportlandme.org">House Manager</a>.');
+                echo('If you do not remember your password, please contact the <a href="mailto:bm@mchpp.org">Operations Manager</a>.');
                 echo('<p><table><form method="post"><input type="hidden" name="_submit_check" value="true"><tr><td>Username:</td><td><input type="text" name="user" tabindex="1"></td></tr><tr><td>Password:</td><td><input type="password" name="pass" tabindex="2"></td></tr><tr><td colspan="2" align="center"><input type="submit" name="Login" value="Login"></td></tr></table>');
             }
         }

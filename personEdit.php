@@ -169,7 +169,7 @@ if ($id == 'new') {
                                         $notes, md5($pass));
                         $result = add_person($newperson);
                         if (!$result)
-                            echo ('<p class="error">Unable to reset ' . $first_name . ' ' . $last_name . "'s password.. <br>Please report this error to the House Manager.");
+                            echo ('<p class="error">Unable to reset ' . $first_name . ' ' . $last_name . "'s password.. <br>Please report this error to the Operations Manager.");
                         else
                             echo("<p>You have successfully reset " . $first_name . " " . $last_name . "'s password.</p>");
                     }
@@ -190,7 +190,7 @@ if ($id == 'new') {
                                         $notes, md5($pass));
                             $result = add_person($newperson);
                             if (!$result)
-                                echo ('<p class="error">Unable to add " .$first_name." ".$last_name. " in the database. <br>Please report this error to the House Manager.');
+                                echo ('<p class="error">Unable to add " .$first_name." ".$last_name. " in the database. <br>Please report this error to the Operations Manager.');
                             else if ($_SESSION['access_level'] == 0)
                                 echo("<p>Your application has been successfully submitted.<br>  An MCHPP staff member will contact you soon.  Thank you!");
                             else
@@ -204,7 +204,7 @@ if ($id == 'new') {
                         $pass = $_POST['old_pass'];
                         $result = remove_person($id);
                         if (!$result)
-                            echo ('<p class="error">Unable to update ' . $first_name . ' ' . $last_name . '. <br>Please report this error to the House Manager.');
+                            echo ('<p class="error">Unable to update ' . $first_name . ' ' . $last_name . '. <br>Please report this error to the Operations Manager.');
                         else {
                             $newperson = new Person($first_name, $last_name, $address, $city, $state, $zip,
                                         $clean_phone1, $clean_phone2, $email, $type,
@@ -213,7 +213,7 @@ if ($id == 'new') {
                                         $notes, md5($pass));
                             $result = add_person($newperson);
                             if (!$result)
-                                echo ('<p class="error">Unable to update ' . $first_name . ' ' . $last_name . '. <br>Please report this error to the House Manager.');
+                                echo ('<p class="error">Unable to update ' . $first_name . ' ' . $last_name . '. <br>Please report this error to the Operations Manager.');
                             //else echo("<p>You have successfully edited " .$first_name." ".$last_name. " in the database.</p>");
                             else
                                 echo('<p>You have successfully edited <a href="' . $path . 'personEdit.php?id=' . $id . '"><b>' . $first_name . ' ' . $last_name . ' </b></a> in the database.</p>');

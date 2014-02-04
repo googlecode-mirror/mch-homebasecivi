@@ -183,7 +183,7 @@ class Person {
     }
 
     function get_password() {
-        return $this->password;
+    	return $this->password;
     }
 }
 
