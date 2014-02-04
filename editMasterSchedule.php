@@ -137,7 +137,7 @@ session_cache_expire(30);
                         return false;
                     $id = $group . $day . $week_no ;
                     if (delete_dbMasterSchedule($id)) {
-                        echo "<br>Deleted master schedule crew for " . $do_group_name($group) .", ". $do_week_name($week_no) ." ". $do_day_name($day_no) . "<br><br>";
+                    	echo "<br>Removed entire crew for " . do_group_name($group) .", ". do_week_name($week_no) ." ". do_day_name($day) . "<br><br>";
                         $returnpoint = "viewSchedule.php?group=" . $group;
                         echo "<table align=\"center\"><tr><td align=\"center\" width=\"442\">
 				<br><a href=\"" . $returnpoint . "\">

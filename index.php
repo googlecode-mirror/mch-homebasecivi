@@ -132,7 +132,7 @@ session_cache_expire(30);
                                 foreach ($upcoming_crews as $tableId) {
                                     echo('<li type="circle">' . get_crew_name_from_id($tableId)) . '</li>';
                                 }
-                                echo('</ul><p>If you need to cancel an upcoming crew, please contact House Manager (207-980-6282 or <a href="mailto:housemgr@rmhportland.org>">housemgr@rmhportland.org</a>).</p></div>');
+                                echo('</ul><p>If you need to cancel an upcoming crew, please contact Operations Manager (207-725-2716 or <a href="mailto:bm@mchpp.org>">bm@mchpp.org</a>).</p></div>');
                             }
                         }
 
