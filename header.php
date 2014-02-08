@@ -79,7 +79,7 @@
         if ($_SESSION['access_level'] == 0)
             echo(' | <a href="' . $path . 'personEdit.php?id=' . 'new' . '"><b>apply</b></a>');
         if ($_SESSION['access_level'] >= 1) {
-            echo(' | <a href="' . $path . 'calendar.php?month='.$month.'&edit=false"><strong>calendars</strong> </a>');
+            echo(' | <a href="' . $path . 'calendar.php?group='.$_SESSION['mygroup'].'&month='.$month.'&edit=false"><strong>calendars</strong> </a>');
         }
         if ($_SESSION['access_level'] >= 2) {
         	$mygroup=$_SESSION['mygroup'];

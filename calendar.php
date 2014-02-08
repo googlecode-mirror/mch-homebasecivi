@@ -53,13 +53,17 @@ session_cache_expire(30);
                         $edit = false;
                     else
                         $edit = true;
+                $this_group = $_SESSION['mygroup'];
+                $groups = array('foodbank'=>'Food Bank', 'foodpantry'=>'Food Pantry', 'soupkitchen'=>'Soup Kitchen');
+                echo("<p style='text-align:center;margin:0 auto;'>( Wrong calendar? Switch to: ");
+                foreach ($groups as $group=>$group_name) {
+                    echo("<a href='calendar.php?group=".$group."&month=".$_GET['month']."&edit=".$_GET['edit']."'>".$group_name."  </a>");
+                }
+                echo(")</p>");
+                $_SESSION['mygroup'] = $_GET['group'];
+                        
                     // gets the week to show, if no week then defaults to current week
-                    if(isset($_SESSION['mygroup'])){
-                        $group = $_SESSION['mygroup'];
-                    } else {
-                        $group = "foodbank";
-                    }
-
+                    $group = $_GET['group'];
                     $monthid = $_GET['month']."-".$group;
                     $explode_month = explode("-", $_GET['month']);
                     $year = "20" . $explode_month[0];
@@ -80,7 +84,7 @@ session_cache_expire(30);
 
                     // prevents archived months from being edited by anyone
                     $today = mktime();
-                    if ($month->get_status() == "archived" || $month->get_end_of_month_timestamp()>$today)
+                    if ($month->get_status() == "archived")
                         $edit = false;
 
                     // shows the previous month / next month navigation
@@ -97,6 +101,7 @@ session_cache_expire(30);
                     if ($edit == true && !($days[6]->get_year() < $year || ($days[6]->get_year() == $year) ) && $_SESSION['access_level'] >= 2)
                         echo "<p align=\"center\"><input type=\"submit\" value=\"Save changes to all notes\" name=\"submit\">";
                     echo '</form>';
+                
                 }
 
                 echo " </div>";
