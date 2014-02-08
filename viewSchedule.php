@@ -32,15 +32,15 @@ $_SESSION['logged_in'] = 1;
                 if ($_SESSION['access_level'] < 2) {
                     die("<p>Only managers can view the master schedule.</p>");
                 }
-                $this_group = $_GET["group"];
-                $groups = array('foodbank'=>'Food Bank', 'foodpantry'=>'Food Pantry', 'soupkitchen'=>'Soup Kitchen');
-                echo("<p style='text-align:center;margin:0 auto;'>( Wrong schedule? Switch to: ");
-                foreach ($groups as $group=>$group_name) {
-                    if($group != $this_group) {
-                        echo("<a href='viewSchedule.php?group=".$group."'>".$group_name."  </a>");
-                    }
-                }
-                echo(")</p>");
+                $this_group = $_SESSION["mygroup"];
+           //     $groups = array('foodbank'=>'Food Bank', 'foodpantry'=>'Food Pantry', 'soupkitchen'=>'Soup Kitchen');
+           //     echo("<p style='text-align:center;margin:0 auto;'>( Wrong schedule? Switch to: ");
+           //     foreach ($groups as $group=>$group_name) {
+           //         if($group != $this_group) {
+           //             echo("<a href='viewSchedule.php?group=".$group."'>".$group_name."  </a>");
+           //         }
+           //     }
+           //     echo(")</p>");
                 show_master_month($this_group);
                 $_SESSION['mygroup'] = $this_group;
                 ?>

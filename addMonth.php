@@ -49,7 +49,7 @@ session_cache_expire(30);
                         $month->set_status("unpublished");
                     update_monthstatus($month);
                     add_log_entry('<a href=\"personEdit.php?id=' . $_SESSION['_id'] . '\">' . $_SESSION['f_name'] . ' ' . $_SESSION['l_name'] . '</a> ' .
-                            $month->get_status() . ' the month of <a href=\"calendar.php?id=' . $month->get_id() . '&edit=true\">' . $month->get_name() . '</a>.');
+                            $month->get_status() . ' the month of <a href=\"calendar.php?id=' . $month->get_id() . '&edit=true&group='.$_SESSION['mygroup'].'\">' . $month->get_name() . '</a>.');
                     echo "<p>Month \"" . $month->get_name() . "\" " .
                     $month->get_status() . ".<br>";
 					include('addMonth.inc');
@@ -61,7 +61,7 @@ session_cache_expire(30);
                     if ($month) {
                       if ($month->get_status() == "unpublished" || $month->get_status() == "archived") {
                         delete_dbMonths($month);
-                        add_log_entry('<a href=\"personEdit.php?id=' . $_SESSION['_id'] . '\">' . $_SESSION['f_name'] . ' ' . $_SESSION['l_name'] . '</a> removed the month of <a href=\"calendar.php?id=' . $month->get_id() . '&edit=true\">' . $month->get_name() . '</a>.');
+                        add_log_entry('<a href=\"personEdit.php?id=' . $_SESSION['_id'] . '\">' . $_SESSION['f_name'] . ' ' . $_SESSION['l_name'] . '</a> removed the month of <a href=\"calendar.php?id=' . $month->get_id() . '&edit=true&group='.$_SESSION['mygroup'].'\">' . $month->get_name() . '</a>.');
                         echo "<p>Month \"" . $month->get_name() . "\" removed.<br>";
                       }
                       else
