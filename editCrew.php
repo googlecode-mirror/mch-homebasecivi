@@ -43,9 +43,8 @@
 								$persons=$crew->get_persons();
 								echo "<br><br><table align=\"center\" border=\"1px\"><tr><td align=\"center\" colspan=\"3\"><b>"
 									.get_crew_name_from_id($crewid)."</b></td><td></td></tr>";
-								if($_SESSION['access_level']>=2) {
-									echo "<tr><td valign=\"top\"><br>&nbsp;".do_slot_num($crew->get_slots())."</td><td>";
-								
+								echo "<tr><td valign=\"top\"><br>&nbsp;".do_slot_num($crew->get_slots())."</td><td>";
+								if($_SESSION['access_level']==2) {
 										echo ("<form method=\"POST\" style=\"margin-bottom:0;\">
 											<input type=\"hidden\" name=\"_submit_add_slot\" value=\"1\"><br>
 											<input type=\"submit\" value=\"Add Slot\"
@@ -55,11 +54,11 @@
 											<input type=\"hidden\" name=\"_submit_clear_crew\" value=\"1\">
 											<input type=\"submit\" value=\"Clear Entire Crew\"
 											name=\"submit\" >
-											</form>");
-									echo "</td><td></td></tr>";
+											</form></td>");	
 								}
-								
-							    echo display_filled_slots($persons);
+								else echo "</td><td></td>";
+								echo "<td></td></tr>";
+								echo display_filled_slots($persons);
 								echo display_vacant_slots($crew->num_vacancies());
 								echo "</td></tr></table>";
 								echo "<p align=\"center\"><a href=\"calendar.php?month=".substr($crewid,0,5)."&group=".$group."&edit=true"."\">

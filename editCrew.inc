@@ -16,10 +16,13 @@
 		for($i=0;$i<count($persons);++$i) {
 			$p=explode("+",$persons[$i]);
 			$s=$s."<tr><td width=\"150\" valign=\"top\"><br>&nbsp;".$p[1]." ".$p[2];
-			$s = $s."</td><td><form method=\"POST\" style=\"margin-bottom:0;\">
-				<input type=\"hidden\" name=\"_submit_filled_slot_".$i."\" value=\"1\"><br>
-				<input type=\"submit\" value=\"Remove Person\" name=\"submit\">
-			</form></td><td></td><td></td></tr>";
+			$s = $s."</td><td><form method=\"POST\" style=\"margin-bottom:0;\">";
+	// volunteers can remove only themselves
+	// echo "p[0]=".$p[0];
+			if ($_SESSION['access_level']==2 || $_SESSION['_id']==$p[0])
+				$s = $s. "<input type=\"hidden\" name=\"_submit_filled_slot_".$i."\" value=\"1\"><br>
+					<input type=\"submit\" value=\"Remove Person\" name=\"submit\">";
+			$s = $s. "</form></td><td></td><td></td></tr>";
 		}
 		return $s."<br>";
 	}
@@ -30,9 +33,9 @@
 			$s=$s."<tr><td width=\"150\" valign=\"top\">&nbsp;<b>vacancy</b></td><td>
 				<form method=\"POST\" style=\"margin-bottom:0;\">
 				<input type=\"hidden\" name=\"_submit_fill_vacancy\" value=\"1\">
-				<input type=\"submit\" value=\"Assign Person\" name=\"submit\"></form>";
-			if($_SESSION['access_level']>=2) {
- 				$s=$s."</td><td><form method=\"POST\" style=\"margin-bottom:0;\">
+				<input type=\"submit\" value=\"Assign Person\" name=\"submit\"></form></td><td>";
+			if($_SESSION['access_level']==2) {
+ 				$s=$s."<form method=\"POST\" style=\"margin-bottom:0;\">
  				<input type=\"hidden\" name=\"_submit_ignore_vacancy\" value=\"1\">
 				<input type=\"submit\" value=\"Remove Slot\" name=\"submit\"></form>";
 			}
@@ -178,7 +181,8 @@
 			$value=$row[0]; //."+".$row[1]."+".$row[2];
 			$label=$row[2].", ".$row[1] ." ".$row[12];
 
-			if(!in_array($value, $personsfixed)) {
+			if(!in_array($value, $personsfixed) && ($_SESSION['access_level']==2 || $_SESSION['_id']==$row[0]))
+		 	{
 				$s=$s."<option value=\"".$value."\">".$label."</option>";
 				$match=false;
 			}
@@ -204,7 +208,7 @@
 			$value=$row[0]; //."+".$row[1]."+".$row[2];
 			$label=$row[2].", ".$row[1] ." ".$row[12];
 
-			if(!in_array($value, $personsfixed)) {
+			if(!in_array($value, $personsfixed) && ($_SESSION['access_level']==2 || $_SESSION['_id']==$row[0])) {
 				$s=$s."<option value=\"".$value."\">".$label."</option>";
 				$match=false;
 			}

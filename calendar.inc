@@ -125,7 +125,7 @@ function get_crewinfo($edit, $crews, $day){
         if($crew && $cgde[2] == $day){
         	$cgp = $crew->get_persons();
         	 //$person_ids = explode(",", $cgp);
-        	if ($edit) $prefix = "<a class='celllink' href='editCrew.php?id=".$crew->get_id()."'><br>&nbsp;&nbsp;";
+        	if ($edit || $_SESSION['access_level']<2) $prefix = "<a class='celllink' href='editCrew.php?id=".$crew->get_id()."'><br>&nbsp;&nbsp;";
             else $prefix = "";
             $info = $prefix;
             foreach($cgp as $person_id){
