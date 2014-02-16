@@ -84,11 +84,11 @@
                 
             </table></td>
         <td valign="top">
-        <table  width="50%"><b> Calendar Crews Selection:</b>
+        <table  width="50%"><b> Calendar Selection:</b>
              <tr><td><br><input type="checkbox" id="check7" name="check7"/> Past Month:
                         <select name="month" onmouseup="if(this.value=='')document.getElementById('check7').checked=false;
                             else document.getElementById('check7').checked=true">
-                            <option value="">--all--</option>
+                            <option value="">--select a month of crews to export--</option>
                             <?php 
                             $theMonths = array("01"=>"January","02"=>"February","03"=>"March","04"=>"April",
                                 "05"=>"May","06"=>"June","07"=>"July","08"=>"August",
