@@ -39,10 +39,10 @@
 Because Homebase must protect the privacy of individual volunteers at Mid-Coast Hunger, access to the system by non-volunteers is
 limited.  If you are a volunteer and have forgotten your Username or Password, please contact the <a href="mailto:bm@mchpp.org">Operations Manager</a>.
                 </p>
-				<p> Homebase is free and open source software (see <a href="http://code.google.com/p/mch-homebasecivi/" target="_BLANK">http://code.google.com/p/rmh-homebase/</a>).  
+				<p> Homebase is free and open source software (see <a href="http://code.google.com/p/mch-homebasecivi/" target="_BLANK">http://code.google.com/p/mch-homebasecivi/</a>).  
 				From this site, its source code can be freely downloaded and adapted
-				 to fit the volunteer scheduling needs of other nonprofit organizations.  For more information about the capabilities or adaptability of Homebase to other settings, please contact
-either <a href="mailto:allen@myopensoftware.org">Allen Tucker</a> or visit the website <a href="http://myopensoftware.org/content/software-projects" target="_BLANK">http://myopensoftware.org</a>.
+				 to fit the volunteer scheduling needs of other organizations.  For more information about the capabilities or adaptability of Homebase to other settings, please contact
+<a href="mailto:allen@myopensoftware.org">Allen Tucker</a> or visit the Web site <a href="http://npfi.org" target="_BLANK">http://npfi.org</a>.
 				</p>
 				<!-- below is the footer that we're using currently-->
 				

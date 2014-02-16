@@ -84,9 +84,9 @@
         if ($_SESSION['access_level'] >= 2) {
         	$mygroup=$_SESSION['mygroup'];
             echo('| <a href="' . $path . 'viewSchedule.php?group='.$mygroup.'"><strong>master schedule</strong></a>');
-            echo('<br><strong>volunteers :</strong> <a href="' . $path . 'personSearch.php">search</a>, 
+            echo('<br><strong>volunteers :</strong> <a href="' . $path . 'personSearch.php">find</a>, 
 			        <a href="personEdit.php?id=' . 'new' . '">add </a> | ');
-            echo('<a href="' . $path . 'dataSearch.php"><strong>reports</strong></a> ');
+            echo('<a href="' . $path . 'dataSearch.php"><strong>data export</strong></a> ');
         }
     }
     ?>

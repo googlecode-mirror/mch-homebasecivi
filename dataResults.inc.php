@@ -16,32 +16,21 @@
 ?>
 <form name="data_results" method="post">
     <input type="hidden" name="_form_submit" value="2" />
-    <p style="text-align:center"><b>Here are the results.</b>  (Select one or more names and then hit <br> 
-                            'Export Data' to choose attributes to export.)</p>
-    <table align="center">
-    	
-        <td valign="top"><table>
-                <td><h4>Selection Criteria:</h4>
+    <p>3.  Here are the results of your search.  If this looks good, hit <b>Export Data</b>.</p>
+    <p><table align="left">
+           <tr><td><b>Selection Criteria:</b></td><td>
                     <?php
-                    session_start();
-                    session_cache_expire(30);
-                    $checked = array();
                     for ($i = 0; $i <= count($attribute_array); $i++) {
                         if ($attribute_array[$i][1] == 'on') {
-                            $checked[] = $i;
-                            echo('<tr><td>' .
-                            $attribute_array[$i][2] . ': <b>' . $attribute_array[$i][3] . '</b></td></tr>');
+                            echo(" ".
+                            $attribute_array[$i][2] . '=' . $attribute_array[$i][3]);
                         }
                     }
-                    $_SESSION['checked'] = $checked;
                     ?>
-                </td>
-            </table></td>
-           <td> </td>
-        <td valign="top"><table>
-                <td><h4>Search Results:</h4>
-                <tr><td>
-                        <select multiple name="results_list[]" id="tempid" style="width:250px;height:150px;font-size:15px"
+           </td><td></td></tr><tr><td></td><td></td></tr>
+        <tr><td><b>Search Results: </b><?php echo "<br>(".sizeof($returned_people)." people found)"?></td>
+               <td>
+                        <select multiple name="results_list[]" id="tempid" style="width:250px;height:250px;font-size:15px"
                                 onmouseup="if(this.value!=''){document.getElementById('b_details').disabled=false;
                                     document.getElementById('b_export').disabled=false}
                                 else{document.getElementById('b_details').disabled=true;
@@ -52,12 +41,12 @@
                                 <?php foreach ($returned_people as $per) { ?>
                                 <option value="<?php echo($per->get_id()); ?>"><?php echo($per->get_first_name() . " " . $per->get_last_name()); ?></option>
                             <?php } ?>
-                        </select></td></tr>
-                <tr><td></td></tr></td>
+                        </select>
+               </td></tr>
         <tr><td><br />
                 <input type="submit" style="margin-left: 35px" id="b_export" name="b_export" value="Export Data" />
 
-            </td></tr>
-    </table></td>
+            </td><td></td></tr>
 </table>
+</p>
 </form>
