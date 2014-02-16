@@ -180,5 +180,22 @@ function get_crew_name_from_id($crewid) {
 		return date("l M j, Y", mktime(0,0,0,$yy_mm_dd[1],$yy_mm_dd[2],$yy_mm_dd[0])) . " " . $groups[$yy_mm_dd[3]]. " Crew";
 		
 }
+function get_crews_for_export ($volunteer_list, $month, $group) {
+    connect();
+    $s = null;
+    $query = "SELECT * FROM dbCrews WHERE id LIKE '%" . $month . "%' AND `group` LIKE '%". $group . "%' order by id";
+    $result = mysql_query($query);
+    $people_in_shifts = array();
+    while ($result_row = mysql_fetch_assoc($result)) {
+        $persons = explode(",",$result_row['persons']);
+        foreach ($persons as $person) {
+            $person_id = substr($person,0,strpos($person,"+"));
+            if ($person_id!="")  // skip vacancies
+                $people_in_shifts[] =  array($person_id, substr($result_row['id'],0,8), substr($result_row['id'],9));  
+        }
+    }
+    mysql_close();
+    return $people_in_shifts;
+}
 
 ?>

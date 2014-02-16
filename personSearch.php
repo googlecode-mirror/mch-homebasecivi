@@ -26,7 +26,7 @@ session_cache_expire(30);
                 <?PHP
                 // display the search form
                 echo('<form method="post">');
-                echo('<p><strong>Search for volunteers:</strong>');
+                echo('<p><strong>Find volunteers:</strong>');
 
                 echo('<p>Type:<select name="s_type">' .
                 '<option value="" SELECTED></option>' .
@@ -99,7 +99,7 @@ session_cache_expire(30);
                         echo " with availability " . $availability;
                     }
                     if (sizeof($result) > 0) {
-                        echo ' (select one for more info).';
+                        echo ' (select a name for more information).';
                         echo '<p><table> <tr><td>Name</td><td>Phone</td><td>E-mail</td><td>Availability</td></tr>';
                         foreach ($result as $vol) {
                             echo "<tr><td><a href=personEdit.php?id=" . str_replace(" ","_",$vol->get_id()) . ">" .

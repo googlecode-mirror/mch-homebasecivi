@@ -27,15 +27,15 @@ if ($_SESSION['access_level'] == 0) {
         echo('</div></div></body></html>');
         die();
     } else {
-        echo('<p><strong>Volunteer Edit Form</strong><br />');
-        echo('Here you can edit your own information in the database.' .
+        echo('<p><strong>Edit Your Own Information</strong><br />');
+        echo('Here you can edit your contact information in the database.' .
         '<br>When you are finished, hit <b>Submit</b> at the bottom of this page.');
     } else if ($_SESSION['access_level'] == 2)
     if ($id == 'new') {
-        echo('<p><strong>New Volunteer Form</strong><br />');
+        echo('<p><strong>Add a New Volunteer</strong><br />');
         echo('Here you can add a new volunteer into the database. </p>');
     } else {
-        echo('<p><strong>Volunteer Edit Form</strong><br />');
+        echo('<p><strong>Edit a Volunteer\'s Contact Information</strong><br />');
         echo('Here you can edit, delete, or change the password for a volunteer in the database.</p><p>');
     } else {
     echo("<p id=\"error\">You do not have sufficient permissions to add a new person to the database.</p>");

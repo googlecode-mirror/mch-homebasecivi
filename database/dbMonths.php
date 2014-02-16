@@ -107,6 +107,17 @@ function getall_dbMonths($group) {
     return $theMonths;
 }
 
+function getall_archived_dbMonth_ids() {
+    connect();
+    $query = "SELECT * FROM dbMonths where status = 'archived' order by end_of_month_timestamp desc";
+    $result = mysql_query($query);
+    $theMonthIds = array();
+    while ($result_row = mysql_fetch_assoc($result)) {
+    	$theMonthIds[] = $result_row['id'];
+    }
+    return $theMonthIds;
+}
+
 /*
  * update month with matching id with the values of this month's fields
  * if month with id is not in db, return false

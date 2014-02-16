@@ -264,15 +264,11 @@ function phone_edit($phone) {
 	else return "";
 }
 
-function get_people_for_export($first_name, $last_name, $role, $type, $status, $start_date, $street, $city, $state, $zip, $phone1, $phone2, $email, $notes) {
+function get_people_for_export($first_name, $last_name, $type, $status, $group, $role) {
     connect();
-    //hours_worked, day_of_the_week, month, employer_school...
     $query = "SELECT * FROM dbPersons WHERE first_name LIKE '%" . $first_name . "%' AND last_name LIKE '%" .
             $last_name . "%' AND type LIKE '%" . $type . "%' AND status LIKE '%" .
-            $status . "%' AND start_date LIKE '%" . $start_date . "%' AND address LIKE '%" . $street . "%' AND city LIKE '%" .
-            $city . "%' AND state LIKE '%" . $state . "%' AND zip LIKE '%" . $zip .
-            "%' AND phone1 LIKE '%" . $phone1 . "%' AND phone2 LIKE '%" . $phone2 . "%' AND email LIKE '%" . $email .
-            "%' AND notes LIKE '%" . $notes . "%' ORDER BY last_name,first_name";
+            $status . "%' AND `group` LIKE '%" . $group . "%' AND role LIKE '%" . $role . "%' ORDER BY last_name,first_name";
     $result = mysql_query($query);
     $thePersons = array();
     while ($result_row = mysql_fetch_assoc($result)) {

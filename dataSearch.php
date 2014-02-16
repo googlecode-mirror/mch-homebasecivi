@@ -29,14 +29,17 @@ session_cache_expire(30);
                 <?php
                 include_once('domain/Person.php');
                 include_once('database/dbPersons.php');
-
-                if ($_POST['_form_submit'] != 1 && $_POST['_form_submit'] != 2 && $_POST['_form_submit'] != 3)
-                    include('dataSearch.inc.php'); // the form has not been submitted, so show it
-
-                process_form();
-                include('footer.inc');
-
-                function process_form() {
+                include_once('domain/Crew.php');
+                include_once('database/dbCrews.php');
+                include_once('database/dbMonths.php');
+                $returned_people = array();
+                $search_attr = "Selection Criteria:  ";
+                if ($_POST['_form_submit'] == 2) {
+                        echo "Data have been exported. CTRL-click the following link and select 'Download' to download the CSV file.";
+                        echo "<br/><br/><a href='dataexport.csv'>dataexport.csv</a>";
+              //          header("File name: dataexport.csv");
+                }
+                else if ($_POST['_form_submit'] == 1) {
                     if ($_POST['check1'] == 'on')
                         $first_name = $_POST['first_name']; else
                         $first_name = '';
@@ -44,139 +47,80 @@ session_cache_expire(30);
                         $last_name = $_POST['last_name']; else
                         $last_name = '';
                     if ($_POST['check3'] == 'on')
-                        $role = $_POST['role']; else
-                        $role = '';
-                    if ($_POST['check4'] == 'on')
-                        $type = $_POST['type'][0]; else
+                        $type = $_POST['type']; else
                         $type = '';
-                    if ($_POST['check5'] == 'on')
+                    if ($_POST['check4'] == 'on')
                         $status = $_POST['status']; else
                         $status = '';
+                    if ($_POST['check5'] == 'on')
+                        $group = $_POST['xgroup']; else
+                        $group = '';
                     if ($_POST['check6'] == 'on')
-                        $start_date = $_POST['start_date']; else
-                        $start_date = '';
+                        $role = $_POST['xrole']; else
+                        $role = '';
                     if ($_POST['check7'] == 'on')
-                        $day_of_the_week = $_POST['day_of_the_week']; else
-                        $day_of_the_week = '';
-                    if ($_POST['check8'] == 'on')
-                        $street = $_POST['street']; else
-                        $street = '';
-                    if ($_POST['check9'] == 'on')
-                        $city = $_POST['city']; else
-                        $city = '';
-                    if ($_POST['check10'] == 'on')
-                        $state = $_POST['state']; else
-                        $state = '';
-                    if ($_POST['check11'] == 'on')
-                        $zip = $_POST['zip']; else
-                        $zip = '';
-                    if ($_POST['check12'] == 'on')
-                        $phone1 = $_POST['phone1']; else
-                        $phone1 = '';
-                    if ($_POST['check13'] == 'on')
-                        $phone2 = $_POST['phone2']; else
-                        $phone2 = '';
-                    if ($_POST['check14'] == 'on')
-                        $email = $_POST['email']; else
-                        $email = '';
-                    if ($_POST['check15'] == 'on')
-                        $notes = $_POST['notes']; else
-                        $notes = '';
-
-                    $attribute_array = array(1 =>
+                        $month = $_POST['month']; else
+                        $month = '';
+                    
+                    $attribute_array = array(
                         array(1 => $_POST['check1'], 'First Name', $first_name),
                         array(1 => $_POST['check2'], 'Last Name', $last_name),
-                        array(1 => $_POST['check3'], 'Role', $role),
-                        array(1 => $_POST['check4'], 'Type', $type),
-                        array(1 => $_POST['check5'], 'Status', $status),
-                        array(1 => $_POST['check6'], 'Start Date', $start_date),
-                        array(1 => $_POST['check7'], 'Day of the Week', $day_of_the_week),
-                        array(1 => $_POST['check8'], 'Street Address', $street),
-                        array(1 => $_POST['check9'], 'City', $city),
-                        array(1 => $_POST['check10'], 'State', $state),
-                        array(1 => $_POST['check11'], 'Zip', $zip),
-                        array(1 => $_POST['check12'], 'Phone 1', $phone1),
-                        array(1 => $_POST['check13'], 'Phone 2', $phone2),
-                        array(1 => $_POST['check14'], 'Email', $email),
-                        array(1 => $_POST['check15'], 'Notes', $notes));
-
-                    $export_attribute_array = array(1 =>
-                        array(1 => $_POST['e_check1'], 'First Name', 'get_first_name'),
-                        array(1 => $_POST['e_check2'], 'Last Name', 'get_last_name'),
-                        array(1 => $_POST['e_check3'], 'Role', 'get_role'),
-                        array(1 => $_POST['e_check4'], 'Type', 'get_type'),
-                        array(1 => $_POST['e_check5'], 'Status', 'get_status'),
-                        array(1 => $_POST['e_check6'], 'Start Date', 'get_start_date'),
-                        array(1 => $_POST['e_check7'], 'Day of the Week', 'get_day_of_the_week'),
-                        array(1 => $_POST['e_check8'], 'Address', 'get_address'),
-                        array(1 => $_POST['e_check9'], 'City', 'get_city'),
-                        array(1 => $_POST['e_check10'], 'State', 'get_state'),
-                        array(1 => $_POST['e_check11'], 'Zip', 'get_zip'),
-                        array(1 => $_POST['e_check12'], 'Phone 1', 'get_phone1'),
-                        array(1 => $_POST['e_check13'], 'Phone 2', 'get_phone2'),
-                        array(1 => $_POST['e_check14'], 'Email', 'get_email'),
-                        array(1 => $_POST['e_check15'], 'Notes', 'get_notes'));
-
-                    if ($_POST['_form_submit'] == 1) {
-                        $returned_people = get_people_for_export($first_name, $last_name, $role, $type, $status, $start_date, $street, $city, $state, $zip, $phone1, $phon2, $email, $notes);
-                        include('dataResults.inc.php');
-                    } else if ($_POST['_form_submit'] == 2) {
-                        $_SESSION['results'] = $_POST['results_list'];
-                        if ($_POST['b_export']) {
-                            $select_people_array = array();
-                            if ($_POST['results_list']) 
-                              foreach ($_POST['results_list'] as $export_person) {
-                                //this will fail if multiple copies of the same person exist, which should never happen
-                                $temp_dude = retrieve_person($export_person);
-                                $select_people_array[] = $temp_dude->get_first_name() . " " . $temp_dude->get_last_name();
-                              }
-                            include('dataExport.inc.php');
-                        }
-                    } else if ($_POST['_form_submit'] == 3) {
-                        $search_attr = "Based on: ";
-                        foreach ($_SESSION['checked'] as $check_num)
-                            $search_attr .= $attribute_array[$check_num][2] . ", ";
-                        $search_attr = substr($search_attr, 0, -2);
-                        $attr_to_export = array();
-                        foreach ($export_attribute_array as $exp_att) {
-                            if ($exp_att[1] == 'on')
-                                $attr_to_export[] = array($exp_att[2], $exp_att[3]);
-                        }
-                        $export_data = array();
-                        for ($i = 0; $i < count($_SESSION['results']); $i++) {
-                            $data_row = array($i + 1);
-                            for ($j = 0; $j < count($attr_to_export); $j++) {
-                                $data_row[] = retrieve_person($_SESSION['results'][$i])->$attr_to_export[$j][1]();
-                                if ($attr_to_export[$j][0] == 'Type')
-                                    $data_row[$j + 1] = $data_row[$j + 1][0];
+                        array(1 => $_POST['check3'], 'Type', $type),
+                        array(1 => $_POST['check4'], 'Status', $status),
+                        array(1 => $_POST['check5'], 'Group', $group),
+                        array(1 => $_POST['check6'], 'Role', $role),
+                        array(1 => $_POST['check7'], 'Month', $month));
+                        
+                    
+                            $returned_people = get_people_for_export($first_name, $last_name, $type, $status, $group, $role);
+                            $returned_shifts = get_crews_for_export($returned_people,$month,$group);
+                            $current_time = array("Export date: " . date("m/d/Y g:ia"));
+                            for ($i = 0; $i <= count($attribute_array); $i++) {
+                                if ($attribute_array[$i][1] == 'on')
+                                    $search_attr .= $attribute_array[$i][2] . "=".$attribute_array[$i][3]. ", ";
                             }
-                            $export_data[] = $data_row;
-                        }
-                        $attribute_row = array("");
-                        foreach ($attr_to_export as $attr)
-                            $attribute_row[] = $attr[0];
-                        date_default_timezone_set('America/New_York');
-                        $current_time = array("Export date: " . date("F j, Y, g:i a"));
-                        export_data($current_time, array($search_attr), $attribute_row, $export_data);
-                        echo "Data have been exported. Right-click the following link and select 'Save Link As' to download the Excel file.";
-                        echo "<br/><br/><a href='/dataexport.csv' type='file'>dataexport.csv</a>";
-              //          header("File name: dataexport.csv");
-                    }
+                            $search_attr = substr($search_attr, 0, -2);
+                            $data_to_export = array();
+                            foreach ($returned_people as $p) {
+                                $data_row = array($p->get_id(), $p->get_first_name(),$p->get_last_name(),$p->get_address(),
+                                    $p->get_city(), $p->get_state(),$p->get_zip(),$p->get_phone1(),
+                                    $p->get_phone2(), $p->get_email(),$p->get_type(),$p->get_address(),
+                                    implode(',', $p->get_group()), implode(',', $p->get_role()),
+                                    $p->get_status(), $p->get_birthday(), $p->get_start_date(), $p->get_notes()
+                                );
+                                $data_to_export[] = $data_row;
+                            }
+                            foreach ($returned_shifts as $returned_shift) {
+                                $data_to_export[] = $returned_shift;
+                            }
+                            export_data($current_time, array($search_attr), $data_to_export);
+                        include('dataResults.inc.php');
+                } 
+                else {
+                    $archived_months = getall_archived_dbMonth_ids();
+                    $unique_months = array();
+                    foreach ($archived_months as $archived_month)
+                        if (!in_array(substr($archived_month,0,5),$unique_months))
+                            $unique_months[] = substr($archived_month,0,5);
+                    include('dataSearch.inc.php'); // the form has not been submitted, so show it
                 }
-
-                function export_data($ct, $sa, $ar, $ed) {
+                               
+                function export_data($ct, $sa, $ed) {
                     $filename = "dataexport.csv";
                     $handle = fopen($filename, "w");
                     fputcsv($handle, $ct);
                     fputcsv($handle, $sa);
-                    fputcsv($handle, str_replace(' ', '_', $ar), ',', "'");
                     foreach ($ed as $person_data) {
-                        fputcsv($handle, str_replace(' ', '_', $person_data), ',', "'");
+                        fputcsv($handle, $person_data, ',', '"');
                     }
                     fclose($handle);
                 }
+                
+                
                 ?>
             </div>
+            <?php   include('footer.inc');  ?>
+            
         </div>
     </body>
 </html>
