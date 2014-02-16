@@ -28,7 +28,7 @@
                     }
                     ?>
            </td><td></td></tr><tr><td></td><td></td></tr>
-        <tr><td><b>Search Results: </b><?php echo "<br>(".sizeof($returned_people)." people found)"?></td>
+        <tr><td><b>Search Results: </b><?php echo "<br>(".sizeof($returned_people)." people and ".sizeof($returned_shifts)." shifts found)     "?></td>
                <td>
                         <select multiple name="results_list[]" id="tempid" style="width:250px;height:250px;font-size:15px"
                                 onmouseup="if(this.value!=''){document.getElementById('b_details').disabled=false;

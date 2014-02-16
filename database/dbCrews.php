@@ -186,7 +186,8 @@ function get_crews_for_export ($volunteer_list, $month, $group) {
     $query = "SELECT * FROM dbCrews WHERE id LIKE '%" . $month . "%' AND `group` LIKE '%". $group . "%' order by id";
     $result = mysql_query($query);
     $people_in_shifts = array();
-    while ($result_row = mysql_fetch_assoc($result)) {
+    if ($month!="")
+      while ($result_row = mysql_fetch_assoc($result)) {
         $persons = explode(",",$result_row['persons']);
         foreach ($persons as $person) {
             $person_id = substr($person,0,strpos($person,"+"));
