@@ -55,7 +55,7 @@ if ($id == 'new') {
                     include('personForm.inc');
                 else {
                     //in this case, the form has been submitted, so validate it
-                    $errors = validate_form();  //step one is validation.
+                    $errors = validate_form($id);  //step one is validation.
                     // errors array lists problems on the form submitted
                     if ($errors) {
                         // display the errors and the form to fix
@@ -72,7 +72,7 @@ if ($id == 'new') {
                     }
                     // this was a successful form submission; update the database and exit
                     else
-                        process_form($id);
+                        process_form($id, $person);
                         echo "</div>";
                     include('footer.inc');
                     echo('</div></body></html>');
@@ -82,10 +82,12 @@ if ($id == 'new') {
                 /**
                  * process_form sanitizes data, concatenates needed data, and enters it all into a database
                  */
-                function process_form($id) {
+                function process_form($id, $person) {
                     //echo($_POST['first_name']);
                     //step one: sanitize data by replacing HTML entities and escaping the ' character
-                    $first_name = trim(str_replace('\\\'', '', htmlentities(str_replace('&', 'and', $_POST['first_name']))));
+                    if ($id=="new")
+                        $first_name = trim(str_replace('\\\'', '', htmlentities(str_replace('&', 'and', $_POST['first_name']))));
+                    else $first_name = $person->get_first_name();
                 //    $first_name = str_replace(' ', '_', $first_name);
                     $last_name = trim(str_replace('\\\'', '\'', htmlentities($_POST['last_name'])));
 
@@ -94,17 +96,23 @@ if ($id == 'new') {
                     $state = trim(htmlentities($_POST['state']));
                     $zip = trim(htmlentities($_POST['zip']));
 
-
-                    $phone1 = trim(str_replace(' ', '', htmlentities($_POST['phone1'])));
+                    if ($id=="new")
+                        $phone1 = trim(str_replace(' ', '', htmlentities($_POST['phone1'])));
+                    else $phone1 = $person->get_phone1();
                     $clean_phone1 = mb_ereg_replace("[^0-9]", "", $phone1);
                     $phone2 = trim(str_replace(' ', '', htmlentities($_POST['phone2'])));
                     $clean_phone2 = mb_ereg_replace("[^0-9]", "", $phone2);
                     $email = $_POST['email'];
 
                     $type = implode(',', $_POST['type']);
-                    $group = implode(',', $_POST['group']);
-                    $role = implode(' ', $_POST['role']);
-                    
+                    if ($_POST['group'])
+                        $group = implode(',', $_POST['group']);
+                    else
+                        $group = "";
+                    if ($_POST['role'])
+                        $role = implode(' ', $_POST['role']);
+                    else
+                        $role = "";
                     $status = $_POST['status'];
 
                     if ($_POST['availability'] != null)

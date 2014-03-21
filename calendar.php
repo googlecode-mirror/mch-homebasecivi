@@ -98,8 +98,8 @@ session_cache_expire(30);
                     <?PHP
                     echo '<form method="POST">';
                     show_month($days, $month, $edit, $year, $group);
-                    if ($edit == true && !($days[6]->get_year() < $year || ($days[6]->get_year() == $year) ) && $_SESSION['access_level'] >= 2)
-                        echo "<p align=\"center\"><input type=\"submit\" value=\"Save changes to all notes\" name=\"submit\">";
+               //     if ($edit == true && !($days[6]->get_year() < $year || ($days[6]->get_year() == $year) ) && $_SESSION['access_level'] >= 2)
+               //         echo "<p align=\"center\"><input type=\"submit\" value=\"Save changes to all notes\" name=\"submit\">";
                     echo '</form>';
                 
                 }

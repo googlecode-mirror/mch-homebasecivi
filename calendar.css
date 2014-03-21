@@ -52,6 +52,8 @@ table#calendar td:hover {
 #calendar td.cell{
 	height:75px;
 	position:relative;
+	vertical-align:top;
+	padding:5px;
 }
 
 #calendar td p.date {

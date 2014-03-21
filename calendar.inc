@@ -127,13 +127,14 @@ function get_crewinfo($edit, $crews, $day){
         	 //$person_ids = explode(",", $cgp);
         	if ($edit || $_SESSION['access_level']<2) $prefix = "<a class='celllink' href='editCrew.php?id=".$crew->get_id()."'><br>&nbsp;&nbsp;";
             else $prefix = "";
-            $info = $prefix;
+            $info = $prefix."&nbsp;&nbsp;";
             foreach($cgp as $person_id){
                 $id_exploded = explode("+", $person_id);
-                if ($id_exploded[3]=="()")
+                $filtered_roles = filter_roles($crew->get_group(), $id_exploded[3]);
+                if ($filtered_roles=="()")
                 	$display_name = $id_exploded[1]. " " . $id_exploded[2];
                 else 
-                	$display_name = $id_exploded[3]. " " . $id_exploded[1]. " " . $id_exploded[2];
+                	$display_name = $id_exploded[1]. " " . $id_exploded[2]. " " .$filtered_roles ;
 				$info = $info . $display_name . "<br>&nbsp;&nbsp;";
             }
 			if ($crew->num_vacancies()>0)
@@ -143,6 +144,24 @@ function get_crewinfo($edit, $crews, $day){
             else return $info."</a>";
         }
     }
+}
+
+// show only those roles for the given group
+function filter_roles($group, $roles){
+    $group_roles = array("foodbank"=>array("CC","B","DD","P"),
+                        "foodpantry"=>array("CC","PR","I","M","CO"),
+                        "soupkitchen"=>array("CC","CH","Pots","Dishes"));
+    $candidates = $group_roles[$group];
+    $filtered_roles = "";
+    $trimmed_roles = explode(" ",substr($roles,1,strlen($roles)-2));
+    foreach ($trimmed_roles as $role) {
+        if (in_array($role, $candidates))
+            if ($filtered_roles=="")
+                $filtered_roles = $role; 
+            else 
+                $filtered_roles .= " ".$role;
+    } 
+    return "(".$filtered_roles.")";
 }
 
 function get_dom($day) {

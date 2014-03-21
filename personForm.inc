@@ -49,8 +49,14 @@ if ($_SESSION['access_level'] == 0) {
     <input type="hidden" name="old_pass" value=<?PHP echo("\"" . $person->get_password() . "\""); ?>>
     <input type="hidden" name="_form_submit" value="1">
     <p>(<span style="font-size:x-small;color:FF0000">*</span> denotes required fields)
-    <p>First Name<span style="font-size:x-small;color:FF0000">*</span>: <input type="text" name="first_name" tabindex="1" value="<?PHP echo($person->get_first_name()) ?>">
-        Last Name<span style="font-size:x-small;color:FF0000">*</span>: <input type="text" name="last_name" tabindex="2" value="<?PHP echo($person->get_last_name()) ?>">
+    <p>First Name<span style="font-size:x-small;color:FF0000">*</span>: 
+    <?php
+    if ($id=="new")
+        echo '<input type="text" name="first_name" tabindex="1" value="'.$person->get_first_name().'">';
+    else echo $person->get_first_name();
+        ?>
+    
+    <br>Last Name<span style="font-size:x-small;color:FF0000">*</span>: <input type="text" name="last_name" tabindex="2" value="<?PHP echo($person->get_last_name()) ?>">
     <fieldset>
         <legend>Contact information:</legend>
         <p>Address<span style="font-size:x-small;color:FF0000">*</span>: <input type="text" name="address" tabindex="3" size=40 value="<?PHP echo($person->get_address()) ?>">
@@ -73,8 +79,13 @@ foreach ($states as $st) {
 ?>
             </select>,
             <input type="text" name="zip" size="5" tabindex="6" value="<?PHP echo($person->get_zip()) ?>">
-        <p>Phone<span style="font-size:x-small;color:FF0000">*</span>: <input type="text" name="phone1" MAXLENGTH=12 tabindex="7" value="<?PHP echo(phone_edit($person->get_phone1())) ?>">
-            &nbsp;&nbsp;Alternate Phone:<input type="text" name="phone2" MAXLENGTH=12 tabindex="8" value="<?PHP echo(phone_edit($person->get_phone2())) ?>">
+        <p>Phone<span style="font-size:x-small;color:FF0000">*</span>: 
+        <?php 
+        if ($id=="new")
+            echo '<input type="text" name="phone1" MAXLENGTH=12 tabindex="7" value="'.phone_edit($person->get_phone1()).'">';
+        else echo phone_edit($person->get_phone1());
+        ?>
+        <br>Alternate Phone:<input type="text" name="phone2" MAXLENGTH=12 tabindex="8" value="<?PHP echo(phone_edit($person->get_phone2())) ?>">
         <p>Email:<input type="text" name="email" tabindex="9" value="<?PHP echo($person->get_email()) ?>">
 <?PHP
         echo '<p>Birthday:';
@@ -142,19 +153,23 @@ foreach ($groups as $key => $value) {
     }
 }
 
-$roles = array('CC' => 'Crew Chief/Chef', 'B' => "Boxes", 'DD' => "Delivery Driver", 'PR' => "Prep",
-				'I' => 'Intake', 'M' => "Meat", 'P' => "Produce", 'C' => "Carryout",
-				'Pots' => "Pots", 'Dishes' => "Dishes");
+$roles = array('CC' => 'Crew Chief/Chef', 
+				'B' => "Boxes", 'DD' => "Delivery Driver", 'P' => "Produce",             // Food Bank specific
+				'PR' => "Prep", 'I' => 'Intake', 'M' => "Meat", 'CO' => "Carryout",      // Food Pantry specific
+				'CH' => "Chef Helper", 'Pots' => "Pots", 'Dishes' => "Dishes");          // Soup Kitchen specific
 echo('<p>Role(s):&nbsp;');
 //echo('<span style="font-size:x-small;color:FF0000">*</span>');
 $i=1;
 foreach ($roles as $key => $value) {
+    if ($i==2) echo "<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Food Bank: &nbsp;&nbsp;";
+    else if ($i==5) echo "<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Food Pantry: &nbsp;&nbsp;";
+    else if ($i==9) echo "<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Soup Kitchen: &nbsp;&nbsp;";
+ //   else echo "&nbsp;&nbsp;&nbsp;&nbsp";
     if(in_array($key, $person->get_role()))
         echo ('<input type="checkbox" name="role[]" value="' . $key . '" checked>'. $value . ' ('.$key.') </input>&nbsp;&nbsp;&nbsp;&nbsp;');
     else
         echo ('<input type="checkbox" name="role[]" value="' . $key . '">'. $value . ' ('.$key.') </input>&nbsp;&nbsp;&nbsp;&nbsp;');
     $i++;
-    if ($i%3==1 && $i<9) echo "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 }
 ?>
     <fieldset id='availability'>
