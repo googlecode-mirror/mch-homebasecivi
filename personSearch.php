@@ -40,6 +40,13 @@ session_cache_expire(30);
                 '<option value="" SELECTED></option>' . '<option value="foodbank">Food Bank</option>' .
                 '<option value="foodpantry">Food Pantry</option>' . '<option value="soupkitchen">Soup Kitchen</option>' .
                 '</select>');
+                $roles = array('CC' => 'Crew Chief/Chef', 'B' => "Boxes", 'DD' => "Delivery Driver", 'PR' => "Prep",
+					'I' => 'Intake', 'M' => "Meat", 'P' => "Produce", 'C' => "Carryout",
+					'Pots' => "Pots", 'Dishes' => "Dishes");
+                echo '&nbsp;&nbsp;Role: <select name="s_role">' . '<option value="" SELECTED></option>' ;
+                foreach ($roles as $key=>$value) 
+                    echo '<option value="'.$key.'">'.$value.'</option>' ;
+                echo ('</select>');
                 echo '<p>Name (type a few letters): ';
                 echo '<input type="text" name="s_name">';
 
@@ -76,6 +83,7 @@ session_cache_expire(30);
                     $type = $_POST['s_type'];
                     $status = $_POST['s_status'];
                     $group = $_POST['s_group'];
+                    $role = $_POST['s_role'];
                     $name = trim(str_replace('\'', '&#39;', htmlentities($_POST['s_name'])));
                     $day = $_POST['s_day'];
                     $week = $_POST['s_week'];
@@ -84,7 +92,7 @@ session_cache_expire(30);
                     include_once('database/dbPersons.php');
                     include_once('domain/Person.php');
 
-                    $result = getonlythose_dbPersons($type, $status, $group, $name, $day, $week);
+                    $result = getonlythose_dbPersons($type, $status, $group, $role, $name, $day, $week);
                     echo '<p><strong>Search Results:</strong> <p>Found ' . sizeof($result) . ' ' . $status . ' ';
                     if ($type != "")
                         echo $type . "s";
@@ -94,18 +102,22 @@ session_cache_expire(30);
                         echo ' with name like "' . $name . '"';
                     if ($group != "")
                         echo ' with group like "' . $group . '"';
+                    if ($role != "")
+                        echo ' with role like "' . $role . '"';
                     $availability = $_POST['s_day'] ." ". $_POST['s_week'];
                     if ($availability != " ") {
                         echo " with availability " . $availability;
                     }
                     if (sizeof($result) > 0) {
                         echo ' (select a name for more information).';
-                        echo '<p><table> <tr><td>Name</td><td>Phone</td><td>E-mail</td><td>Availability</td></tr>';
+                        echo '<p><table> <tr><td>Name</td><td>Phone</td><td>E-mail</td><td>Group(s)</td><td>Role(s)</td><td>Availability</td></tr>';
                         foreach ($result as $vol) {
                             echo "<tr><td><a href=personEdit.php?id=" . str_replace(" ","_",$vol->get_id()) . ">" .
                             $vol->get_first_name() . " " . $vol->get_last_name() . "</td><td>" .
                             phone_edit($vol->get_phone1()) . "</td><td>" .
-                            $vol->get_email() . "</td><td>";
+                            $vol->get_email() . "</td><td>" .
+                            implode(',',$vol->get_group()) . "</td><td>".
+                            implode(',',$vol->get_role()) . "</td><td>";
                             foreach ($vol->get_availability() as $availableon) {
                                 echo ($availableon . ", ");
                             }

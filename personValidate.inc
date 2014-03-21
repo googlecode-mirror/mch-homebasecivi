@@ -16,8 +16,8 @@
  * it returns an array of the errors with the form (string warnings)
  * this array is null (aka false) if there are no errors
  */
-function validate_form() {
-    if ($_POST['first_name'] == null || $_POST['first_name'] == 'new')
+function validate_form($id) {
+    if ($id=="new" && ($_POST['first_name'] == null || $_POST['first_name'] == 'new'))
         $errors[] = 'Please enter a first name';
     if ($_POST['last_name'] == null)
         $errors[] = 'Please enter a last name';
@@ -35,7 +35,7 @@ function validate_form() {
         $errors[] = "Sorry, you can't promote yourself to manager.";
  //   if ($_POST['emergency_contact'] == null)
  //       $errors[] = 'Please enter an emergency contact';
-    if (!valid_phone($_POST['phone1']))
+    if ($id=="new" && !valid_phone($_POST['phone1']))
         $errors[] = 'Enter a valid primary phone number (10 digits: ### ### ####)';
     if ($_POST['phone2'] != "" && !valid_phone($_POST['phone2']))
         $errors[] = 'Enter a valid alternate phone number (10 digits: ### ### ####)';

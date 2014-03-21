@@ -137,12 +137,14 @@ function get_people_for_shift($master_shift) {
         array_shift($people);
     $p = "<br>";
     for ($i = 0; $i < count($people); ++$i) {
-        if (is_array($people[$i]))
-          if ($people[$i]['role']!="")
-            $p = $p . "&nbsp;" ."(" . $people[$i]['role'] .") ". $people[$i]['first_name'] . " " . $people[$i]['last_name'] . "<br>";
+        if (is_array($people[$i])) {
+          $fr = filter_roles($master_shift->get_group(),"(" . $people[$i]['role'].")");
+          if ($fr!="()")  
+            $p = $p . "&nbsp;" .$people[$i]['first_name'] . " " . $people[$i]['last_name'] ." ". $fr . "<br>";
           else 
           	$p = $p . "&nbsp;" . $people[$i]['first_name'] . " " . $people[$i]['last_name'] . "<br>";
-        else
+    }
+    else
             $p = $p . "&nbsp;" . $people[$i] . "<br>";
     }
     if ($slots - count($people) > 0)
@@ -151,4 +153,23 @@ function get_people_for_shift($master_shift) {
         $p = $p . "&nbsp;<br>";
     return substr($p, 0, strlen($p) - 4); // remove the last )<br>
 }
+
+// show only those roles for the given group
+function filter_roles($group, $roles){
+    $group_roles = array("foodbank"=>array("CC","B","DD","P"),
+                        "foodpantry"=>array("CC","PR","I","M","CO"),
+                        "soupkitchen"=>array("CC","CH","Pots","Dishes"));
+    $candidates = $group_roles[$group];
+    $filtered_roles = "";
+    $trimmed_roles = explode(" ",substr($roles,1,strlen($roles)-2));
+    foreach ($trimmed_roles as $role) {
+        if (in_array($role, $candidates))
+            if ($filtered_roles=="")
+                $filtered_roles = $role; 
+            else 
+                $filtered_roles .= " ".$role;
+    } 
+    return "(".$filtered_roles.")";
+}
+
 ?>
